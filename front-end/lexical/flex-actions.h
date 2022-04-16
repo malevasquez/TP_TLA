@@ -8,11 +8,13 @@ typedef enum TokenID {
     YYUNDEF = 257,
 
     STRING,
-    INTEGER
+    INTEGER,
+    VARIABLE
 } TokenID;
 
 TokenID StringPatternAction(const char * lexeme);
 TokenID IntegerPatternAction(const char* lexeme);
 TokenID UnknownPatternAction(const char * lexeme);
+TokenID VariablePatternAction(const char * lexeme)
 
 #endif
