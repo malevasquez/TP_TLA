@@ -45,6 +45,8 @@ NOTE                [do|re|mi|fa|sol|la|si][#]?
 "to notes"                          {return TO_NOTES;}
 "to chord"                          {return TO_CHORD;}
 "concat notes"                      {return CONCAT_NOTES;}
+"reproduce chord"                   {return REPRODUCE_CHORD;}
+"reproduce note"                    {return REPRODUCE_NOTE;}
 {INTEGER}                           {return IntegerPatternAction(yytext);}
 {STRING}                            {return StringPatternAction(yytext);}
 .									{return UnknownPatternAction(yytext);}
