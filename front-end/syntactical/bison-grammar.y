@@ -81,36 +81,23 @@ instruction:
 	;
 
 assignment:
-    definition assign expression								{ $$ = AssignAction($1, $2, $3); }
-	| definition assign string									{ $$ = AssignAction($1, $2, $3); }
-	| definition assign chord									{ $$ = AssignAction($1, $2, $3); }
-	| definition assign note									{ $$ = AssignAction($1, $2, $3); }
-	| variable assign expression								{ $$ = AssignAction($1, $2, $3); }
-	| variable assign string									{ $$ = AssignAction($1, $2, $3); }
-	| variable assign chord										{ $$ = AssignAction($1, $2, $3); }
+    definition assign expression								{ $$ = AssignAction($1); }
+	| definition assign string									{ $$ = AssignAction($1); }
+	| definition assign chord									{ $$ = AssignAction($1); }
+	| definition assign note									{ $$ = AssignAction($1); }
+	| variable assign expression								{ $$ = AssignAction($1); }
+	| variable assign string									{ $$ = AssignAction($1); }
+	| variable assign chord										{ $$ = AssignAction($1); }
 	;
 
 expression:
-	variable op_sign expression									{ $$ = VariableGrammarAction($1); }
-	| variable													{ $$ = VariableGrammarAction($1); }
+	variable op_sign expression									{ $$ = AssignAction($1); }
+	| variable													{ $$ = AssignAction($1); }
 	| integer op_sign expression
 	| integer
 	| open_par expression close_par op_sign expression
 	| open_par expression close_par
 	;
-
-/* expression: 
-	| expression PLUS expression								{ $$ = AdditionExpressionGrammarAction($1, $3); }
-	| expression MINUS expression								{ $$ = SubtractionExpressionGrammarAction($1, $3); }
-	| expression MULTIPLY expression							{ $$ = MultiplicationExpressionGrammarAction($1, $3); }
-	| expression DIVIDE expression								{ $$ = DivisionExpressionGrammarAction($1, $3); }
-	| factor													{ $$ = FactorExpressionGrammarAction($1); }
-	; */
-
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS			{ $$ = ExpressionFactorGrammarAction($2); }
-	| constant													{ $$ = ConstantFactorGrammarAction($1); }
-	;
-
 
 definition: type VARIABLE 										{ $$ = VariableTypeDefinition($1,$2); }
 	;
@@ -120,12 +107,12 @@ definition: type VARIABLE 										{ $$ = VariableTypeDefinition($1,$2); }
 /* ------------------------------------------------------ */ 
 
 print:
-	PRINT chord													{ $$ = PrintChordAction($2); }
-	| PRINT note												{ $$ = PrintNoteAction($2); }
+	PRINT chord													{ $$ = PrintStringAction($2); }
+	| PRINT note												{ $$ = PrintStringAction($2); }
 	| PRINT string												{ $$ = PrintStringAction($2); }
 	| PRINT integer												{ $$ = PrintIntegerAction($2); }
 	| PRINT variable											{ $$ = PrintVariableAction($2); }
-	| PRINT NEW_LINE											{ $$ = PrintNewLineAction($2); }
+	| PRINT NEW_LINE											{ $$ = PrintStringAction($2); }
 	;
 
 concat_notes:
@@ -135,13 +122,13 @@ concat_notes:
 chord_to_notes: TO_NOTES chord									{ $$ = ToNotesAction($2); }
 	;
 	
-notes_to_chord: TO_CHORD note note note							{ $$ = ToChordAction($2, $3, $4); }
+notes_to_chord: TO_CHORD variable variable variable				{ $$ = ToChordAction($2, $3, $4); }
 	;
 
-reproduce_note: REPRODUCE_NOTE note								{ $$ = ReproduceNoteAction($2); }
+reproduce_note: REPRODUCE_NOTE variable							{ $$ = ReproduceNoteAction($2); }
 	;
 
-reproduce_chord: REPRODUCE_CHORD chord							{ $$ = ReproduceChordAction($2); }
+reproduce_chord: REPRODUCE_CHORD variable						{ $$ = ReproduceChordAction($2); }
 
 /* ------------------------------------------------------ */ 
 /*					    CONDITIONAL                       */
@@ -159,25 +146,25 @@ conditional_if_else: if_def open_par boolean close_par then_def program else_def
 	;
 
 conditional_while: 
-	do_def program while_def open_par boolean close_par delimiter { printf("\n"); }
+	do_def program while_def open_par boolean close_par delimiter { Print("\n"); }
 	;
 
-if_def: IF 														{ printf("if "); }
+if_def: IF 														{ Print("if "); }
 	;
 
-then_def: THEN 													{ printf(" {\n"); }
+then_def: THEN 													{ Print(" {\n"); }
 	;
 
-else_def: ELSE 													{ printf("}\n else {"); }
+else_def: ELSE 													{ Print("}\n else {"); }
 	;
 
-end_if_def: END_IF 												{ printf("}\n"); }
+end_if_def: END_IF 												{ Print("}\n"); }
 	;
 
-while_def: WHILE 												{ printf("} while "); }
+while_def: WHILE 												{ Print("} while "); }
 	;
 
-do_def: DO 														{ printf("do { \n"); }
+do_def: DO 														{ Print("do { \n"); }
 	;
 
 /* ------------------------------------------------------ */ 
@@ -200,42 +187,42 @@ operator:
 /* ------------------------------------------------------ */ 
 
 op_sign:
-	PLUS 														{ printf(" + "); }
-	| MINUS 													{ printf(" - "); }
-	| MULTIPLY 													{ printf(" * "); }
-	| DIVIDE 													{ printf(" / "); }
+	PLUS 														{ Print(" + "); }
+	| MINUS 													{ Print(" - "); }
+	| MULTIPLY 													{ Print(" * "); }
+	| DIVIDE 													{ Print(" / "); }
 	;
 
-open_par: OPEN_PARENTHESIS										{ printf("("); }
+open_par: OPEN_PARENTHESIS										{ Print("("); }
 	;
-close_par: CLOSE_PARENTHESIS									{ printf(")"); }
-	;
-
-and_op: AND 													{ printf(" && "); }
+close_par: CLOSE_PARENTHESIS									{ Print(")"); }
 	;
 
-or_op: OR 														{ printf(" || "); }
+and_op: AND 													{ Print(" && "); }
 	;
 
-equal: EQUALS 													{ printf("=="); }
+or_op: OR 														{ Print(" || "); }
 	;
 
-notequal: NOT_EQUALS 											{ printf("!="); }
+equal: EQUALS 													{ Print("=="); }
 	;
 
-not_op: NOT 													{ printf("!"); }
+notequal: NOT_EQUALS 											{ Print("!="); }
 	;
 
-lower: LOWER 													{ printf("<"); }
+not_op: NOT 													{ Print("!"); }
 	;
 
-greater: GREATER 												{ printf(">"); }
+lower: LOWER 													{ Print("<"); }
 	;
 
-assign: ASSIGN 													{ printf(" = "); }
+greater: GREATER 												{ Print(">"); }
 	;
 
-delimiter: DELIMITER 											{ printf(";\n"); }  
+assign: ASSIGN 													{ Print(" = "); }
+	;
+
+delimiter: DELIMITER 											{ Print(";\n"); }  
 	;
 
 /* ------------------------------------------------------ */ 
@@ -243,10 +230,10 @@ delimiter: DELIMITER 											{ printf(";\n"); }
 /* ------------------------------------------------------ */ 
 
 type: 
-	INTEGER 													{ $$ = 0; printf("int "); } 
-	| STRING 													{ $$ = 1; printf("char *"); }
-	| MUSICAL_NOTE 												{ $$ = 2; printf("char *"); }
-    | MUSICAL_CHORD 											{ $$ = 3; printf("char "); }
+	INTEGER 													{ $$ = 0; Print("int "); } 
+	| STRING 													{ $$ = 1; Print("char *"); }
+	| MUSICAL_NOTE 												{ $$ = 2; Print("char *"); }
+    | MUSICAL_CHORD 											{ $$ = 3; Print("char "); }
 	; 
 
 variable: VARIABLE                                              { $$ = VariableGrammarAction($1); }

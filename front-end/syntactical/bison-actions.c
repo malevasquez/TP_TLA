@@ -100,4 +100,45 @@ char* VariableTypeDefinition(char* type, char* variable) {
     return VariableTypeDefinitionImplementation(type, variable);
 }
 
+void AssignAction(char *definition) {
+	return NULL;
+}
+
+void PrintStringAction(char* value) {
+	return NULL;
+}
+
+
+void PrintIntegerAction(int value) {
+	return NULL;
+}
+
+void PrintVariableAction(char* value) {
+	return NULL;
+}
+
+char* ConcatNotesAction(char* variable1, char* variable2) {
+	return NULL;
+}
+
+char* ToNotesAction(char chord) {
+	return NULL;
+}
+
+char* ToChordAction(char* note) {
+	return NULL;
+}
+
+void ReproduceChordAction(char chord) {
+	return NULL;
+}
+
+void ReproduceNoteAction(char* note) {
+	return NULL;
+}
+
+char* Print(char* string) {
+	//Paso de manos hasta que hace un printf en el back
+	return NULL;
+}
 
