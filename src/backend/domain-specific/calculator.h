@@ -1,5 +1,5 @@
-#ifndef LOGIC_HEADER
-#define LOGIC_HEADER
+#ifndef CALCULATOR_HEADER
+#define CALCULATOR_HEADER
 
 int Add(const int leftAddend, const int rightAddend);
 

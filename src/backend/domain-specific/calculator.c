@@ -1,4 +1,8 @@
-#include "logic.h"
+#include "calculator.h"
+
+/**
+ * Implementación de "calculator.h".
+ */
 
 int Add(const int leftAddend, const int rightAddend) {
 	return leftAddend + rightAddend;

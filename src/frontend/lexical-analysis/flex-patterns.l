@@ -16,6 +16,8 @@ NOTE                [do|re|mi|fa|sol|la|si][#]?
 
 %%
 
+"start"                             {return START;}
+"end"                               {return END;}
 "is"                                {return ASSIGN;}
 "plus"                              {return PLUS;}
 "minus"                             {return MINUS;}     

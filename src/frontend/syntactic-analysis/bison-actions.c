@@ -1,4 +1,4 @@
-#include "../../backend/domain-specific/logic.h"
+#include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
 #include <stdio.h>
@@ -8,17 +8,6 @@
  * Implementación de "bison-grammar.h".
  */
 
-
-void StartAction() {
-    printf("#include <stdio.h>\n");
-    printf("#include <stlib.h>\n");
-    printf("#include <string.h>\n");
-    printf("int main() {\n");
-}
-
-void EndAction() {
-    printf("return 0;}");    
-}
 
 void yyerror(const char * string) {
 	LogError("Mensaje: '%s' debido a '%s' (linea %d).", string, yytext, yylineno);
@@ -77,68 +66,3 @@ int IntegerConstantGrammarAction(const int value) {
 	LogDebug("IntegerConstantGrammarAction(%d)", value);
 	return value;
 }
-
-//Falta hacer el VariableConstantGrammarAction()
-
-char* StringConstantGrammarAction(const char* value) {
-    LogDebug("StringConstantGrammarAction(%s)", value);
-    return value;
-}
-
-char* MusicalNoteConstantGrammarAction(const char* value) {
-    LogDebug("MusicalNoteConstantGrammarAction(%s)",value);
-    return value;
-}
-
-char MusicalChordConstantGrammarAction(const char value) {
-    LogDebug("MusicalChordConstantGrammarAction(%c)",value);
-    return value;
-}
-
-char* VariableTypeDefinition(char* type, char* variable) {
-    LogDebug("VariableTypeDefinition(%s, %s)",type, variable);
-    return VariableTypeDefinitionImplementation(type, variable);
-}
-
-void AssignAction(char *definition) {
-	return NULL;
-}
-
-void PrintStringAction(char* value) {
-	return NULL;
-}
-
-
-void PrintIntegerAction(int value) {
-	return NULL;
-}
-
-void PrintVariableAction(char* value) {
-	return NULL;
-}
-
-char* ConcatNotesAction(char* variable1, char* variable2) {
-	return NULL;
-}
-
-char* ToNotesAction(char chord) {
-	return NULL;
-}
-
-char* ToChordAction(char* note) {
-	return NULL;
-}
-
-void ReproduceChordAction(char chord) {
-	return NULL;
-}
-
-void ReproduceNoteAction(char* note) {
-	return NULL;
-}
-
-char* Print(char* string) {
-	//Paso de manos hasta que hace un printf en el back
-	return NULL;
-}
-

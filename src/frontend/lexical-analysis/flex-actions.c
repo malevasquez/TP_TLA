@@ -2,13 +2,17 @@
 #include "flex-actions.h"
 #include <stdlib.h>
 
+/**
+ * Implementación de "flex-rules.h".
+ */
+
 TokenID StringPatternAction(const char * lexeme) {
     LogDebug("StringPatternAction: '%s'.", lexeme);
-    strcpy(yyltext, lexeme);
+    strcpy(yytext, lexeme);
 	return STRING;
 }
 
-TokenID IntegerPatternAction(consta char* lexeme) {
+TokenID IntegerPatternAction(const char* lexeme) {
 	LogDebug("IntegerPatternAction: '%s'.", lexeme);
 	yylval = atoi(lexeme);
 	return INTEGER;
