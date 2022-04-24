@@ -1,8 +1,12 @@
-[![✗](https://img.shields.io/badge/Release-v0.1.0-ffb600.svg?style=for-the-badge)](https://github.com/agustin-golmar/Flex-Bison-Compiler/releases)
+Para este proyecto se utilizó como base el siguiente template: https://github.com/agustin-golmar/Flex-Bison-Compiler
 
-# Compilador Flex/Bison
+# Trabajo Práctico Especial - Music++
 
-Un compilador vacío construido con Flex y Bison.
+## Autores
+* Cupitó, Felipe
+* Finucci Roca, Hernán
+* Kim, Azul Candelaria
+* Vásquez Currie, Malena
 
 ## Requerimientos
 
@@ -21,25 +25,97 @@ Si en lugar de trabajar con un entorno _Linux_, se está construyendo el proyect
 Para construir el proyecto por completo, ejecute en la raíz del repositorio el siguiente comando:
 
 ```bash
-user@machine:path/ $ cmake -S . -B bin
-user@machine:path/ $ cd bin
-user@machine:path/ $ make
+user@machine:path/ $ chmod 777 ./run.sh
+user@machine:path/ $ ./run.sh
 ```
 
-En un entorno _Microsoft Windows_, en lugar de ejecutar el comando `make`, se deberá abrir la solución generada `bin/Compiler.sln` con el IDE _Microsoft Visual Studio 2022_. Los ejecutables que este sistema construye se depositan dentro del directorio `bin/Debug` y `bin/Release` según corresponda.
+Si es que su versión de CMake es una anterior a la establecida en los requerimientos, modificar el archivo CMakeLists.txt.
 
-## Ejecución
+##  Ejecucion
 
-Para compilar un programa, primero cree un archivo vacío denominado `program` con el siguiente contenido:
+Para compilar un programa, primero cree un archivo vacío denominado `program` con una gramatica valida.
 
-```
-123123 + 123 - 2 * (454 + 890 / 89)
-```
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, inyectando el programa desde la entrada estándard:
 
 ```bash
-user@machine:path/ $ cat program | bin/Compiler
+user@machine:path/ $ cat Programs/program<number> | bin/Compiler
 ```
 
+## Casos de uso
+En la carpeta [`Programs`](./Programs), se encuentran los casos de uso pedidos por la cátedra.
+
 Deberia obtener el resultado correcto de evaluar el programa anterior: `122318`.
+
+## Gramatica
+
+Instrucciones obligatorias indicando el comienzo y fin del programa:
+```
+start
+// Codigo
+end
+```
+Cabe aclarar que cada fin de linea del cuerpo debe ser finalizada con el delimitador `;`.
+
+Declaracion y Asignacion de variables:
+
+Music++ acepta los siguientes tipos de datos:
+* string
+* integer
+* chord
+* note
+
+Para declarar una variable:
+* string [variable];
+* integer [variable];
+* chord [variable];
+* note [variable];
+
+Para asignar
+
+* string [variable] is [valor];
+* integer [variable] is [valor];
+* chord [variable] is [valor];
+* note [variable] is [valor];
+
+o
+
+* [variable] is [valor];
+
+Instrucciones para imprimir en pantalla las distintas variables:
+Para imprimir un string (texto) se utiliza simplemente la funcion print.
+Si se quiere imprimir simultaneamente varios acordes, se usa la funcion print_to_chord, tomando como argumentos las notas que forman dichos acordes.
+
+Instrucciones para reproducir el sonido de notas y acordes:
+Para reproducir los sonidos de una nota o acorde, se utilizan las funciones reproduce_note y reproduce_chord, respectivamente.
+
+Instruccion para realizar ciclos do-while y condicionales if-else.
+Para realizar un ciclo, se utiliza la siguiente sintaxis:
+compute
+print "hola mundo";
+while ( 2 greater_than 1);
+
+Similarmente, para realizar una instruccion condicional se utiliza la siguiente sintaxis:
+if ( 2 greater_than 1)
+then
+print "greater"
+else
+print "lower"
+end_if
+
+Instrucciones para realizar operaciones aritméticas
+* integer variable1 is num1 sum num2;
+* integer variable2 is num1 minux num2;
+* integer variable3 is num1 times num2;
+* integer variable4 is num1 by num2;
+donde num1 y num2 pueden ser variables del tipo integer o números enteros.
+
+Instrucciones para realizar operaciones lógicas
+* var1 greater_than var2
+* var1 lower_than var2
+* var1 equals var2
+* var1 not_equals var2
+* var1 and var2
+* var1 or var2
+* not var1
+tal que el resultado de esta operación debe ser verdadero o falso.
