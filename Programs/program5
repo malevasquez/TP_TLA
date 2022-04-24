@@ -1,0 +1,7 @@
+start
+note nota1 is do;
+note nota2 is mi;
+note nota3 is sol;
+concat_notes nota1 nota2 nota3;
+concat_notes do mi sol;
+end

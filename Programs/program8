@@ -1,0 +1,11 @@
+start
+integer num1 is 9;
+compute
+print "doing";
+while ( num1 greater_than 1);
+
+string text1 is "hello";
+compute
+print text1;
+while ( true );
+end

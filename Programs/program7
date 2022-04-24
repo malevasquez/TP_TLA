@@ -1,0 +1,48 @@
+start
+if ( true )
+then
+string message is "hola";
+print message;
+end_if
+
+if ( 6 greater_than 2 )
+then
+reproduce_note sol;
+end_if
+
+integer num1 is 7;
+integer num2 is 1;
+
+if ( num1 equals num2 )
+then
+print num1;
+end_if
+
+if ( not false )
+then 
+print sol;
+end_if
+
+if ( not ( 3 lower_than 2 ) )
+then
+print "hello";
+end_if
+
+if ( true or false )
+then
+print "good";
+end_if
+
+if ( true or ( num1 greater_than 3) )
+then
+print "okay";
+end_if
+
+if ( num2 lower_than 0 )
+then
+print "lower";
+else
+print "greater";
+end_if
+
+end

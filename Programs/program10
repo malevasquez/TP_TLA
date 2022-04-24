@@ -1,0 +1,8 @@
+start
+note nota1 is do;
+chord acorde1 is C;
+print acorde1;
+print F;
+print nota1; 
+print re; 
+end 

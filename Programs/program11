@@ -1,0 +1,5 @@
+start
+note nota1 is do;
+note nota2 is mi;
+concat_notes nota1 "algo";
+end

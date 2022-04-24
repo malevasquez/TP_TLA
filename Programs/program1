@@ -1,0 +1,17 @@
+start
+note nota1;
+nota1 is do#;
+note nota2 is re;
+note nota3 is mi;
+note nota4 is fa;
+note nota5 is sol;
+note nota6 is la;
+note nota7 is si;
+note nota8 is do#;
+note nota9 is re#;
+note nota10 is mi#;
+note nota11 is fa#;
+note nota12 is sol#;
+note nota13 is la#;
+note nota14 is si#;
+end

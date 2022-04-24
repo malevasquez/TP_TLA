@@ -1,0 +1,5 @@
+start
+print_to_chords do mi sol fa si do la;
+print_to_chords do mi sol fa si;
+print_to_chords do mi;
+end

@@ -1,0 +1,4 @@
+start
+to_chord do mi "algo" 
+to_notes mi la "algo"
+end 

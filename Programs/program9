@@ -1,0 +1,8 @@
+start
+integer num1 is 8;
+integer num2 is 10;
+integer res1 is 2 plus 8;
+integer res2 is num1 minus num2;
+integer res3 is res2 times num1;
+integer num3 is 4 by 2;
+end

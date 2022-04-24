@@ -1,0 +1,7 @@
+start
+note nota1 is do;
+note nota2 is re;
+note nota3;
+to_chord nota1 nota2 nota3;
+end 
+
