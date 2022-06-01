@@ -43,10 +43,10 @@ note                (do|re|mi|fa|sol|la|si)#?
 "compute"                                   { return DO; }
 "while"                                     { return WHILE; }
 
-"greater_than"                              {return GREATER;}
-"lower_than"                                {return LOWER;}
-"equals"                                    {return EQUALS;}
-"not_equals"                                {return NOT_EQUALS;}
+">"                                         {return GREATER;}
+"<"                                         {return LOWER;}
+"="                                         {return EQUALS;}
+"!="                                        {return NOT_EQUALS;}
 "and"                                       {return AND;}
 "or"                                        {return OR;}
 "not"                                       {return NOT;}

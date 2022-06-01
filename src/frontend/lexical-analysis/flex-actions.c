@@ -19,25 +19,25 @@ TokenID IntegerPatternAction(const char * lexeme) {
 
 TokenID ChordPatternAction(const char * lexeme) {
     LogDebug("ChordPatternAction: '%s'.", lexeme);
-    strcpy(yytext, lexeme);
+    // strcpy(yytext, lexeme);
 	return CHORD;
 }
 
 TokenID NotePatternAction(const char * lexeme) {
     LogDebug("NotePatternAction: '%s'.", lexeme);
-    strcpy(yytext, lexeme);
+    // strcpy(yytext, lexeme);
 	return NOTE;
 }
 
 TokenID StringPatternAction(const char * lexeme) {
     LogDebug("StringPatternAction: '%s'.", lexeme);
-    strcpy(yytext, lexeme);
+    // strcpy(yytext, lexeme);
 	return STRING;
 }
 
 TokenID VariableNamePatternAction(const char * lexeme) {
     LogDebug("VariableNamePatternAction: '%s'.", lexeme);
-    strcpy(yytext, lexeme);
+    // strcpy(yytext, lexeme);
 	return VARIABLE_NAME;
 }
 

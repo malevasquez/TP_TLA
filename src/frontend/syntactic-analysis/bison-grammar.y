@@ -55,6 +55,9 @@
 %token STRING
 %token VARIABLE_NAME
 
+%left PLUS MINUS
+%left MULTIPLY DIVIDE
+
 %%
 
 program: START code END												{ $$ = ProgramGrammarAction($1); }
@@ -99,18 +102,12 @@ print:
 	;
 
 print_to_chords:
-	PRINT_TO_CHORDS notes
-	;
-
-notes:
-	notes notes
-	| NOTE
-	| VARIABLE_NAME
-	| note
+	PRINT_TO_CHORDS note note note
 	;
 
 note:
-	notes
+	NOTE
+	| VARIABLE_NAME
 	;
 
 concat_notes: 
