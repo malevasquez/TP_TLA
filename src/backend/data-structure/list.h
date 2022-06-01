@@ -3,10 +3,16 @@
 
 #include <stdbool.h>
 
+enum{
+    STRING =0,
+    
+}
+
 /* type: 0 es int, 1 es string, 2 es braille */
 struct node{
     char * variable_name;
     int type;
+
     bool is_assigned;
     struct node *next;
 };
