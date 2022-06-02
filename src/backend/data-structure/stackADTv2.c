@@ -17,8 +17,6 @@ typedef struct stackCDT{
 static void deleteNode(node* n);
 
 
-
-
 stackADT initStack(size_t elemSize){
 
     stackADT newStack;
@@ -31,7 +29,7 @@ stackADT initStack(size_t elemSize){
     return newStack;
 }
 
-void deleteStack(stackADT stack){
+void freeStack(stackADT stack){
 
     deleteNode(stack->first);
     free(stack);
@@ -52,6 +50,8 @@ void push(stackADT stack, void* elem){
 
     //creo el nuevo nodo 
     node* newNode = malloc(sizeof(*newNode));
+
+    //creeo el elem en el nodo
     newNode->elem = malloc(sizeof(stack->elemSize));
     memcpy(newNode->elem, elem, stack->elemSize);
     newNode->next = NULL;
@@ -66,6 +66,7 @@ void push(stackADT stack, void* elem){
 }
 
 
+//TODO revisar el 
 void * pop(stackADT stack){
     if(stack->stackSize = 0){
         return NULL;
@@ -92,8 +93,15 @@ void * pop(stackADT stack){
     return toReturn;
 }
 
+void * peek(stackADT stack){
+    return stack->first->elem;
+}
 
 int getStackSize(stackADT stack){
     return stack->stackSize;
+}
+
+int stackIsEmpty(stackADT stack){
+    return stack->stackSize == 0;
 }
 

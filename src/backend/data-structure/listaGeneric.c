@@ -1,5 +1,5 @@
 #include "listageneric.h"
-#include <stddef.h>
+
 
 
 typedef struct node {
@@ -16,6 +16,8 @@ typedef struct listCDT{
     unsigned int size;
 }listCDT;
 
+
+
 //prtivate:
 nodeP search(nodeP current, void* element, int (*comparator)(void*, void*));
 int contains(nodeP first, void* element, int (*comparator)(void*, void*));
@@ -30,14 +32,23 @@ listADT newList(int elemSize, int (*cmp)(void* elem1, void* elem2)){
     return list;
 }
 
+int getListSize(){
+    return sizeof(listCDT);
+}
+
 //inserta los elementos al principio de la lista
-int insertFirstUno(listADT list, void* element){
+int insert(listADT list, void* element){
+
+    //creo el nuevo node
     nodeP aux = malloc(sizeof(struct node));
     if(aux == NULL)
         return -1;
     aux->next = list->first;
-    list->first = aux;
+    aux->value = malloc(list->valueBytes);
     memcpy(aux->value, element, list->valueBytes);
+    
+    //lo inserto en la lista
+    list->first = aux;
     list->size++;
     return 0;
 }

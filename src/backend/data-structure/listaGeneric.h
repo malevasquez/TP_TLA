@@ -1,7 +1,14 @@
 #ifndef LISTADT_H_
 #define LISTADT_H_
 
-typedef struct listCDT *listADT;
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+typedef struct listCDT* listADT;
+
+
 
 /*
 typedef int elemType;
@@ -12,6 +19,9 @@ static int compare(elemType elem1, elemType elem2 ){
 */
 
 listADT newList(int elemSize, int (*cmp)(void* elem1, void* elem2));
+
+//devulve la el tamano de listCDT
+int getListSize();
 
 int insert(listADT  list, void* element);
 

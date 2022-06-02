@@ -184,16 +184,26 @@ logical_op:
 	| OR
 	;
 
+/*
 definition: type VARIABLE_NAME
     ;
+*/
 
+definition:
+	INTEGER_TYPE VARIABLE_NAME
+	| STRING_TYPE VARIABLE_NAME
+	| NOTE_TYPE VARIABLE_NAME
+	| CHORD_TYPE VARIABLE_NAME
+	;
+
+/*
 type:
 	INTEGER_TYPE
 	| STRING_TYPE
 	| NOTE_TYPE
 	| CHORD_TYPE
 	;
-
+*/
 
 /* ------------------------------------------------------ */ 
 /*						OPERATIONS                        */
