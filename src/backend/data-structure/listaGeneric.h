@@ -29,7 +29,11 @@ int delete(listADT list, void* element);
 
 int listIsEmpty( listADT list);
 
+//devuelve 1 si lo encontro sino 0
 int elementBelongs(const listADT list, void* element);
+
+//cmp(elem, value)
+void* getElem(listADT list, void* value, int(*cmp)(void*, void*)){
 
 void freeList(listADT list);
 

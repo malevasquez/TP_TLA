@@ -8,9 +8,10 @@ typedef struct node{
 
 typedef struct stackCDT{
     node* first;
-    size_t elemSize; //en bytes
-    int stackSize;
+    node* iteradorNext;  //iterador
 
+    size_t elemSize; //en bytes
+    int stackSize;   //cantidad de elemtos
 }stackCDT;
 
 //funciones privadas:
@@ -45,6 +46,7 @@ static void deleteNode(node* n){
     free(n->elem);
     free(n);
 }
+
 
 void push(stackADT stack, void* elem){
 
@@ -104,4 +106,25 @@ int getStackSize(stackADT stack){
 int stackIsEmpty(stackADT stack){
     return stack->stackSize == 0;
 }
+
+
+//iterador
+void toBegin(stackADT stack) {
+	stack->iteradorNext = stack->first;
+}
+
+int hasNext(const stackADT stack) {
+	return stack->iteradorNext != NULL;
+}
+
+void* next(stackADT stack) {
+	if (hasNext(stack))
+		toBegin(stack);
+	void* toReturn = stack->iteradorNext->elem;
+	stack->iteradorNext = stack->iteradorNext->next;
+
+	return toReturn;
+}
+
+
 

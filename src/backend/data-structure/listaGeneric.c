@@ -6,6 +6,7 @@ typedef struct node {
 	void* value;
 	struct node * next;
 }node;
+
 typedef struct node * nodeP;
 
 typedef struct listCDT{
@@ -44,7 +45,7 @@ int insert(listADT list, void* element){
     if(aux == NULL)
         return -1;
     aux->next = list->first;
-    aux->value = malloc(list->valueBytes);
+    //aux->value = malloc(list->valueBytes);
     memcpy(aux->value, element, list->valueBytes);
     
     //lo inserto en la lista
@@ -113,6 +114,10 @@ void* next(listADT list) {
 	list->iteradorNext = list->iteradorNext->next;
 
 	return result;
+}
+void* getElem(listADT list, void* value, int(*cmp)(void*, void*)){
+    nodeP aux = search(list->first, value, cmp);
+    return aux;
 }
 
 //private:

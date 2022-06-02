@@ -8,19 +8,26 @@
 
 
 
-typedef struct scopeCDT* scope;
+typedef struct scopeCDT* scopeADT;
 
+//inicializa el scope
+scopeADT initScope();
 
-scope initScope();
+//devuelve el ID de la variable y solo la inserta si no existe
+//si hubo un erro devuelve -1
+int addDefinition(scopeADT scope, enum type type, char* variableName);
 
-int addDefinition(scope scope, enum type type, char* variableName);
+int addAssigId(scopeADT scope, int id, enum type type, void* value);
 
-int addAssigId(scope scope, int id, enum type type, void* value);
+void* getValueId(scopeADT scope, int id);
 
-void* getValueId(scope scope, int id);
+void* getValueName(scopeADT scope, char* name);
 
-void* getValueName(scope scope, char* name);
+//OJO
+void freeScope(scopeADT scope);
 
-void newScope(scope stack);
+//crea un nuevo scope
+void newScope(scopeADT stack);
 
-void endScope(scope stack);
+//elimina el ultimo scope
+void endScope(scopeADT stack);

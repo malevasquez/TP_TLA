@@ -28,18 +28,20 @@ enum chords {
   G,
 };
 
+//TODO no se si funciona
+//quiero que cada uno guarde cuanto ocupa
 enum type{
-    NOTE =0,
-    CHORD,
-    INTEGER,
-    STRING,
+    NOTE = 3*sizeof(char*),
+    CHORD = 2*sizeof(char*),
+    INTEGER = sizeof(int),
+    STRING = sizeof(void*),
 };
 
-char *noteName[] = {"do",  "re",  "mi",  "sol",  "fa",  "si",
+char* noteName[] = {"do",  "re",  "mi",  "sol",  "fa",  "si",
                     "do#", "re#", "mi#", "sol#", "fa#", "si#"};
 const int noteNameSize = 12;
 
-char *chordName[] = {"A", "B", "C", "D", "E", "F", "G"};
+char* chordName[] = {"A", "B", "C", "D", "E", "F", "G"};
 const int chordNameSize = 7;
 
 // todas las funciones devulven -1 si hubo un error
