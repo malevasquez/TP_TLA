@@ -1,6 +1,7 @@
 # Folders:
 .DS_Store
 .vs/
+.vscode/
 bin/
 cache/
 log/
