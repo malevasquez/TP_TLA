@@ -1,3 +1,6 @@
+#ifndef VARIABLE_H
+#define VARIABLE_H
+
 #include <stdio.h>
 #include <string.h>
 
@@ -31,21 +34,25 @@ enum chords {
 //TODO no se si funciona
 //quiero que cada uno guarde cuanto ocupa
 enum type{
-    NOTE = 3*sizeof(char*),
-    CHORD = 2*sizeof(char*),
-    INTEGER = sizeof(int),
-    STRING = sizeof(void*),
+    NOTE = 0,
+    CHORD,
+    INTEGER,
+    STRING,
 };
 
-char* noteName[] = {"do",  "re",  "mi",  "sol",  "fa",  "si",
+static char* noteName[] = {"do",  "re",  "mi",  "sol",  "fa",  "si",
                     "do#", "re#", "mi#", "sol#", "fa#", "si#"};
-const int noteNameSize = 12;
+static const int noteNameSize = 12;
 
-char* chordName[] = {"A", "B", "C", "D", "E", "F", "G"};
-const int chordNameSize = 7;
+static char* chordName[] = {"A", "B", "C", "D", "E", "F", "G"};
+static const int chordNameSize = 7;
 
 // todas las funciones devulven -1 si hubo un error
 enum notes getNoteEnum(char *noteStr);
 char *getNoteStr(enum notes note);
 enum chords getChordEnum(char *chordStr);
 char *getChordStr(enum chords chord);
+
+int getTypeSize(enum type);
+
+#endif

@@ -4,36 +4,44 @@
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "logger.h"
+/*
+ * lista generica, se puede guardar cualquier tipo de elem y de cualquier tamaño
+ * los elentos se crean con un malloc y se le pasa a insert el puntero al elem.
+ * para poder hacer un free de los elemnto se debe pasar la funcion freeElem al crar los la
+ * lista.
+ * */
 
 
 typedef struct listCDT* listADT;
 
-
-
 /*
-typedef int elemType;
-
 static int compare(elemType elem1, elemType elem2 ){
 	return elem1 - elem2;		
 }
 */
 
-listADT newList(int elemSize, int (*cmp)(void* elem1, void* elem2));
+
+listADT newList(int (*elemFree)(void*));
 
 //devulve la el tamano de listCDT
-int getListSize();
+int getListStructSize();
 
-int insert(listADT  list, void* element);
+//simpre inserta al pricipio de la lista
+int insert(listADT list, void* elem);
 
-int delete(listADT list, void* element);
+//retorna 1 si lo elimino y 0 si no lo encontro
+//se compara el elm2 con elem1, cmp devulve 0 si eson iguales, 1 sino (como strcmp)
+int delete(listADT list, void* elem2, int (*cmp)(void* elem1, void* elem2));
 
-int listIsEmpty( listADT list);
+int listIsEmpty(listADT list);
 
 //devuelve 1 si lo encontro sino 0
-int elementBelongs(const listADT list, void* element);
+int elemBelongs(listADT list, void* elem, int (*cmp)(void*, void*));
 
-//cmp(elem, value)
-void* getElem(listADT list, void* value, int(*cmp)(void*, void*)){
+void* getElem(listADT list, void* value, int(*cmp)(void*, void*));
 
 void freeList(listADT list);
 
@@ -42,10 +50,10 @@ int listSize(const listADT list);
 /**
  * Funciones para poder iterar sobre la lista
  */
-void toBegin(listADT list);
+void listToBegin(listADT list);
 
-int hasNext(const listADT list);
+int listHasNext(const listADT list);
 
-void* next(listADT list);
+void* listNext(listADT list);
 
 #endif 

@@ -1,33 +1,45 @@
+#ifndef SCOPE_H
+#define SCOPE_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "logger.h"
 
 #include "listaGeneric.h"
 #include "stackADTv2.h"
-#include "../variables/variable.h"
+#include "variables/variable.h"
 
-
+typedef struct elem {
+    int id;
+    enum type type;
+    char *name;
+    void *value;
+} elem;
 
 typedef struct scopeCDT* scopeADT;
 
-//inicializa el scope
-scopeADT initScope();
+scopeADT newScope();
 
 //devuelve el ID de la variable y solo la inserta si no existe
 //si hubo un erro devuelve -1
-int addDefinition(scopeADT scope, enum type type, char* variableName);
+int addDefinition(scopeADT scope, enum type type, char *variableName);
 
-int addAssigId(scopeADT scope, int id, enum type type, void* value);
+int addAssignById(scopeADT scope, int id, enum type type, void *value, int valueSize);
 
-void* getValueId(scopeADT scope, int id);
+int addAssignByName(scopeADT scope, char *name, enum type type,void *value, int valueSize);
 
-void* getValueName(scopeADT scope, char* name);
+elem* getElemById(scopeADT scope, int id);
 
-//OJO
+elem* getElemByName(scopeADT scope, char *name);
+
+
 void freeScope(scopeADT scope);
 
 //crea un nuevo scope
-void newScope(scopeADT stack);
+void createSubScope(scopeADT scope);
 
 //elimina el ultimo scope
-void endScope(scopeADT stack);
+void endSubScope(scopeADT scope);
+
+#endif

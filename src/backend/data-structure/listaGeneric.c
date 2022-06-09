@@ -1,93 +1,98 @@
 #include "listageneric.h"
 
-
-
 typedef struct node {
 	void* value;
-	struct node * next;
+	struct node* next;
 }node;
 
-typedef struct node * nodeP;
 
 typedef struct listCDT{
-	nodeP first;
-    nodeP iteradorNext; 
-	int valueBytes;
-    int (*cmp)(void* elem1, void* elem2);
+	node* first;
+    node* iteradorNext; 
+    int (*elemFree) (void*); //funcion que borra los elemntos
     unsigned int size;
 }listCDT;
 
 
+//private:
+node* listSearch(node** current, void* elem, int (*cmp)(void*, void*));
+int listContains(node* first, void* elem, int (*cmp)(void*, void*));
 
-//prtivate:
-nodeP search(nodeP current, void* element, int (*comparator)(void*, void*));
-int contains(nodeP first, void* element, int (*comparator)(void*, void*));
+listADT newList(int (*elemFree)(void*)){
 
-listADT newList(int elemSize, int (*cmp)(void* elem1, void* elem2)){
-    listADT list = malloc(sizeof(struct listCDT));
+    listADT list = malloc(sizeof(listCDT));
+    if(list == NULL){
+        return NULL;
+    }
+
     list->first = NULL;
-    list->valueBytes = elemSize;
-    list->cmp = cmp;
+    list->elemFree = elemFree;
     list->size = 0;
     list->iteradorNext = NULL;
+    
     return list;
 }
 
-int getListSize(){
+int getListStructSize(){
     return sizeof(listCDT);
 }
 
-//inserta los elementos al principio de la lista
-int insert(listADT list, void* element){
+//inserta los elemos al principio de la lista
+//se tiene que crear con malloc el elem
+int insert(listADT list, void* elem){
 
     //creo el nuevo node
-    nodeP aux = malloc(sizeof(struct node));
-    if(aux == NULL)
+    node* newNode = malloc(sizeof(node));
+    if(newNode == NULL)
         return -1;
-    aux->next = list->first;
-    //aux->value = malloc(list->valueBytes);
-    memcpy(aux->value, element, list->valueBytes);
-    
+
+    newNode->next = list->first;
+
+    newNode->value = elem;
+
     //lo inserto en la lista
-    list->first = aux;
+    list->first = newNode;
     list->size++;
+
     return 0;
 }
 
-//se le podria pasar un puntero a funcion del compare
 //retorna 1 si lo elimino y 0 si no lo encontro 
-int delete(listADT list, void* element){
-    nodeP current = list->first;
-    nodeP last = search(current, element, list->cmp);
-
+//se compara el elm2 con elem1, cmp devulve 0 si eson iguales, 1 sino (como strcmp)
+int delete(listADT list, void* elem2, int (*cmp)(void* elem1, void* elem2)){
+    
+    node* current = list->first;
+    node* last = listSearch(&current, elem2, cmp);
     if(current == NULL)
         return 0;
 
     if(last == NULL){
+        //se elimina el primero
         list->first = current->next;
     }else{
         last->next = current->next;
     }
 
     list->size --;
-    free(current->value);
+    list->elemFree(current->value);
     free(current);
     return 1;
 }
 
-int listIsEmpty( listADT list){
+int listIsEmpty(listADT list){
 	return list->size == 0;
 }
 
-int elementBelongs(listADT list, void* element){
-	return contains(list->first, element, list->cmp);
+int elemBelongs(listADT list, void* elem, int (*cmp)(void*, void*) ){
+	return listContains(list->first, elem, cmp);
 }
 
-void freeList( listADT list){
-	nodeP current = list->first, aux;
+void freeList(listADT list){
+    node* current = list->first;
+    node* aux;
 	while (current != NULL) {
 		aux = current->next;
-		free(current->value);
+		list->elemFree(current->value);
         free(current);
 		current = aux;
 	}
@@ -99,46 +104,52 @@ int listSize(const listADT list) {
 }
 
 //iterator
-void toBegin(listADT list) {
+void listToBegin(listADT list) {
 	list->iteradorNext = list->first;
 }
 
-int hasNext(const listADT list) {
+int listHasNext(const listADT list) {
 	return list->iteradorNext != NULL;
 }
 
-void* next(listADT list) {
-	if (hasNext(list))
-		toBegin(list);
+void* listNext(listADT list) {
+	if (listHasNext(list))
+		listToBegin(list);
 	void* result = list->iteradorNext->value;
 	list->iteradorNext = list->iteradorNext->next;
 
 	return result;
 }
+
+//devuelve el elem, si es nulo no lo encontro
 void* getElem(listADT list, void* value, int(*cmp)(void*, void*)){
-    nodeP aux = search(list->first, value, cmp);
-    return aux;
+    node* current = list->first;
+    listSearch(&current, value, cmp);
+    if(current == NULL)
+        return NULL;
+    return current->value;
 }
 
 //private:
-
 //si current es null no lo encotro
 //si last es null el elemnto buscado es el primer elemnto
-nodeP search(nodeP current, void* element, int (*comparator)(void*, void*)) {
-	nodeP last = NULL;
-    while (current != NULL){
-        if(comparator(current->value, element) == 0){
+node* listSearch(node** current, void* elem, int (*cmp)(void*, void*)) {
+	node* last = NULL;
+    node* auxCurrent = *current;
+    while (auxCurrent != NULL){
+        if(cmp(auxCurrent->value, elem) == 0){
             return last;
         }
-        last = current;
-        current = current->next;
+        last = auxCurrent;
+        auxCurrent = auxCurrent->next;
+        *current =  auxCurrent;
     }
-    return last;     
+    return last;
 }
 
 //devuelve 1 si lo encontro sino 0
-int contains(nodeP first, void* element, int (*comparator)(void*, void*)){
-    search(first, element, comparator);
+int listContains(node* first, void* elem, int (*cmp)(void*, void*)){
+    listSearch(&first, elem, cmp);
     if(first == NULL)
         return 0;
     return 1;

@@ -2,129 +2,118 @@
 
 
 typedef struct node{
-    void * elem;
-    void * next;
+    void * value;
+    struct node* next;
 }node;
 
 typedef struct stackCDT{
     node* first;
     node* iteradorNext;  //iterador
-
-    size_t elemSize; //en bytes
-    int stackSize;   //cantidad de elemtos
+    int (*elemFree) (void*); //funcion que borra los elemntos
+    int size;   //cantidad de elemtos
 }stackCDT;
 
-//funciones privadas:
-static void deleteNode(node* n);
 
+stackADT newStack(int (*elemFree)(void*)){
 
-stackADT initStack(size_t elemSize){
-
-    stackADT newStack;
-
-    newStack=malloc(sizeof(*newStack));
-    newStack->elemSize=elemSize;
+    stackADT newStack = malloc(sizeof(stackCDT));
+    if(newStack == NULL){
+        return NULL;
+    }
     newStack->first=NULL;
-    newStack->stackSize = 0;
+    newStack->elemFree= elemFree;
+    newStack->size = 0;
 
     return newStack;
 }
 
-void freeStack(stackADT stack){
+//retorna -1 si hubo erro, sino 0
+int push(stackADT stack, void* elem){
 
-    deleteNode(stack->first);
-    free(stack);
-}
+    //creo el nuevo nodo
+    node* newNode = malloc(sizeof(node));
+    if(newNode == NULL)
+        return -1;
 
-static void deleteNode(node* n){
+    newNode->next = stack->first;
 
-    if(n == NULL)
-        return;
+    newNode->value = elem;
 
-    deleteNode(n->next);
-
-    free(n->elem);
-    free(n);
-}
-
-
-void push(stackADT stack, void* elem){
-
-    //creo el nuevo nodo 
-    node* newNode = malloc(sizeof(*newNode));
-
-    //creeo el elem en el nodo
-    newNode->elem = malloc(sizeof(stack->elemSize));
-    memcpy(newNode->elem, elem, stack->elemSize);
-    newNode->next = NULL;
-
-    if(stack->first != NULL){
-        newNode->next = stack->first;
-    }
     stack->first = newNode;
 
-    //agrego uno al size del stack
-    stack->stackSize ++;
+    stack->size ++;
+
+    return 0;
 }
 
+void* pop(stackADT stack){
 
-//TODO revisar el 
-void * pop(stackADT stack){
-    if(stack->stackSize = 0){
+    if(stack->first == NULL){
         return NULL;
     }
-    //guardo el elem a retornar
-    void* toReturn = malloc(sizeof(stack->elemSize));
-    memcpy(toReturn, stack->first->elem, stack->elemSize);
+    node* auxNode = stack->first;
 
-    //guardo el nuevo primer nodo
-    node* newFirst;
-    if(stack->stackSize = 1)
-        newFirst = NULL;
-    else
-        newFirst = stack->first->next;
-    
-    
-    //borro el nodeo que era primero
-    free(stack->first->elem);
-    free(stack->first);
-    stack->stackSize --;
+    if(auxNode->next != NULL){
+        stack->first = auxNode->next;
+    }
 
-    stack->first = newFirst;
-    
+    void* toReturn = auxNode->value;
+
+    free(auxNode);
+    stack->size--;
+
     return toReturn;
 }
 
 void * peek(stackADT stack){
-    return stack->first->elem;
+    return stack->first->value;
 }
 
-int getStackSize(stackADT stack){
-    return stack->stackSize;
+int stackSize(stackADT stack){
+    return stack->size;
+}
+
+int getStackStructSize(){
+    return sizeof(stackCDT);
 }
 
 int stackIsEmpty(stackADT stack){
-    return stack->stackSize == 0;
+    return stack->size == 0;
+}
+
+
+void freeStack(stackADT stack){
+    node* current = stack->first;
+    node* aux;
+    while (current != NULL) {
+        aux = current->next;
+        stack->elemFree(current->value);
+        free(current);
+        current = aux;
+    }
+    free(stack);;
 }
 
 
 //iterador
-void toBegin(stackADT stack) {
+void stackToBegin(stackADT stack) {
 	stack->iteradorNext = stack->first;
 }
 
-int hasNext(const stackADT stack) {
+int stackHasNext(const stackADT stack) {
 	return stack->iteradorNext != NULL;
 }
 
-void* next(stackADT stack) {
-	if (hasNext(stack))
-		toBegin(stack);
-	void* toReturn = stack->iteradorNext->elem;
+void* stackNext(stackADT stack) {
+	if (!stackHasNext(stack))
+        return NULL;
+	void* toReturn = stack->iteradorNext->value;
 	stack->iteradorNext = stack->iteradorNext->next;
 
 	return toReturn;
 }
+
+
 
 
 
