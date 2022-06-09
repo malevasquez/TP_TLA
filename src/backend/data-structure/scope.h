@@ -8,7 +8,7 @@
 
 #include "listaGeneric.h"
 #include "stackADTv2.h"
-#include "variables/variable.h"
+#include "../variables/variable.h"
 
 typedef struct elem {
     int id;
