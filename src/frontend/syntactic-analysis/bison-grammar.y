@@ -55,8 +55,14 @@
 %token STRING
 %token VARIABLE_NAME
 
+%right ASSIGN
+%left AND OR
+%left GREATER LOWER EQUALS NOT_EQUALS
 %left PLUS MINUS
 %left MULTIPLY DIVIDE
+%left NOT
+
+%start program
 
 %%
 
@@ -163,8 +169,9 @@ conditional_while: DO code WHILE OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELI
 	;
 
 boolean:
-	boolean logical_op boolean
-	| expression comparator_op expression
+	expression comparator_op expression
+	| boolean AND boolean
+	| boolean OR boolean
 	| NOT boolean 
 	| OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS
 	| boolean_value
@@ -182,16 +189,6 @@ boolean_value:
 	TRUE
 	| FALSE
 	;
-
-logical_op:
-	AND 
-	| OR
-	;
-
-/*
-definition: type VARIABLE_NAME
-    ;
-*/
 
 definition:
 	INTEGER_TYPE VARIABLE_NAME
@@ -214,13 +211,11 @@ type:
 /* ------------------------------------------------------ */ 
 
 expression:		
-	expression op_sign expression						
-	| VARIABLE_NAME				
+	VARIABLE_NAME op_sign expression
+	| INTEGER op_sign expression
+	| OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
+	| VARIABLE_NAME
 	| INTEGER
-	| factor
-	;
-
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				
 	;
 
 op_sign:
