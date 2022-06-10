@@ -1,4 +1,4 @@
-#include "listageneric.h"
+#include "listaGeneric.h"
 
 typedef struct node {
 	void* value;

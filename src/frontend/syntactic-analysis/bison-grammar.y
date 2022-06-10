@@ -69,8 +69,7 @@
 program: START code end												{ $$ = ProgramGrammarAction($1); }
 	;
 
-end: 																{ $$ = EndProgramGrammarAction(); }
-	END
+end: END 															{ $$ = EndProgramGrammarAction($1); }
 	;
 
 code: instruction code

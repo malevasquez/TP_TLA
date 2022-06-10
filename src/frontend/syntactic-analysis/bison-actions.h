@@ -12,6 +12,7 @@
 
 // Programa.
 int ProgramGrammarAction(const int value);
+int EndProgramGrammarAction(const int value);
 
 // Expresión.
 int AdditionExpressionGrammarAction(const int leftValue, const int rightValue);

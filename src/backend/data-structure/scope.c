@@ -211,4 +211,7 @@ int deleteElem(void *elem1) {
   return 0;
 }
 
-int deleteList(void *elem1) { freeList((listADT)elem1); }
+int deleteList(void *elem1) { 
+  freeList((listADT)elem1);
+  return 0;
+}
