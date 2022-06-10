@@ -10,7 +10,7 @@ enum notes getNoteEnum(char *noteStr) {
 }
 
 char *getNoteStr(enum notes note) {
-  if (note < DO || note > SI_S)
+  if (note < DO || note > SI)
     return NULL;
   return noteName[note];
 }
@@ -25,7 +25,7 @@ enum chords getChordEnum(char *chordStr) {
 }
 
 char *getChordStr(enum chords chord) {
-  if (chord < A || chord > G)
+  if (chord < C || chord > B)
     return NULL;
   return chordName[chord];
 }

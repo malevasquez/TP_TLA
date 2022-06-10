@@ -3,12 +3,9 @@
 #include <stdlib.h>
 
 #include "notes.h"
-#include "variable.h"
-
-FILE* program_file;
 
 void start_program() {
-    FILE *file = fopen("archivoPrueba.c", "w");
+    FILE *file = fopen("archivoPrueba.c", "w+");
     fprintf(file, "#include <stdio.h> int main()  {");
     program_file = file;
 }
@@ -21,9 +18,9 @@ void end_program() {
 void notes_to_chord(char* note1, char* note2, char* note3) {
 
     int notes[3]; 
-    notes[0] = (getNoteEnum(note1) % 12);
-    notes[1] = (getNoteEnum(note2) % 12);
-    notes[2] = (getNoteEnum(note3) % 12);
+    notes[0] = (getNoteEnum(note1) % 13);
+    notes[1] = (getNoteEnum(note2) % 13);
+    notes[2] = (getNoteEnum(note3) % 13);
 
     bubbleSort(notes, 3);
 
@@ -48,13 +45,25 @@ void chord_to_notes(char* chord_string) {
     
     int chord = getChordEnum(chord_string);
 
-    printf("nota 1: %c\n", chord );
-    printf("nota 2: %s\n", chord + 4);
-    printf("nota 3: %s\n", chord + 7);
+    printf("nota 1: %s\n", getNoteStr(chord) );
+    printf("nota 2: %s\n", getNoteStr((chord + 4) % 13));
+    printf("nota 3: %s\n", getNoteStr((chord + 7) % 13));
 
     // TODO esto es solo valido para acordes mayores,
     // no se como hariamos esto con los menores sin romper los enums
     fprintf(program_file, "printf(%s); ", getNoteStr(chord));
     fprintf(program_file, "printf(%s); ", getNoteStr(chord + 4));
     fprintf(program_file, "printf(%s); ", getNoteStr(chord + 7));
+}
+
+//ver a donde va
+void print_chord(char *chord) {
+    printf("acorde: %s\n", chord);
+    fprintf(program_file, "printf(%s); ", chord); 
+}
+
+void print_note(char *note) {
+    int note_num = getNoteEnum(note) % 13;
+    printf("nota: %d", note_num);
+    fprintf(program_file, "printf(%d); ", note_num); 
 }

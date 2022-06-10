@@ -16,22 +16,17 @@ enum notes {
   SOL_S,
   LA,
   LA_S,
-  SI,
+  SI
 };
 
 enum chords {
-  C,
-  C_S,
+  C = 0,
   D,
-  D_S,
   E,
   F,
-  F_S
   G,
-  G_S,
   A,
-  A_S
-  B,
+  B
 };
 
 //TODO no se si funciona
@@ -46,7 +41,7 @@ enum type{
 static char* noteName[] = {"do", "do#", "re", "re#", "mi", "mi#", "fa", "fa#","sol", "sol#", "la", "la#","si", "si#",};
 static const int noteNameSize = 12;
 
-static char* chordName[] = {"C", "C#" "D", "D#","E","F", "F#", "G", "G#", "A", "A#", "B"};
+static char* chordName[] = {"C", "D", "E", "F", "G", "A", "B"};
 static const int chordNameSize = 7;
 
 // todas las funciones devulven -1 si hubo un error
