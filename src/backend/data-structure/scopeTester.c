@@ -17,7 +17,7 @@ int main(int argc, char const *argv[]) {
     if(addDefinition(scope, NOTE, "nota1") == -1)
         printf("ERROR 2 \n");
 
-    if(addDefinition(scope, NOTE, "nota2") != -1)
+    if(addDefinition(scope, NOTE, "nota2") == -1)
         printf("ERROR 3 \n");
 
     if(addDefinition(scope, STRING, "nombre1") == -1)
@@ -36,7 +36,7 @@ int main(int argc, char const *argv[]) {
 
     int* num = (int*) malloc(sizeof(int));
     *num = 100; 
-    addAssignById(scope, numId, INTEGER, num, sizeof(int));
+    addAssignById(scope, numId, INTEGER, num);
 
     elem* aux = getElemByName(scope, "numero1");
     printf("%d %d %d %s  \n" ,aux->id, aux->type, *((int*)aux->value), aux->name);
@@ -44,11 +44,7 @@ int main(int argc, char const *argv[]) {
     if(addDefinition(scope, INTEGER, "numero2") == -1)
         printf("ERROR 7 > ok");
 
-    endSubScope(scope);
-    endSubScope(scope);
-    endSubScope(scope);
-    endSubScope(scope);
-    endSubScope(scope);
+
     endSubScope(scope);
 
     aux = getElemById(scope, 0);
