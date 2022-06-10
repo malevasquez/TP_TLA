@@ -60,7 +60,11 @@
 
 %%
 
-program: START code END												{ $$ = ProgramGrammarAction($1); }
+program: START code end												{ $$ = ProgramGrammarAction($1); }
+	;
+
+end: 																{ $$ = EndProgramGrammarAction(); }
+	END
 	;
 
 code: instruction code
@@ -101,7 +105,7 @@ print:
 	| PRINT_FUNCTION VARIABLE_NAME
 	;
 
-print_to_chords:
+print_to_chords:													
 	PRINT_TO_CHORDS note note note
 	;
 

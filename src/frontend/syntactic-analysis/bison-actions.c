@@ -1,6 +1,7 @@
 #include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
+#include "../../backend/domain-specific/notes.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -21,8 +22,15 @@ void yyerror(const char * string) {
 
 int ProgramGrammarAction(const int value) {
 	LogDebug("ProgramGrammarAction(%d)", value);
+	start_program();
 	state.succeed = true;
 	state.result = value;
+	return value;
+}
+
+int EndProgramGrammarAction(const int value) {
+	LogDebug("EndProgramGrammarAction(%d)", value);
+	end_program();
 	return value;
 }
 
