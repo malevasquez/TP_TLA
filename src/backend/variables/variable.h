@@ -55,6 +55,4 @@ char *getNoteStr(enum notes note);
 enum chords getChordEnum(char *chordStr);
 char *getChordStr(enum chords chord);
 
-int getTypeSize(enum type);
-
 #endif

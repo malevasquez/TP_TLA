@@ -25,14 +25,15 @@ scopeADT newScope();
 //si hubo un erro devuelve -1
 int addDefinition(scopeADT scope, enum type type, char *variableName);
 
-int addAssignById(scopeADT scope, int id, enum type type, void *value, int valueSize);
 
-int addAssignByName(scopeADT scope, char *name, enum type type,void *value, int valueSize);
+//debe inicilizar un pnt con malloc y guardar el valor.
+int addAssignById(scopeADT scope, int id, enum type type, void *value);
+
+int addAssignByName(scopeADT scope, char *name, enum type type, void *value);
 
 elem* getElemById(scopeADT scope, int id);
 
 elem* getElemByName(scopeADT scope, char *name);
-
 
 void freeScope(scopeADT scope);
 

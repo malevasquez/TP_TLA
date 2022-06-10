@@ -29,24 +29,3 @@ char *getChordStr(enum chords chord) {
     return NULL;
   return chordName[chord];
 }
-
-int getTypeSize(enum type type) {
-  switch (type) {
-  case NOTE:
-    return sizeof(int);
-    break;
-  case CHORD:
-    return sizeof(int);
-    break;
-  case INTEGER:
-    return sizeof(int);
-    break;
-  case STRING:
-    return sizeof(int);
-    break;
-
-  default:
-    return -1;
-    break;
-  }
-}

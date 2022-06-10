@@ -47,6 +47,11 @@ add_executable(Compiler
 	src/main.c
 	src/backend/code-generation/generator.c
 	src/backend/domain-specific/calculator.c
+	src/backend/domain-specific/notes.c
+	src/backend/variables/variable.c
+	src/backend/data-structure/listaGeneric.c
+	src/backend/data-structure/scope.c
+	src/backend/data-structure/stackADTv2.c
 	src/backend/support/logger.c
 	src/frontend/lexical-analysis/flex-actions.c
 	src/frontend/lexical-analysis/flex-scanner.c
