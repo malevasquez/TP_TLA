@@ -33,7 +33,7 @@ typedef enum TokenID {
 	ELSE,
 	END_IF,
 
-	DO,
+	DO_STATEMENT,
 	WHILE,
 
 	GREATER,

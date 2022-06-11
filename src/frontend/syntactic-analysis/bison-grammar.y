@@ -4,6 +4,11 @@
 
 %}
 
+/* %union {
+	int num;
+	char* string;
+} */
+
 // IDs de los tokens generados desde Flex:
 %token START
 %token END
@@ -18,7 +23,7 @@
 %token ELSE
 %token END_IF
 
-%token DO
+%token DO_STATEMENT
 %token WHILE
 
 %token GREATER
@@ -69,10 +74,10 @@
 program: start code end												
 	;
 
-start: START														{ $$ = ProgramGrammarAction($1); }
+start: START														{ ProgramGrammarAction(); }
 	;
 
-end: END 															{ $$ = EndProgramGrammarAction($1); }
+end: END 															{ EndProgramGrammarAction(); }
 	;
 
 code: instruction code
@@ -93,66 +98,62 @@ instruction: definition DELIMITER
 	;
 
 assignment:
-	definition ASSIGN STRING
+	definition ASSIGN str
 	| definition ASSIGN expression
-    | definition ASSIGN CHORD									
-	| definition ASSIGN NOTE
+    | definition ASSIGN chord									
+	| definition ASSIGN note
 	| definition ASSIGN to_chord	
-	| VARIABLE_NAME ASSIGN NOTE	
+	| VARIABLE_NAME ASSIGN note	
 	| VARIABLE_NAME ASSIGN expression								
-	| VARIABLE_NAME ASSIGN CHORD									
-	| VARIABLE_NAME ASSIGN STRING
+	| VARIABLE_NAME ASSIGN chord									
+	| VARIABLE_NAME ASSIGN str
 	| VARIABLE_NAME ASSIGN to_chord			
 	;
 
 print:
-	PRINT_FUNCTION CHORD													
-	| PRINT_FUNCTION NOTE												
-	| PRINT_FUNCTION STRING												
-	| PRINT_FUNCTION INTEGER								
+	PRINT_FUNCTION chord													
+	| PRINT_FUNCTION note												
+	| PRINT_FUNCTION str												
+	| PRINT_FUNCTION integer								
 	| PRINT_FUNCTION VARIABLE_NAME
 	;
 
 print_to_chords:													
 	PRINT_TO_CHORDS note note note
-	;
-
-note:
-	NOTE
-	| VARIABLE_NAME
+	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
 	;
 
 concat_notes: 
 	CONCAT_NOTES VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| CONCAT_NOTES NOTE NOTE NOTE
+	| CONCAT_NOTES note note note
 	;
 
 to_notes:
-	VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME TO_NOTES CHORD
+	VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME TO_NOTES chord
 	| VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME TO_NOTES VARIABLE_NAME
 	;
 
 to_chord:
 	TO_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| TO_CHORD NOTE NOTE NOTE
+	| TO_CHORD note note note
 	;
 
 reproduce_note:
-	REPRODUCE_NOTE NOTE
+	REPRODUCE_NOTE note
 	| REPRODUCE_NOTE VARIABLE_NAME
 	;
 
 reproduce_chord:
-	REPRODUCE_CHORD CHORD
+	REPRODUCE_CHORD chord
 	| REPRODUCE_CHORD VARIABLE_NAME
 	;
 
 validate: IS_NOTE VARIABLE_NAME
-	| IS_NOTE NOTE
+	| IS_NOTE note
 	| IS_CHORD VARIABLE_NAME
 	| IS_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| IS_CHORD NOTE NOTE NOTE
-	| IS_CHORD CHORD
+	| IS_CHORD note note note
+	| IS_CHORD chord
 	;
 
 conditional:
@@ -167,7 +168,7 @@ conditional_if: IF OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS THEN code END_IF
 conditional_if_else: IF OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS THEN code ELSE code END_IF
 	;
 
-conditional_while: DO code WHILE OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELIMITER
+conditional_while: DO_STATEMENT code WHILE OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELIMITER
 	;
 
 boolean:
@@ -214,10 +215,10 @@ type:
 
 expression:		
 	VARIABLE_NAME op_sign expression
-	| INTEGER op_sign expression
+	| integer op_sign expression
 	| OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
 	| VARIABLE_NAME
-	| INTEGER
+	| integer
 	;
 
 op_sign:
@@ -227,4 +228,23 @@ op_sign:
 	| DIVIDE 													
 	;
 
+/* ------------------------------------------------------ */ 
+/*						DATA TYPES                        */
+/* ------------------------------------------------------ */ 
+
+integer:
+	INTEGER															{ IntegerConstantGrammarAction($1);}
+	;
+
+str:
+	STRING															{ /* StringValueGrammarAction($1); */ }
+	;
+
+chord:
+	CHORD															{ /* ChordValueGrammarAction($1); */ }
+	;
+
+note:
+	NOTE															{/*  NoteValueGrammarAction($1); */ }
+	;
 %%

@@ -3,6 +3,9 @@
 
 #include "../../backend/support/shared.h"
 
+#include "../../backend/domain-specific/notes.h"
+#include "../../backend/domain-specific/functions.h"
+
 /**
  * Se definen las acciones a ejecutar sobre cada regla de producción de la
  * gramática. El objetivo de cada acción debe ser el de construir el nodo
@@ -11,8 +14,8 @@
  */
 
 // Programa.
-int ProgramGrammarAction(const int value);
-int EndProgramGrammarAction(const int value);
+int ProgramGrammarAction();
+int EndProgramGrammarAction();
 
 // Expresión.
 int AdditionExpressionGrammarAction(const int leftValue, const int rightValue);
@@ -27,5 +30,8 @@ int ConstantFactorGrammarAction(const int value);
 
 // Constantes.
 int IntegerConstantGrammarAction(const int value);
+int StringValueGrammarAction(char* str);
+int NoteValueGrammarAction(char* note);
+int ChordValueGrammarAction(char* chord);
 
 #endif

@@ -40,7 +40,7 @@ note                (do|re|mi|fa|sol|la|si)#?
 "else"                                      { return ELSE; }
 "end_if"                                    { return END_IF; }
 
-"compute"                                   { return DO; }
+"compute"                                   { return DO_STATEMENT; }
 "while"                                     { return WHILE; }
 
 ">"                                         {return GREATER;}

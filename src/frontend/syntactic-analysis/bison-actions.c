@@ -1,7 +1,6 @@
 #include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
 #include "bison-actions.h"
-#include "../../backend/domain-specific/notes.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -20,18 +19,18 @@ void yyerror(const char * string) {
 	LogErrorRaw("\n\n");
 }
 
-int ProgramGrammarAction(const int value) {
-	LogDebug("ProgramGrammarAction(%d)", value);
+int ProgramGrammarAction() {
+	LogDebug("ProgramGrammarAction(%s)", "start");
 	start_program();
 	state.succeed = true;
-	state.result = value;
-	return value;
+	state.result = 0;
+	return 0;
 }
 
-int EndProgramGrammarAction(const int value) {
-	LogDebug("EndProgramGrammarAction(%d)", value);
+int EndProgramGrammarAction(char* value) {
+	LogDebug("EndProgramGrammarAction(%s)", "end");
 	end_program();
-	return value;
+	return 0;
 }
 
 int AdditionExpressionGrammarAction(const int leftValue, const int rightValue) {
@@ -71,5 +70,24 @@ int ConstantFactorGrammarAction(const int value) {
 
 int IntegerConstantGrammarAction(const int value) {
 	LogDebug("IntegerConstantGrammarAction(%d)", value);
+	getIntegerValue(value);
 	return value;
+}
+
+int StringValueGrammarAction(char* str) {
+	LogDebug("StringValueGrammarAction(%s)", str);
+	getStringValue(str);
+	return 0;
+}
+
+int NoteValueGrammarAction(char* note) {
+	LogDebug("NoteValueGrammarAction(%s)", note);
+	print_note(note);
+	return 0;
+}
+
+int ChordValueGrammarAction(char* chord) {
+	LogDebug("ChordValueGrammarAction(%s)", chord);
+	print_chord(chord);
+	return 0;
 }
