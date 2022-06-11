@@ -48,6 +48,7 @@ add_executable(Compiler
 	src/backend/code-generation/generator.c
 	src/backend/domain-specific/calculator.c
 	src/backend/domain-specific/notes.c
+	src/backend/domain-specific/functions.c
 	src/backend/variables/variable.c
 	src/backend/data-structure/listaGeneric.c
 	src/backend/data-structure/scope.c
