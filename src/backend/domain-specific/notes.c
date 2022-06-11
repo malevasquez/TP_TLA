@@ -29,7 +29,7 @@ void notes_to_chord(char* note1, char* note2, char* note3) {
     if (notes[1] - notes[0] == 4 && notes[2] - notes[1] == 3) {
         printf("Acorde valido\n");
         printf("El acorde es: %s\n",getChordStr(notes[0]));
-        fprintf(program_file, "printf(%s); ", getChordStr(notes[0]));
+        dprintf(5, "printf(%s); ", getChordStr(notes[0]));
     }
     // TODO esto funciona para acordes menores, pero no se si vale la pena incorporarlo
     // else if (notes[1] - notes[0] == 3 && notes[2] - notes[1] == 4) {
@@ -53,19 +53,19 @@ void chord_to_notes(char* chord_string) {
 
     // TODO esto es solo valido para acordes mayores,
     // no se como hariamos esto con los menores sin romper los enums
-    fprintf(program_file, "printf(%s); ", getNoteStr(chord));
-    fprintf(program_file, "printf(%s); ", getNoteStr(chord + 4));
-    fprintf(program_file, "printf(%s); ", getNoteStr(chord + 7));
+    dprintf(5, "printf(%s); ", getNoteStr(chord));
+    dprintf(5, "printf(%s); ", getNoteStr(chord + 4));
+    dprintf(5, "printf(%s); ", getNoteStr(chord + 7));
 }
 
 //ver a donde va
 void print_chord(char *chord) {
     printf("acorde: %s\n", chord);
-    fprintf(program_file, "printf(%s); ", chord); 
+    dprintf(5, "printf(%s); ", chord); 
 }
 
 void print_note(char *note) {
     int note_num = getNoteEnum(note) % 13;
     printf("nota: %d", note_num);
-    fprintf(program_file, "printf(%d); ", note_num); 
+    dprintf(5, "printf(%d); ", note_num); 
 }

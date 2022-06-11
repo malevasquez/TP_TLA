@@ -32,10 +32,10 @@ enum chords {
 //TODO no se si funciona
 //quiero que cada uno guarde cuanto ocupa
 enum type{
-    NOTE = 0,
-    CHORD,
-    INTEGER,
-    STRING,
+    _NOTE = 0,
+    _CHORD,
+    _INTEGER,
+    _STRING,
 };
 
 static char* noteName[] = {"do", "do#", "re", "re#", "mi", "mi#", "fa", "fa#","sol", "sol#", "la", "la#","si", "si#",};

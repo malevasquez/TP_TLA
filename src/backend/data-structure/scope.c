@@ -108,7 +108,7 @@ int addAssign(elem **elem1, enum type type, void *value) {
   if (auxElem->type != type)
     return -1;
 
-  if (type == STRING)
+  if (type == _STRING)
     valueSize = SIZEOF(value);
   else
     valueSize = sizeof(int);
