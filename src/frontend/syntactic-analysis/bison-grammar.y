@@ -66,7 +66,10 @@
 
 %%
 
-program: START code end												{ $$ = ProgramGrammarAction($1); }
+program: start code end												
+	;
+
+start: START														{ $$ = ProgramGrammarAction($1); }
 	;
 
 end: END 															{ $$ = EndProgramGrammarAction($1); }

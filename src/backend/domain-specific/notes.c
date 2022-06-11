@@ -5,14 +5,16 @@
 #include "notes.h"
 
 void start_program() {
-    FILE *file = fopen("archivoPrueba.c", "w+");
-    fprintf(file, "#include <stdio.h> int main()  {");
-    program_file = file;
+    // FILE *file = fopen("archivoPrueba.c", "w");
+    dprintf(5, "#include <stdio.h> int main()  {");
+    // printf("#include <stdio.h> int main()  {");
+    // program_file = file;
 }
 
 void end_program() {
-    fprintf(program_file, "return 0; }");
-    fclose(program_file);
+    dprintf(5, "return 0; }");
+    // printf("return 0;");
+    // fclose(program_file);
 }
 
 void notes_to_chord(char* note1, char* note2, char* note3) {
