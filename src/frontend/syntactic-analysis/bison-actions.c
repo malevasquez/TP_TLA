@@ -19,8 +19,8 @@ void yyerror(const char * string) {
 	LogErrorRaw("\n\n");
 }
 
-int ProgramGrammarAction() {
-	LogDebug("ProgramGrammarAction(%s)", "start");
+int ProgramGrammarAction(char* value) {
+	LogDebug("ProgramGrammarAction(%s)", value);
 	start_program();
 	state.succeed = true;
 	state.result = 0;
@@ -28,7 +28,7 @@ int ProgramGrammarAction() {
 }
 
 int EndProgramGrammarAction(char* value) {
-	LogDebug("EndProgramGrammarAction(%s)", "end");
+	LogDebug("EndProgramGrammarAction(%s)", value);
 	end_program();
 	return 0;
 }
@@ -67,6 +67,33 @@ int ConstantFactorGrammarAction(const int value) {
 	LogDebug("ConstantFactorGrammarAction(%d)", value);
 	return value;
 }
+
+/* ------------------------------------------------------ */ 
+/*						OP SYMBOLS                        */
+/* ------------------------------------------------------ */ 
+
+int PlusGrammarAction() {
+	LogDebug("PlusGrammarAction(%c)", "+");
+	return 0;
+}
+
+int MinusGrammarAction() {
+	LogDebug("MinusGrammarAction(%c)", "-");
+	return 0;
+}
+
+int MultiplyGrammarAction() {
+	LogDebug("MultiplyGrammarAction(%c)", "*");
+	return 0;
+}
+
+int DivideGrammarAction() {
+	LogDebug("DivideGrammarAction(%c)", "/");
+}
+
+/* ------------------------------------------------------ */ 
+/*						DATA TYPES                        */
+/* ------------------------------------------------------ */ 
 
 int IntegerConstantGrammarAction(const int value) {
 	LogDebug("IntegerConstantGrammarAction(%d)", value);

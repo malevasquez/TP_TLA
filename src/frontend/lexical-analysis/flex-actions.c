@@ -6,36 +6,48 @@
  * Implementación de "flex-rules.h".
  */
 
-TokenID PatternAction(TokenID token, const char* message) {
+unsigned PatternAction(unsigned token, const char* message) {
 	LogDebug(message);
 	return token;
 }
 
-TokenID IntegerPatternAction(const char * lexeme) {
+unsigned StartPatternAction(char * lexeme) {
+	LogDebug("StartPatternAction: '%s'.", lexeme);
+	yylval.string = lexeme;
+	return START;
+}
+
+unsigned EndPatternAction(char * lexeme) {
+	LogDebug("EndPatternAction: '%s'.", lexeme);
+	yylval.string = lexeme;
+	return END;
+}
+
+unsigned IntegerPatternAction(const char * lexeme) {
 	LogDebug("IntegerPatternAction: '%s'.", lexeme);
-	yylval = atoi(lexeme);
+	yylval.num = atoi(lexeme);
 	return INTEGER;
 }
 
-TokenID ChordPatternAction(const char * lexeme) {
+unsigned ChordPatternAction(const char * lexeme) {
     LogDebug("ChordPatternAction: '%s'.", lexeme);
     // strcpy(yytext, lexeme);
 	return CHORD;
 }
 
-TokenID NotePatternAction(const char * lexeme) {
+unsigned NotePatternAction(const char * lexeme) {
     LogDebug("NotePatternAction: '%s'.", lexeme);
     // strcpy(yytext, lexeme);
 	return NOTE;
 }
 
-TokenID StringPatternAction(const char * lexeme) {
+unsigned StringPatternAction(const char * lexeme) {
     LogDebug("StringPatternAction: '%s'.", lexeme);
     // strcpy(yytext, lexeme);
 	return STRING;
 }
 
-TokenID VariableNamePatternAction(const char * lexeme) {
+unsigned VariableNamePatternAction(const char * lexeme) {
     LogDebug("VariableNamePatternAction: '%s'.", lexeme);
     // strcpy(yytext, lexeme);
 	return VARIABLE_NAME;
@@ -45,7 +57,7 @@ void IgnoredPatternAction(const char * lexeme) {
 	LogDebug("IgnoredPatternAction: '%s'.", lexeme);
 }
 
-TokenID UnknownPatternAction(const char * lexeme) {
+unsigned UnknownPatternAction(const char * lexeme) {
 	LogDebug("UnknownPatternAction: '%s'.", lexeme);
 	return YYUNDEF;
 }

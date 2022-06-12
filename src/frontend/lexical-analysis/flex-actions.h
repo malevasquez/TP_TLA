@@ -2,12 +2,15 @@
 #define FLEX_ACTIONS_HEADER
 
 #include "../../backend/support/shared.h"
+#include "../syntactic-analysis/bison-parser.h"
 #include <string.h>
+
+#define YYUNDEF 257
 
 /**
  * Se definen los diferentes IDs de cada token disponible para el scanner Flex.
  */
-typedef enum TokenID {
+/* typedef enum TokenID {
 
 	// Por defecto, el valor "0" hace fallar el analizador sintáctico.
 	UNKNOWN = 0,
@@ -72,7 +75,7 @@ typedef enum TokenID {
 	NOTE,
 	STRING,
 	VARIABLE_NAME
-} TokenID;
+} TokenID; */
 
 /**
  * Se definen las acciones a ejecutar sobre cada patrón hallado mediante el
@@ -81,14 +84,18 @@ typedef enum TokenID {
  * (a.k.a. DFA), como mecanismo de escaneo y reconocimiento.
  */
 
-TokenID PatternAction(TokenID token, const char* message);
-TokenID IntegerPatternAction(const char * lexeme);
-TokenID ChordPatternAction(const char * lexeme);
-TokenID NotePatternAction(const char * lexeme);
-TokenID StringPatternAction(const char * lexeme);
-TokenID VariableNamePatternAction(const char * lexeme);
+unsigned PatternAction(unsigned token, const char* message);
+
+unsigned StartPatternAction(char * lexeme);
+unsigned EndPatternAction(char * lexeme);
+
+unsigned IntegerPatternAction(const char * lexeme);
+unsigned ChordPatternAction(const char * lexeme);
+unsigned NotePatternAction(const char * lexeme);
+unsigned StringPatternAction(const char * lexeme);
+unsigned VariableNamePatternAction(const char * lexeme);
 
 void IgnoredPatternAction(const char * lexeme);
-TokenID UnknownPatternAction(const char * lexeme);
+unsigned UnknownPatternAction(const char * lexeme);
 
 #endif

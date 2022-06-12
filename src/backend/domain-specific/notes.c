@@ -6,13 +6,13 @@
 
 void start_program() {
     // FILE *file = fopen("archivoPrueba.c", "w");
-    dprintf(5, "#include <stdio.h> int main()  {");
+    dprintf(5, "#include <stdio.h> \nint main()  {\n");
     // printf("#include <stdio.h> int main()  {");
     // program_file = file;
 }
 
 void end_program() {
-    dprintf(5, "return 0; }");
+    dprintf(5, "return 0; }\n");
     // printf("return 0;");
     // fclose(program_file);
 }

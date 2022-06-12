@@ -26,8 +26,8 @@ note                (do|re|mi|fa|sol|la|si)#?
 
 %%
 
-"start"                                     { return PatternAction(START, "start"); }
-"end"                                       { return END; }
+"start"                                     { return StartPatternAction(yytext); }
+"end"                                       { return EndPatternAction(yytext); }
 "is"                                        { return ASSIGN; }
 
 "plus"                                      {return PLUS;}

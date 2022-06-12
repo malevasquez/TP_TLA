@@ -14,8 +14,8 @@
  */
 
 // Programa.
-int ProgramGrammarAction();
-int EndProgramGrammarAction();
+int ProgramGrammarAction(char* value);
+int EndProgramGrammarAction(char* value);
 
 // Expresión.
 int AdditionExpressionGrammarAction(const int leftValue, const int rightValue);
@@ -27,6 +27,12 @@ int FactorExpressionGrammarAction(const int value);
 // Factores.
 int ExpressionFactorGrammarAction(const int value);
 int ConstantFactorGrammarAction(const int value);
+
+// Signos de Operacion
+int PlusGrammarAction();
+int MinusGrammarAction();
+int MultiplyGrammarAction();
+int DivideGrammarAction();
 
 // Constantes.
 int IntegerConstantGrammarAction(const int value);

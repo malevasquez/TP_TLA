@@ -4,14 +4,14 @@
 
 %}
 
-/* %union {
+%union {
 	int num;
 	char* string;
-} */
+}
 
 // IDs de los tokens generados desde Flex:
-%token START
-%token END
+%token <string> START
+%token <string> END
 
 %token PLUS
 %token MINUS
@@ -54,10 +54,10 @@
 %token STRING_TYPE
 %token INTEGER_TYPE
 
-%token INTEGER
-%token CHORD
-%token NOTE
-%token STRING
+%token <num> INTEGER
+%token <string> CHORD
+%token <string> NOTE
+%token <string> STRING
 %token VARIABLE_NAME
 
 %right ASSIGN
@@ -74,10 +74,10 @@
 program: start code end												
 	;
 
-start: START														{ ProgramGrammarAction(); }
+start: START														{ ProgramGrammarAction($1); }
 	;
 
-end: END 															{ EndProgramGrammarAction(); }
+end: END 															{ EndProgramGrammarAction($1); }
 	;
 
 code: instruction code
@@ -222,10 +222,10 @@ expression:
 	;
 
 op_sign:
-	PLUS 													
-	| MINUS 													
-	| MULTIPLY 													
-	| DIVIDE 													
+	PLUS 															{ PlusGrammarAction(); }
+	| MINUS 														{ MinusGrammarAction(); }
+	| MULTIPLY 														{ MultiplyGrammarAction(); }
+	| DIVIDE 														{ DivideGrammarAction(); }
 	;
 
 /* ------------------------------------------------------ */ 
@@ -237,14 +237,15 @@ integer:
 	;
 
 str:
-	STRING															{ /* StringValueGrammarAction($1); */ }
+	STRING															{ StringValueGrammarAction($1); }
 	;
 
 chord:
-	CHORD															{ /* ChordValueGrammarAction($1); */ }
+	CHORD															{ ChordValueGrammarAction($1); }
 	;
 
 note:
-	NOTE															{/*  NoteValueGrammarAction($1); */ }
+	NOTE															{ NoteValueGrammarAction($1); }
 	;
+
 %%
