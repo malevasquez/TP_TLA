@@ -1,2 +1,6 @@
 start
+print 6;
+print "hola";
+print do;
+print G;
 end

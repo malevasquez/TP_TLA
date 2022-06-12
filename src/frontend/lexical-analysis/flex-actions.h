@@ -156,10 +156,10 @@ unsigned IntegerTypePatternAction(char * lexeme);
 /* Data Format */
 
 unsigned IntegerPatternAction(const char * lexeme);
-unsigned ChordPatternAction(const char * lexeme);
-unsigned NotePatternAction(const char * lexeme);
-unsigned StringPatternAction(const char * lexeme);
-unsigned VariableNamePatternAction(const char * lexeme);
+unsigned ChordPatternAction(char * lexeme);
+unsigned NotePatternAction(char * lexeme);
+unsigned StringPatternAction(char * lexeme);
+unsigned VariableNamePatternAction(char * lexeme);
 
 void IgnoredPatternAction(const char * lexeme);
 unsigned UnknownPatternAction(const char * lexeme);

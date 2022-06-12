@@ -47,12 +47,10 @@ void chord_to_notes(char* chord_string) {
 
 //ver a donde va
 void print_chord(char *chord) {
-    printf("acorde: %s\n", chord);
-    dprintf(5, "printf(%s); ", chord); 
+    dprintf(FD, "printf(\"Acorde: %s\\n\"); ", chord); 
 }
 
 void print_note(char *note) {
-    int note_num = getNoteEnum(note) % 13;
-    printf("nota: %d", note_num);
-    dprintf(5, "printf(%d); ", note_num); 
+    // int note_num = getNoteEnum(note) % 13;
+    dprintf(FD, "printf(\"Nota: %s\\n\"); ", note); 
 }

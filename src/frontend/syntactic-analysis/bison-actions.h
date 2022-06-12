@@ -58,6 +58,10 @@ int TrueGrammarAction(char * value);
 int FalseGrammarAction(char * value);
 
 // Funciones
+int PrintIntegerGrammarAction(int value);
+int PrintStringGrammarAction(char * value);
+int PrintChordGrammarAction(char * value);
+int PrintNoteGrammarAction(char * value);
 
 // Simbolos
 int OpenParGrammarAction(char * value);

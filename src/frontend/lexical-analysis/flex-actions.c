@@ -268,27 +268,27 @@ unsigned IntegerPatternAction(const char * lexeme) {
 	return INTEGER;
 }
 
-unsigned ChordPatternAction(const char * lexeme) {
+unsigned ChordPatternAction( char * lexeme) {
     LogDebug("ChordPatternAction: '%s'.", lexeme);
-    // strcpy(yytext, lexeme);
+    yylval.string = lexeme;
 	return CHORD;
 }
 
-unsigned NotePatternAction(const char * lexeme) {
+unsigned NotePatternAction( char * lexeme) {
     LogDebug("NotePatternAction: '%s'.", lexeme);
-    // strcpy(yytext, lexeme);
+    yylval.string = lexeme;
 	return NOTE;
 }
 
-unsigned StringPatternAction(const char * lexeme) {
+unsigned StringPatternAction( char * lexeme) {
     LogDebug("StringPatternAction: '%s'.", lexeme);
-    // strcpy(yytext, lexeme);
+    yylval.string = lexeme;
 	return STRING;
 }
 
-unsigned VariableNamePatternAction(const char * lexeme) {
+unsigned VariableNamePatternAction( char * lexeme) {
     LogDebug("VariableNamePatternAction: '%s'.", lexeme);
-    // strcpy(yytext, lexeme);
+    yylval.string = lexeme;
 	return VARIABLE_NAME;
 }
 

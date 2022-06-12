@@ -43,6 +43,11 @@ void notValue();
 void trueValue();
 void falseValue();
 
+/* Funciones */
+
+void printNum(int value);
+void printStr(char * str);
+
 /* Simbolos */
 
 void openParValue();

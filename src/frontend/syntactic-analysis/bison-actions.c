@@ -207,6 +207,34 @@ int FalseGrammarAction(char * value) {
 }
 
 /* ------------------------------------------------------ */ 
+/*						 FUNCIONES                        */
+/* ------------------------------------------------------ */ 
+
+int PrintIntegerGrammarAction(int value) {
+	LogDebug("PrintIntegerGrammarAction(%d)", value);
+	printNum(value);
+	return 0;
+}
+
+int PrintStringGrammarAction(char * value) {
+	LogDebug("PrintStringGrammarAction(%s)", value);
+	printStr(value);
+	return 0;
+}
+
+int PrintChordGrammarAction(char * value) {
+	LogDebug("PrintChordGrammarAction(%s)", value);
+	print_chord(value);
+	return 0;
+}
+
+int PrintNoteGrammarAction(char * value) {
+	LogDebug("PrintNoteGrammarAction(%s)", value);
+	print_note(value);
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
 /*						 SIMBOLOS                         */
 /* ------------------------------------------------------ */ 
 

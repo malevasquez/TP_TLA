@@ -103,6 +103,14 @@ void falseValue() {
 
 /* Funciones */
 
+void printNum(int value) {
+    dprintf(FD, "printf(\"%%d\", %d)", value);
+}
+
+void printStr(char * str) {
+    dprintf(FD, "printf(%s)", str);
+}
+
 // TODO: Hacer las funciones
 
 /* Simbolos */
@@ -116,7 +124,7 @@ void closeParValue() {
 }
 
 void delimiterValue() {
-    dprintf(FD, ";");
+    dprintf(FD, ";\n");
 }
 
 /* Data Format */

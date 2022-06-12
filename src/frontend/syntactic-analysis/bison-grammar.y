@@ -48,7 +48,7 @@
 %token ASSIGN
 %token <string> OPEN_PARENTHESIS
 %token <string> CLOSE_PARENTHESIS
-%token DELIMITER
+%token <string> DELIMITER
 %token NOTE_TYPE
 %token CHORD_TYPE
 %token STRING_TYPE
@@ -85,16 +85,16 @@ code: instruction code
 	| {}	
 	;
 
-instruction: definition DELIMITER
-	| assignment DELIMITER
-	| print DELIMITER
-	| concat_notes DELIMITER
-	| to_notes DELIMITER
-	| to_chord DELIMITER
-	| reproduce_note DELIMITER
-	| reproduce_chord DELIMITER
-	| validate DELIMITER
-	| print_to_chords DELIMITER
+instruction: definition delimiter
+	| assignment delimiter
+	| print delimiter
+	| concat_notes delimiter
+	| to_notes delimiter
+	| to_chord delimiter
+	| reproduce_note delimiter
+	| reproduce_chord delimiter
+	| validate delimiter
+	| print_to_chords delimiter
 	;
 
 assignment:
@@ -111,10 +111,10 @@ assignment:
 	;
 
 print:
-	PRINT_FUNCTION chord													
-	| PRINT_FUNCTION note												
-	| PRINT_FUNCTION str												
-	| PRINT_FUNCTION integer								
+	PRINT_FUNCTION CHORD											{ PrintChordGrammarAction($2); }
+	| PRINT_FUNCTION NOTE											{ PrintNoteGrammarAction($2); }
+	| PRINT_FUNCTION STRING											{ PrintStringGrammarAction($2); }
+	| PRINT_FUNCTION INTEGER										{ PrintIntegerGrammarAction($2); }
 	| PRINT_FUNCTION VARIABLE_NAME
 	;
 
@@ -236,7 +236,7 @@ conditional_if: if_state open_par boolean close_par then_state code end_if_state
 conditional_if_else: if_state open_par boolean close_par then_state code else_state code end_if_state
 	;
 
-conditional_while: do_state code while_state open_par boolean close_par DELIMITER
+conditional_while: do_state code while_state open_par boolean close_par delimiter
 	;
 
 if_state:
@@ -292,6 +292,10 @@ open_par:
 
 close_par:
 	CLOSE_PARENTHESIS												{ CloseParGrammarAction($1); }
+	;
+
+delimiter:
+	DELIMITER														{ DelimiterGrammarAction($1); }
 	;
 
 /* ------------------------------------------------------ */ 
