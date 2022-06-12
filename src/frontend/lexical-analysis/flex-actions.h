@@ -86,8 +86,74 @@
 
 unsigned PatternAction(unsigned token, const char* message);
 
+/* Marcadores de inicio y fin */
+
 unsigned StartPatternAction(char * lexeme);
 unsigned EndPatternAction(char * lexeme);
+
+/* Asignacion */
+
+unsigned AssignPatternAction(char * lexeme);
+
+/* Signos de operacion */
+
+unsigned PlusPatternAction(char * lexeme);
+unsigned MinusPatternAction(char * lexeme);
+unsigned MultiplyPatternAction(char * lexeme);
+unsigned DividePatternAction(char * lexeme);
+
+/* Condicionales y Ciclos */
+
+unsigned IfPatternAction(char * lexeme);
+unsigned ThenPatternAction(char * lexeme);
+unsigned ElsePatternAction(char * lexeme);
+unsigned EndIfPatternAction(char * lexeme);
+unsigned DoStatementPatternAction(char * lexeme);
+unsigned WhilePatternAction(char * lexeme);
+
+/* Signos de comparacion */
+
+unsigned GreaterPatternAction(char * lexeme);
+unsigned LowerPatternAction(char * lexeme);
+unsigned EqualsPatternAction(char * lexeme);
+unsigned NotEqualsPatternAction(char * lexeme);
+
+/* Operadores logicos */
+
+unsigned AndPatternAction(char * lexeme);
+unsigned OrPatternAction(char * lexeme);
+unsigned NotPatternAction(char * lexeme);
+
+/* Valores de verdad */
+
+unsigned TruePatternAction(char * lexeme);
+unsigned FalsePatternAction(char * lexeme);
+
+/* Funciones */
+unsigned PrintPatternAction(char * lexeme);
+unsigned PrintToChordsPatternAction(char * lexeme);
+unsigned ConcatNotesPatternAction(char * lexeme);
+unsigned ToNotesPatternAction(char * lexeme);
+unsigned ToChordPatternAction(char * lexeme);
+unsigned ReproduceNotePatternAction(char * lexeme);
+unsigned ReproduceChordPatternAction(char * lexeme);
+unsigned IsNotePatternAction(char * lexeme);
+unsigned IsChordPatternAction(char * lexeme);
+
+/* Symbols */
+
+unsigned OpenParenthesisPatternAction(char * lexeme);
+unsigned CloseParenthesisPatternAction(char * lexeme);
+unsigned DelimiterPatternAction(char * lexeme);
+
+/* Data Types */
+
+unsigned NoteTypePatternAction(char * lexeme);
+unsigned ChordTypePatternAction(char * lexeme);
+unsigned StringTypePatternAction(char * lexeme);
+unsigned IntegerTypePatternAction(char * lexeme);
+
+/* Data Format */
 
 unsigned IntegerPatternAction(const char * lexeme);
 unsigned ChordPatternAction(const char * lexeme);
