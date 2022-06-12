@@ -26,15 +26,15 @@
 %token <string> DO_STATEMENT
 %token <string> WHILE
 
-%token GREATER
-%token LOWER
-%token EQUALS
-%token NOT_EQUALS
-%token AND
-%token OR
-%token NOT
-%token TRUE
-%token FALSE
+%token <string> GREATER
+%token <string> LOWER
+%token <string> EQUALS
+%token <string> NOT_EQUALS
+%token <string> AND
+%token <string> OR
+%token <string> NOT
+%token <string> TRUE
+%token <string> FALSE
 
 %token PRINT_FUNCTION
 %token PRINT_TO_CHORDS
@@ -46,8 +46,8 @@
 %token IS_NOTE
 %token IS_CHORD
 %token ASSIGN
-%token OPEN_PARENTHESIS
-%token CLOSE_PARENTHESIS
+%token <string> OPEN_PARENTHESIS
+%token <string> CLOSE_PARENTHESIS
 %token DELIMITER
 %token NOTE_TYPE
 %token CHORD_TYPE
@@ -156,28 +156,6 @@ validate: IS_NOTE VARIABLE_NAME
 	| IS_CHORD chord
 	;
 
-boolean:
-	expression comparator_op expression
-	| boolean AND boolean
-	| boolean OR boolean
-	| NOT boolean 
-	| OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS
-	| boolean_value
-	| validate
-	;
-
-comparator_op:
-	GREATER
-	| LOWER
-	| EQUALS
-	| NOT_EQUALS
-	;
-
-boolean_value:
-	TRUE
-	| FALSE
-	;
-
 definition:
 	INTEGER_TYPE VARIABLE_NAME
 	| STRING_TYPE VARIABLE_NAME
@@ -195,6 +173,54 @@ type:
 */
 
 /* ------------------------------------------------------ */ 
+/*					 	   BOOLEAN						  */
+/* ------------------------------------------------------ */ 
+
+/* TODO: Chequear que este bien */
+boolean:
+	expression comparator_op expression
+	| boolean_op and_op boolean_op
+	| boolean_op or_op boolean_op
+	| not_op boolean_op
+	| boolean_value
+	| validate
+	;
+
+boolean_op:
+	expression
+	| boolean_exp
+	| validate
+	;
+
+boolean_exp:
+	open_par boolean close_par
+	| boolean_value
+
+comparator_op:
+	GREATER															{ GreaterGrammarAction($1); }
+	| LOWER															{ LowerGrammarAction($1); }
+	| EQUALS														{ EqualGrammarAction($1); }
+	| NOT_EQUALS													{ NotEqualGrammarAction($1); }
+	;
+
+boolean_value:
+	TRUE															{ TrueGrammarAction($1); }
+	| FALSE															{ FalseGrammarAction($1); }
+	;
+
+and_op:
+	AND																{ AndGrammarAction($1); }
+	;
+
+or_op:
+	OR																{ OrGrammarAction($1); }
+	;
+
+not_op:
+	NOT																{ NotGrammarAction($1); }
+	;
+
+/* ------------------------------------------------------ */ 
 /*				    CONDITIONALS & CYCLES				  */
 /* ------------------------------------------------------ */ 
 
@@ -204,13 +230,13 @@ conditional:
 	| conditional_while
 	;
 
-conditional_if: if_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS then_state code end_if_state
+conditional_if: if_state open_par boolean close_par then_state code end_if_state
 	;
 
-conditional_if_else: if_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS then_state code else_state code end_if_state
+conditional_if_else: if_state open_par boolean close_par then_state code else_state code end_if_state
 	;
 
-conditional_while: do_state code while_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELIMITER
+conditional_while: do_state code while_state open_par boolean close_par DELIMITER
 	;
 
 if_state:
@@ -244,7 +270,7 @@ while_state:
 expression:		
 	VARIABLE_NAME op_sign expression
 	| integer op_sign expression
-	| OPEN_PARENTHESIS expression CLOSE_PARENTHESIS
+	| open_par expression close_par
 	| VARIABLE_NAME
 	| integer
 	;
@@ -254,6 +280,18 @@ op_sign:
 	| MINUS 														{ MinusGrammarAction($1); }
 	| MULTIPLY 														{ MultiplyGrammarAction($1); }
 	| DIVIDE 														{ DivideGrammarAction($1); }
+	;
+
+/* ------------------------------------------------------ */ 
+/*					  	  SYMBOLS                         */
+/* ------------------------------------------------------ */ 
+
+open_par:
+	OPEN_PARENTHESIS												{ OpenParGrammarAction($1); }
+	;
+
+close_par:
+	CLOSE_PARENTHESIS												{ CloseParGrammarAction($1); }
 	;
 
 /* ------------------------------------------------------ */ 

@@ -73,7 +73,7 @@ int ConstantFactorGrammarAction(const int value) {
 }
 
 /* ------------------------------------------------------ */ 
-/*						OP SYMBOLS                        */
+/*						OPERACIONES                       */
 /* ------------------------------------------------------ */ 
 
 int PlusGrammarAction(char * value) {
@@ -101,7 +101,7 @@ int DivideGrammarAction(char * value) {
 }
 
 /* ------------------------------------------------------ */ 
-/*				    CONDITIONALS & CYCLES				  */
+/*			      CONDITIONALES & CYCLOS				  */
 /* ------------------------------------------------------ */ 
 
 int IfGrammarAction(char * value) {
@@ -137,6 +137,94 @@ int DoGrammarAction(char * value) {
 int WhileGrammarAction(char * value) {
 	LogDebug("WhileGrammarAction(%s)", value);
 	whileValue();
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*						COMPARACION                       */
+/* ------------------------------------------------------ */
+
+int GreaterGrammarAction(char * value) {
+	LogDebug("GreaterGrammarAction(%s)", value);
+	greaterValue();
+	return 0;
+}
+
+int LowerGrammarAction(char * value) {
+	LogDebug("LowerGrammarAction(%s)", value);
+	lowerValue();
+	return 0;
+}
+
+int EqualGrammarAction(char * value) {
+	LogDebug("EqualGrammarAction(%s)", value);
+	equalValue();
+	return 0;
+}
+
+int NotEqualGrammarAction(char * value) {
+	LogDebug("NotEqualGrammarAction(%s)", value);
+	notEqualValue();
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*					 	 OP LOGICOS                       */
+/* ------------------------------------------------------ */
+
+int AndGrammarAction(char * value) {
+	LogDebug("AndEqualGrammarAction(%s)", value);
+	andValue();
+	return 0;
+}
+
+int OrGrammarAction(char * value) {
+	LogDebug("OrGrammarAction(%s)", value);
+	orValue();
+	return 0;
+}
+
+int NotGrammarAction(char * value) {
+	LogDebug("NotGrammarAction(%s)", value);
+	notValue();
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*				   	  VALORES DE VERDAD                   */
+/* ------------------------------------------------------ */
+
+int TrueGrammarAction(char * value) {
+	LogDebug("TrueGrammarAction(%s)", value);
+	trueValue();
+	return 0;
+}
+
+int FalseGrammarAction(char * value) {
+	LogDebug("FalseGrammarAction(%s)", value);
+	falseValue();
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*						 SIMBOLOS                         */
+/* ------------------------------------------------------ */ 
+
+int OpenParGrammarAction(char * value) {
+	LogDebug("OpenParGrammarAction(%s)", value);
+	openParValue();
+	return 0;
+}
+
+int CloseParGrammarAction(char * value) {
+	LogDebug("CloseParGrammarAction(%s)", value);
+	closeParValue();
+	return 0;
+}
+
+int DelimiterGrammarAction(char * value) {
+	LogDebug("DelimiterGrammarAction(%s)", value);
+	delimiterValue();
 	return 0;
 }
 

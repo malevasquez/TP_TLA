@@ -140,7 +140,7 @@ unsigned ReproduceChordPatternAction(char * lexeme);
 unsigned IsNotePatternAction(char * lexeme);
 unsigned IsChordPatternAction(char * lexeme);
 
-/* Symbols */
+/* Simbolos */
 
 unsigned OpenParenthesisPatternAction(char * lexeme);
 unsigned CloseParenthesisPatternAction(char * lexeme);

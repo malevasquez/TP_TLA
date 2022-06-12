@@ -59,6 +59,66 @@ void whileValue() {
     dprintf(FD, "} while ");
 }
 
+/* Signos de comparacion */
+
+void greaterValue() {
+    dprintf(FD, " > ");
+}
+
+void lowerValue() {
+    dprintf(FD, " < ");
+}
+
+void equalValue() {
+    dprintf(FD, " == ");
+}
+
+void notEqualValue() {
+    dprintf(FD, " != ");
+}
+
+/* Operadores logicos */
+
+void andValue() {
+    dprintf(FD, " && ");
+}
+
+void orValue() {
+    dprintf(FD, " || ");
+}
+
+void notValue() {
+    dprintf(FD, "!");
+}
+
+/* Valores de verdad */
+
+void trueValue() {
+    dprintf(FD, "1");
+}
+
+void falseValue() {
+    dprintf(FD, "0");
+}
+
+/* Funciones */
+
+// TODO: Hacer las funciones
+
+/* Simbolos */
+
+void openParValue() {
+    dprintf(FD, "(");
+}
+
+void closeParValue() {
+    dprintf(FD, ")");
+}
+
+void delimiterValue() {
+    dprintf(FD, ";");
+}
+
 /* Data Format */
 
 void getIntegerValue(int value) {

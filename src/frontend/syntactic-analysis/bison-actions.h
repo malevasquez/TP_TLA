@@ -42,6 +42,28 @@ int EndIfGrammarAction(char * value);
 int DoGrammarAction(char * value);
 int WhileGrammarAction(char * value);
 
+// Comparacion
+int GreaterGrammarAction(char * value);
+int LowerGrammarAction(char * value);
+int EqualGrammarAction(char * value);
+int NotEqualGrammarAction(char * value);
+
+// Operadores logicos
+int AndGrammarAction(char * value);
+int OrGrammarAction(char * value);
+int NotGrammarAction(char * value);
+
+// Valores de verdad
+int TrueGrammarAction(char * value);
+int FalseGrammarAction(char * value);
+
+// Funciones
+
+// Simbolos
+int OpenParGrammarAction(char * value);
+int CloseParGrammarAction(char * value);
+int DelimiterGrammarAction(char * value);
+
 // Constantes.
 int IntegerConstantGrammarAction(const int value);
 int StringValueGrammarAction(char* str);
