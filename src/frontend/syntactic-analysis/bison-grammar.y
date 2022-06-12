@@ -13,18 +13,18 @@
 %token <string> START
 %token <string> END
 
-%token PLUS
-%token MINUS
-%token MULTIPLY
-%token DIVIDE
+%token <string> PLUS
+%token <string> MINUS
+%token <string> MULTIPLY
+%token <string> DIVIDE
 
-%token IF
-%token THEN
-%token ELSE
-%token END_IF
+%token <string> IF
+%token <string> THEN
+%token <string> ELSE
+%token <string> END_IF
 
-%token DO_STATEMENT
-%token WHILE
+%token <string> DO_STATEMENT
+%token <string> WHILE
 
 %token GREATER
 %token LOWER
@@ -156,21 +156,6 @@ validate: IS_NOTE VARIABLE_NAME
 	| IS_CHORD chord
 	;
 
-conditional:
-	conditional_if
-	| conditional_if_else
-	| conditional_while
-	;
-
-conditional_if: IF OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS THEN code END_IF
-	;
-
-conditional_if_else: IF OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS THEN code ELSE code END_IF
-	;
-
-conditional_while: DO_STATEMENT code WHILE OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELIMITER
-	;
-
 boolean:
 	expression comparator_op expression
 	| boolean AND boolean
@@ -210,6 +195,49 @@ type:
 */
 
 /* ------------------------------------------------------ */ 
+/*				    CONDITIONALS & CYCLES				  */
+/* ------------------------------------------------------ */ 
+
+conditional:
+	conditional_if
+	| conditional_if_else
+	| conditional_while
+	;
+
+conditional_if: if_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS then_state code end_if_state
+	;
+
+conditional_if_else: if_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS then_state code else_state code end_if_state
+	;
+
+conditional_while: do_state code while_state OPEN_PARENTHESIS boolean CLOSE_PARENTHESIS DELIMITER
+	;
+
+if_state:
+	IF																{ IfGrammarAction($1); }
+	;
+
+then_state:
+	THEN															{ ThenGrammarAction($1); }
+	;
+
+else_state:
+	ELSE															{ ElseGrammarAction($1); }
+	;
+
+end_if_state:
+	END_IF															{ EndIfGrammarAction($1); }
+	;
+
+do_state:
+	DO_STATEMENT													{ DoGrammarAction($1); }
+	;
+
+while_state:
+	WHILE															{ WhileGrammarAction($1); }
+	;
+
+/* ------------------------------------------------------ */ 
 /*						OPERATIONS                        */
 /* ------------------------------------------------------ */ 
 
@@ -222,10 +250,10 @@ expression:
 	;
 
 op_sign:
-	PLUS 															{ PlusGrammarAction(); }
-	| MINUS 														{ MinusGrammarAction(); }
-	| MULTIPLY 														{ MultiplyGrammarAction(); }
-	| DIVIDE 														{ DivideGrammarAction(); }
+	PLUS 															{ PlusGrammarAction($1); }
+	| MINUS 														{ MinusGrammarAction($1); }
+	| MULTIPLY 														{ MultiplyGrammarAction($1); }
+	| DIVIDE 														{ DivideGrammarAction($1); }
 	;
 
 /* ------------------------------------------------------ */ 
@@ -233,7 +261,7 @@ op_sign:
 /* ------------------------------------------------------ */ 
 
 integer:
-	INTEGER															{ IntegerConstantGrammarAction($1);}
+	INTEGER															{ IntegerConstantGrammarAction($1); }
 	;
 
 str:

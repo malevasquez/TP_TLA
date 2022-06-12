@@ -29,10 +29,18 @@ int ExpressionFactorGrammarAction(const int value);
 int ConstantFactorGrammarAction(const int value);
 
 // Signos de Operacion
-int PlusGrammarAction();
-int MinusGrammarAction();
-int MultiplyGrammarAction();
-int DivideGrammarAction();
+int PlusGrammarAction(char * value);
+int MinusGrammarAction(char * value);
+int MultiplyGrammarAction(char * value);
+int DivideGrammarAction(char * value);
+
+// Condicionales y Ciclos
+int IfGrammarAction(char * value);
+int ThenGrammarAction(char * value);
+int ElseGrammarAction(char * value);
+int EndIfGrammarAction(char * value);
+int DoGrammarAction(char * value);
+int WhileGrammarAction(char * value);
 
 // Constantes.
 int IntegerConstantGrammarAction(const int value);

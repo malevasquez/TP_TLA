@@ -4,19 +4,6 @@
 
 #include "notes.h"
 
-void start_program() {
-    // FILE *file = fopen("archivoPrueba.c", "w");
-    dprintf(5, "#include <stdio.h> \nint main()  {\n");
-    // printf("#include <stdio.h> int main()  {");
-    // program_file = file;
-}
-
-void end_program() {
-    dprintf(5, "return 0; }\n");
-    // printf("return 0;");
-    // fclose(program_file);
-}
-
 void notes_to_chord(char* note1, char* note2, char* note3) {
 
     int notes[3]; 

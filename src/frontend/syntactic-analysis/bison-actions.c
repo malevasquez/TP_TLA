@@ -19,6 +19,10 @@ void yyerror(const char * string) {
 	LogErrorRaw("\n\n");
 }
 
+/* ------------------------------------------------------ */ 
+/*						  MARKERS                         */
+/* ------------------------------------------------------ */ 
+
 int ProgramGrammarAction(char* value) {
 	LogDebug("ProgramGrammarAction(%s)", value);
 	start_program();
@@ -72,23 +76,68 @@ int ConstantFactorGrammarAction(const int value) {
 /*						OP SYMBOLS                        */
 /* ------------------------------------------------------ */ 
 
-int PlusGrammarAction() {
-	LogDebug("PlusGrammarAction(%c)", "+");
+int PlusGrammarAction(char * value) {
+	LogDebug("PlusGrammarAction(%s)", value);
+	plusValue();
 	return 0;
 }
 
-int MinusGrammarAction() {
-	LogDebug("MinusGrammarAction(%c)", "-");
+int MinusGrammarAction(char * value) {
+	LogDebug("MinusGrammarAction(%s)", value);
+	minusValue();
 	return 0;
 }
 
-int MultiplyGrammarAction() {
-	LogDebug("MultiplyGrammarAction(%c)", "*");
+int MultiplyGrammarAction(char * value) {
+	LogDebug("MultiplyGrammarAction(%s)", value);
+	multiplyValue();
 	return 0;
 }
 
-int DivideGrammarAction() {
-	LogDebug("DivideGrammarAction(%c)", "/");
+int DivideGrammarAction(char * value) {
+	LogDebug("DivideGrammarAction(%s)", value);
+	divideValue();
+	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*				    CONDITIONALS & CYCLES				  */
+/* ------------------------------------------------------ */ 
+
+int IfGrammarAction(char * value) {
+	LogDebug("IfGrammarAction(%s)", value);
+	ifValue();
+	return 0;
+}
+
+int ThenGrammarAction(char * value) {
+	LogDebug("ThenGrammarAction(%s)", value);
+	thenValue();
+	return 0;
+}
+
+int ElseGrammarAction(char * value) {
+	LogDebug("ElseGrammarAction(%s)", value);
+	elseValue();
+	return 0;
+}
+
+int EndIfGrammarAction(char * value) {
+	LogDebug("EndIfGrammarAction(%s)", value);
+	endIfValue();
+	return 0;
+}
+
+int DoGrammarAction(char * value) {
+	LogDebug("DoGrammarAction(%s)", value);
+	doStatementValue();
+	return 0;
+}
+
+int WhileGrammarAction(char * value) {
+	LogDebug("WhileGrammarAction(%s)", value);
+	whileValue();
+	return 0;
 }
 
 /* ------------------------------------------------------ */ 
