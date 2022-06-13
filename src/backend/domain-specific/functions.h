@@ -51,6 +51,8 @@ void printStr(char * str);
 void toChord(const char* note1, const char* note2, const char* note3);
 void toNotes(char* chord);
 
+void concatNotes(char * note1, char * note2, char * note3);
+
 /* Simbolos */
 
 void openParValue();

@@ -54,3 +54,21 @@ void print_note(char *note) {
     // int note_num = getNoteEnum(note) % 13;
     dprintf(FD, "printf(\"Nota: %s\\n\")", note); 
 }
+
+int is_chord(char *note1, char* note2, char* note3) {
+    int valid1 = getNoteEnum(note1);
+    int valid2 = getNoteEnum(note2);
+    int valid3 = getNoteEnum(note3);
+
+    if(valid1 == -1 || valid2 == -1 || valid3 == -1) {
+        return -1;
+    }
+
+    return 0;
+
+    // TODO: Falta seguir la funcion
+}
+
+void concat_notes(char * note1, char * note2, char * note3) {
+
+}

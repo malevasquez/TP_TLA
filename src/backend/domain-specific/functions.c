@@ -119,6 +119,10 @@ void toNotes(char* chord) {
     dprintf(FD, "chord_to_notes(\"%s\")", chord);
 }
 
+void concatNotes(char * note1, char * note2, char * note3) {
+    dprintf(FD, "concat_notes(\"%s\", \"%s\", \"%s\")", note1, note2, note3);
+}
+
 // TODO: Hacer las funciones
 
 /* Simbolos */

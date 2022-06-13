@@ -259,6 +259,22 @@ int ToNotesGrammarAction(char * func, char * chord) {
 	return 0;
 }
 
+int ConcatNotesGrammarAction(char * func, char * notes) {
+	char delimiter[] = " ";
+
+	func = strtok(func, delimiter);
+
+	char *note1, *note2, *note3;
+
+	note1 = strtok(notes, delimiter);
+	note2 = strtok(NULL, delimiter);
+	note3 = strtok(NULL, delimiter);
+	concatNotes(note1, note2, note3);
+	LogDebug("ConcatNotesGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
+	
+	return 0;
+}
+
 /* ------------------------------------------------------ */ 
 /*						 SIMBOLOS                         */
 /* ------------------------------------------------------ */ 

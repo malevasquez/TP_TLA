@@ -66,6 +66,8 @@ int PrintNoteGrammarAction(char * value);
 int ToChordGrammarAction(char * func, char* notes);
 int ToNotesGrammarAction(char * func, char * chord);
 
+int ConcatNotesGrammarAction(char * func, char * notes);
+
 // Simbolos
 int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);

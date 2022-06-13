@@ -13,4 +13,6 @@ to_chord do mi sol;
 
 to_notes C;
 
+concat_notes re mi do;
+
 end

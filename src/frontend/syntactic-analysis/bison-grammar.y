@@ -39,7 +39,7 @@
 
 %token PRINT_FUNCTION
 %token PRINT_TO_CHORDS
-%token CONCAT_NOTES
+%token <func> CONCAT_NOTES
 %token <func> TO_NOTES
 %token <func> TO_CHORD
 %token REPRODUCE_NOTE
@@ -120,13 +120,17 @@ print:
 	;
 
 print_to_chords:													
-	PRINT_TO_CHORDS note note note									{ }
+	PRINT_TO_CHORDS notes									{ }
 	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME		{ }
 	;
 
 concat_notes: 
 	CONCAT_NOTES VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| CONCAT_NOTES note note note
+	| CONCAT_NOTES NOTE NOTE NOTE									{ ConcatNotesGrammarAction($1, $2); }
+	;
+
+notes:
+	NOTE NOTE NOTE notes
 	;
 
 to_notes:
