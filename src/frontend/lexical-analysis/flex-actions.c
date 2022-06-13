@@ -161,55 +161,55 @@ unsigned FalsePatternAction(char * lexeme) {
 
 unsigned PrintPatternAction(char * lexeme) {
 	LogDebug("PrintPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return PRINT_FUNCTION;
 }
 
 unsigned PrintToChordsPatternAction(char * lexeme) {
 	LogDebug("PrintToChordsPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return PRINT_TO_CHORDS;
 }
 
 unsigned ConcatNotesPatternAction(char * lexeme) {
 	LogDebug("ConcatNotesPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return CONCAT_NOTES;
 }
 
 unsigned ToNotesPatternAction(char * lexeme) {
 	LogDebug("ToNotesPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return TO_NOTES;
 }
 
 unsigned ToChordPatternAction(char * lexeme) {
 	LogDebug("ToChordPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return TO_CHORD;
 }
 
 unsigned ReproduceNotePatternAction(char * lexeme) {
 	LogDebug("ReproduceNotePatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return REPRODUCE_NOTE;
 }
 
 unsigned ReproduceChordPatternAction(char * lexeme) {
 	LogDebug("ReproduceChordPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return REPRODUCE_CHORD;
 }
 
 unsigned IsNotePatternAction(char * lexeme) {
 	LogDebug("IsNotePatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return IS_NOTE;
 }
 
 unsigned IsChordPatternAction(char * lexeme) {
 	LogDebug("IsChordPatternAction: '%s'.", lexeme);
-	yylval.string = lexeme;
+	yylval.func = lexeme;
 	return IS_CHORD;
 }
 

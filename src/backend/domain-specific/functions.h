@@ -48,6 +48,9 @@ void falseValue();
 void printNum(int value);
 void printStr(char * str);
 
+void toChord(const char* note1, const char* note2, const char* note3);
+void toNotes(char* chord);
+
 /* Simbolos */
 
 void openParValue();

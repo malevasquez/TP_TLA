@@ -3,4 +3,14 @@ print 6;
 print "hola";
 print do;
 print G;
+
+if ( 6 > 2 )
+then
+print sol;
+end_if
+
+to_chord do mi sol;
+
+to_notes C;
+
 end

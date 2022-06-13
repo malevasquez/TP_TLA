@@ -234,6 +234,31 @@ int PrintNoteGrammarAction(char * value) {
 	return 0;
 }
 
+// TODO: Check if strtok use is valid
+int ToChordGrammarAction(char* func, char* notes) {
+	char delimiter[] = " ";
+
+	func = strtok(func, delimiter);
+
+	char *note1, *note2, *note3;
+
+	note1 = strtok(notes, delimiter);
+	note2 = strtok(NULL, delimiter);
+	note3 = strtok(NULL, delimiter);
+	toChord(note1, note2, note3);
+	LogDebug("ToChordGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
+	return 0;
+}
+
+int ToNotesGrammarAction(char * func, char * chord) {
+	char delimiter[] = " ";
+	func = strtok(func, delimiter);
+
+	LogDebug("ToNotesGrammarAction(%s, %s)", func, chord);
+	toNotes(chord);
+	return 0;
+}
+
 /* ------------------------------------------------------ */ 
 /*						 SIMBOLOS                         */
 /* ------------------------------------------------------ */ 

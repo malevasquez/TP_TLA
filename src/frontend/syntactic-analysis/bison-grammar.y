@@ -7,6 +7,7 @@
 %union {
 	int num;
 	char* string;
+	char* func;
 }
 
 // IDs de los tokens generados desde Flex:
@@ -39,8 +40,8 @@
 %token PRINT_FUNCTION
 %token PRINT_TO_CHORDS
 %token CONCAT_NOTES
-%token TO_NOTES
-%token TO_CHORD
+%token <func> TO_NOTES
+%token <func> TO_CHORD
 %token REPRODUCE_NOTE
 %token REPRODUCE_CHORD
 %token IS_NOTE
@@ -119,8 +120,8 @@ print:
 	;
 
 print_to_chords:													
-	PRINT_TO_CHORDS note note note
-	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
+	PRINT_TO_CHORDS note note note									{ }
+	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME		{ }
 	;
 
 concat_notes: 
@@ -129,13 +130,13 @@ concat_notes:
 	;
 
 to_notes:
-	VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME TO_NOTES chord
-	| VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME TO_NOTES VARIABLE_NAME
+	TO_NOTES CHORD													{ ToNotesGrammarAction($1, $2); }
+	| TO_NOTES VARIABLE_NAME
 	;
 
 to_chord:
-	TO_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| TO_CHORD note note note
+	TO_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME				{ }
+	| TO_CHORD NOTE NOTE NOTE										{ ToChordGrammarAction($1, $2); }
 	;
 
 reproduce_note:

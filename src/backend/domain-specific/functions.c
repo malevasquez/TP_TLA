@@ -111,6 +111,14 @@ void printStr(char * str) {
     dprintf(FD, "printf(%s)", str);
 }
 
+void toChord(const char* note1, const char* note2, const char* note3) {
+    dprintf(FD, "notes_to_chord(\"%s\", \"%s\", \"%s\")", note1, note2, note3);
+}
+
+void toNotes(char* chord) {
+    dprintf(FD, "chord_to_notes(\"%s\")", chord);
+}
+
 // TODO: Hacer las funciones
 
 /* Simbolos */
