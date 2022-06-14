@@ -2,9 +2,15 @@
 #define BISON_ACTIONS_HEADER
 
 #include "../../backend/support/shared.h"
-
+#include "../../backend/variables/variable.h"
 #include "../../backend/domain-specific/notes.h"
 #include "../../backend/domain-specific/functions.h"
+#include "../../backend/data-structure/scope.h"
+#include <stdio.h>
+#include <string.h>
+#include "../../backend/domain-specific/calculator.h"
+#include "../../backend/support/logger.h"
+
 
 /**
  * Se definen las acciones a ejecutar sobre cada regla de producción de la
@@ -73,7 +79,10 @@ int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);
 int DelimiterGrammarAction(char * value);
 
-// Constantes.
+//DEFINITION
+int DefinitionGrammarAction(enum type type, char *variableName){
+
+// DATA TYPES     
 int IntegerConstantGrammarAction(const int value);
 int StringValueGrammarAction(char* str);
 int NoteValueGrammarAction(char* note);

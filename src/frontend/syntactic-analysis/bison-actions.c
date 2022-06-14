@@ -1,8 +1,6 @@
-#include "../../backend/domain-specific/calculator.h"
-#include "../../backend/support/logger.h"
 #include "bison-actions.h"
-#include <stdio.h>
-#include <string.h>
+
+scopeADT scope;
 
 /**
  * Implementación de "bison-grammar.h".
@@ -17,7 +15,10 @@ void yyerror(const char * string) {
 		LogErrorRaw("[%d]", yytext[i]);
 	}
 	LogErrorRaw("\n\n");
+
+	
 }
+
 
 /* ------------------------------------------------------ */ 
 /*						  MARKERS                         */
@@ -28,6 +29,7 @@ int ProgramGrammarAction(char* value) {
 	start_program();
 	state.succeed = true;
 	state.result = 0;
+	scope = newScope();
 	return 0;
 }
 
@@ -301,6 +303,14 @@ int DelimiterGrammarAction(char * value) {
 	LogDebug("DelimiterGrammarAction(%s)", value);
 	delimiterValue();
 	return 0;
+}
+
+/* ------------------------------------------------------ */ 
+/*						DEFINITION                        */
+/* ------------------------------------------------------ */ 
+
+int DefinitionGrammarAction(enum type type1, char *variableName){
+	return addDefinition(scope, type1, variableName);
 }
 
 /* ------------------------------------------------------ */ 

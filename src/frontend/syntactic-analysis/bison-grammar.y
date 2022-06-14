@@ -1,6 +1,7 @@
 %{
 
 #include "bison-actions.h"
+#include "../../backend/variables/variable.h"
 
 %}
 
@@ -162,21 +163,20 @@ validate: IS_NOTE VARIABLE_NAME
 	| IS_CHORD chord
 	;
 
+/*enum type{
+    _NOTE = 0,
+    _CHORD,
+    _INTEGER,
+    _STRING,
+};*/
+
 definition:
-	INTEGER_TYPE VARIABLE_NAME
-	| STRING_TYPE VARIABLE_NAME
-	| NOTE_TYPE VARIABLE_NAME
-	| CHORD_TYPE VARIABLE_NAME
+	INTEGER_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(2, $2); }
+	| STRING_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(3, $2); }
+	| NOTE_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(0, $2); }
+	| CHORD_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(1, $2); }
 	;
 
-/*
-type:
-	INTEGER_TYPE
-	| STRING_TYPE
-	| NOTE_TYPE
-	| CHORD_TYPE
-	;
-*/
 
 /* ------------------------------------------------------ */ 
 /*					 	   BOOLEAN						  */
