@@ -15,4 +15,6 @@ to_notes C;
 
 concat_notes re mi do;
 
+create_music_score do mi sol C re E F G si A;
+
 end

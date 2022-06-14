@@ -74,6 +74,8 @@ int ToNotesGrammarAction(char * func, char * chord);
 
 int ConcatNotesGrammarAction(char * func, char * notes);
 
+int CreatePartitureGrammarAction(char * input);
+
 // Simbolos
 int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);

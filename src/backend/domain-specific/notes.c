@@ -4,6 +4,11 @@
 #include <string.h>
 #include "notes.h"
 
+void introPartiture();
+void createNewExtract();
+void finishPartiture();
+char* notesFromChord(char * chordStr, int sum);
+
 void notes_to_chord(char* note1, char* note2, char* note3) {
 
     int notes[3]; 
@@ -123,4 +128,123 @@ void print_to_chords(char *notes) {
     for (int i = 0; i < n; i++) {
         printf("Acorde: %s\n", getChordStr(resultArray[i]));
     }
+}
+
+void create_partiture(char * input) {
+    char delimiter[] = " ";
+    int note_count = 0;
+    int error = 0;
+    int chord_enum;
+    char note1[5];
+    char note2[5];
+
+    introPartiture();
+
+    // Returns first musical note/chord
+    char * token = strtok(input, delimiter);
+
+    while(token != NULL) {
+        if((note_count % 4) == 0  && note_count > 0)
+            dprintf(LATEX_FD, "\\bar\n");
+
+        if((note_count % 16) == 0 && note_count > 0) {
+            createNewExtract();
+        }
+
+        if(getNoteEnum(token) != -1) {
+            if(isSharp(token)) {
+                token[strlen(token) - 1] = '\0';
+                int note_num = getNoteNumber(token);
+                dprintf(LATEX_FD, "\\NOtes \\qu{^%c} \\en\n", 'c' + note_num);
+            }
+            else {
+                int note_num = getNoteNumber(token);
+                dprintf(LATEX_FD, "\\NOtes \\qu{%c} \\en\n", 'c' + note_num);
+            }
+        } else if((chord_enum = getChordEnum(token)) != -1) {
+            dprintf(LATEX_FD, "\\NOtes\\zqu{{%c}", 'c' + chord_enum);
+
+            strcpy(note1, notesFromChord(token, 4));
+            if(isSharp(note1)) {
+                // int n = (int) (strchr(note1, '#') - note1);
+                // note1[n] = '\0';
+                // int note1_num = getNoteNumber(note1);
+                // dprintf(LATEX_FD, "{^%c}} \\en\n", 'c' + note1_num);
+            } else {
+                int note1_num = getNoteNumber(note1);
+                dprintf(LATEX_FD, "{%c}", 'c' + note1_num);
+            }
+
+            strcpy(note2, notesFromChord(token, 7));
+            if(isSharp(note2)) {
+                // int n = (int) (strchr(note2, '#') - note2);
+                // note2[n] = '\0';
+                // int note2_num = getNoteNumber(note2);
+                // dprintf(LATEX_FD, "{^%c}} \\en\n", 'c' + note2_num);
+            } else {
+                int note2_num = getNoteNumber(note2);
+                dprintf(LATEX_FD, "{%c}} \\en\n", 'c' + note2_num);
+            }
+        } else {
+            LogError("Received list contains an invalid argument");
+            exit(1);
+        }
+
+        note_count++;
+
+        token = strtok(NULL, delimiter);
+    }
+
+    finishPartiture();
+}
+
+void introPartiture() {
+    dprintf(LATEX_FD, "\\documentclass{article}\n");
+    dprintf(LATEX_FD, "\\usepackage{musixtex}\n");
+    dprintf(LATEX_FD, "\\begin{document}\n");
+    dprintf(LATEX_FD, "\\begin{music}\n");
+    dprintf(LATEX_FD, "\\instrumentnumber{1}\n");
+    dprintf(LATEX_FD, "\\setstaffs1{1}\n");
+    dprintf(LATEX_FD, "\\nobarnumbers\n");
+    dprintf(LATEX_FD, "\\generalmeter{\\meterfrac44}\n");
+    dprintf(LATEX_FD, "\\startextract\n");
+    dprintf(LATEX_FD, "\\bar\n");
+}
+
+void createNewExtract() {
+    dprintf(LATEX_FD, "\\zendextract\n");
+    dprintf(LATEX_FD, "\\instrumentnumber{1}\n");
+    dprintf(LATEX_FD, "\\setstaffs1{1}\n");
+    dprintf(LATEX_FD, "\\nobarnumbers\n");
+    dprintf(LATEX_FD, "\\generalmeter{\\meterfrac44}\n");
+    dprintf(LATEX_FD, "\\startextract\n");
+    dprintf(LATEX_FD, "\\bar\n");
+}
+
+void finishPartiture() {
+    dprintf(LATEX_FD, "\\Endpiece\n");
+    dprintf(LATEX_FD, "\\zendextract\n");
+    dprintf(LATEX_FD, "\\end{music}\n");
+    dprintf(LATEX_FD, "\\end{document}\n");
+}
+
+char* notesFromChord(char * chordStr, int sum) {
+    int chord = getChordEnum(chordStr);
+
+    switch (chord)
+    {
+    case 3:
+        chord += 2;
+        break;
+    case 4:
+        chord += 3;
+        break;
+    case 5:
+        chord += 4;
+        break;
+    case 6:
+        chord += 7;
+    }
+
+    return getNoteStr((chord + sum) % 12);
 }

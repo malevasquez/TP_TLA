@@ -59,7 +59,7 @@ note                (do|re|mi|fa|sol|la|si)#?
 "to_notes"                                  { return ToNotesPatternAction(yytext); }
 "to_chord"                                  { return ToChordPatternAction(yytext); }
 "reproduce_note"                            { return ReproduceNotePatternAction(yytext); }
-"reproduce_chord"                           { return ReproduceChordPatternAction(yytext); }
+"create_music_score"                        { return CreateMusicScorePatternAction(yytext); }
 "is_note"                                   { return IsNotePatternAction(yytext); }
 "is_chord"                                  { return IsChordPatternAction(yytext); }
 

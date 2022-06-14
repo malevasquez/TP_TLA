@@ -44,7 +44,7 @@
 %token <func> TO_NOTES
 %token <func> TO_CHORD
 %token REPRODUCE_NOTE
-%token REPRODUCE_CHORD
+%token CREATE_MUSIC_SCORE
 %token IS_NOTE
 %token IS_CHORD
 %token ASSIGN
@@ -94,7 +94,7 @@ instruction: definition delimiter
 	| to_notes delimiter
 	| to_chord delimiter
 	| reproduce_note delimiter
-	| reproduce_chord delimiter
+	| create_music delimiter
 	| validate delimiter
 	| print_to_chords delimiter
 	;
@@ -150,9 +150,15 @@ reproduce_note:
 	| REPRODUCE_NOTE VARIABLE_NAME
 	;
 
-reproduce_chord:
-	REPRODUCE_CHORD chord
-	| REPRODUCE_CHORD VARIABLE_NAME
+create_music:
+	CREATE_MUSIC_SCORE CHORD music 									{ CreatePartitureGrammarAction($2); }
+	| CREATE_MUSIC_SCORE NOTE music									{ CreatePartitureGrammarAction($2); }
+	;
+
+music:
+	CHORD music
+	| NOTE music
+	| {}
 	;
 
 validate: IS_NOTE VARIABLE_NAME

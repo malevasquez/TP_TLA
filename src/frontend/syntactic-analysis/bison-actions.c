@@ -283,6 +283,15 @@ int ConcatNotesGrammarAction(char * func, char * notes) {
 	return 0;
 }
 
+int CreatePartitureGrammarAction(char * input) {
+	input[strlen(input) - 1] = '\0';
+	LogDebug("CreatePartitureGrammarAction(%s)", input);
+	
+	create_partiture(input);
+
+	return 0;
+}
+
 /* ------------------------------------------------------ */ 
 /*						 SIMBOLOS                         */
 /* ------------------------------------------------------ */ 
