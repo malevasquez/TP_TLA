@@ -37,12 +37,6 @@ void chord_to_notes(char* chord_string) {
     printf("nota 1: %s\n", getNoteStr(chord) );
     printf("nota 2: %s\n", getNoteStr((chord + 4) % 13));
     printf("nota 3: %s\n", getNoteStr((chord + 7) % 13));
-
-    // TODO esto es solo valido para acordes mayores,
-    // no se como hariamos esto con los menores sin romper los enums
-    dprintf(5, "printf(%s); ", getNoteStr(chord));
-    dprintf(5, "printf(%s); ", getNoteStr(chord + 4));
-    dprintf(5, "printf(%s); ", getNoteStr(chord + 7));
 }
 
 //ver a donde va
