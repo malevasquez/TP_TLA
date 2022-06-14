@@ -81,6 +81,10 @@ int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);
 int DelimiterGrammarAction(char * value);
 
+//ASSIGNMENT
+int AssignmentByIdGrammarAction(int id, enum type type, void *value);
+int AssignmentByNameGrammarAction(char *name, enum type type, void *value);
+
 //DEFINITION
 int DefinitionGrammarAction(enum type type, char *variableName){
 

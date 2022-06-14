@@ -313,6 +313,17 @@ int DelimiterGrammarAction(char * value) {
 	delimiterValue();
 	return 0;
 }
+/* ------------------------------------------------------ */ 
+/*						ASSIGNMENT                        */
+/* ------------------------------------------------------ */ 
+int AssignmentByIdGrammarAction(int id, enum type type, void *value){
+	addAssignById(scope, id, type, value);
+}
+
+int AssignmentByNameGrammarAction(char *name, enum type type, void *value) {
+	addAssignByName(scope, name, type, value);
+}
+
 
 /* ------------------------------------------------------ */ 
 /*						DEFINITION                        */
