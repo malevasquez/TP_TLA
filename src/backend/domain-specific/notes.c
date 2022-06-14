@@ -1,7 +1,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
+#include <string.h>
 #include "notes.h"
 
 void notes_to_chord(char* note1, char* note2, char* note3) {
@@ -71,4 +71,62 @@ int is_chord(char *note1, char* note2, char* note3) {
 
 void concat_notes(char * note1, char * note2, char * note3) {
 
+}
+
+char* replace_char(char* str, char find, char replace){
+    char *current_pos = strchr(str,find);
+    while (current_pos) {
+        *current_pos = replace;
+        current_pos = strchr(current_pos,find);
+    }
+    return str;
+}
+
+int remove_duplicate(int arr[], int n) {
+  if (n == 0 || n == 1)
+    return n;
+
+  int temp[n];
+
+  int j = 0;
+  int i;
+  for (i = 0; i < n - 1; i++)
+    if (arr[i] != arr[i + 1])
+      temp[j++] = arr[i];
+  temp[j++] = arr[n - 1];
+
+  for (i = 0; i < j; i++)
+    arr[i] = temp[i];
+
+  return j;
+}
+
+void print_to_chords(char *notes) {
+    char delimiter[2] = " ";
+    char *token = strtok(notes, delimiter);
+
+    int notesArray[20];
+
+    int x = 0;
+    while (token != NULL) {
+        notesArray[x] = getNoteEnum(replace_char(token, ';','\0'));
+        token = strtok(NULL, delimiter);
+        x++;
+    }
+
+    int resultArray[10];
+    int count = 0;
+    for (int i = 0; i < x; i++) {
+        for (int j = 0; j < x; j++) {
+            for (int h = 0; h < x; h++) {
+                if (notesArray[j] - notesArray[i] == 4 && notesArray[h] - notesArray[j] == 3) {
+                    resultArray[count++] = notesArray[i];
+                }
+            }
+        }
+    }
+    int n = remove_duplicate(resultArray, count);
+    for (int i = 0; i < n; i++) {
+        printf("Acorde: %s\n", getChordStr(resultArray[i]));
+    }
 }

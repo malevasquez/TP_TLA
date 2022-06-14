@@ -4,7 +4,7 @@
 
 void start_program() {
     // FILE *file = fopen("archivoPrueba.c", "w");
-    dprintf(FD, "#include <stdio.h> \nint main()  {\n");
+    dprintf(FD, "#include <stdio.h>\n#include <string.h>\nint main()  {\nchar printChordAuxArray[100];\n");
     // printf("#include <stdio.h> int main()  {");
     // program_file = file;
 }
@@ -121,6 +121,11 @@ void toNotes(char* chord) {
 
 void concatNotes(char * note1, char * note2, char * note3) {
     dprintf(FD, "concat_notes(\"%s\", \"%s\", \"%s\")", note1, note2, note3);
+}
+
+void printToChords(char *notes) {
+    dprintf(FD, "strcpy(printChordAuxArray, \"%s\");\n", notes);
+    dprintf(FD, "print_to_chords(printChordAuxArray)", notes);
 }
 
 // TODO: Hacer las funciones

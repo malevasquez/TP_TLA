@@ -234,6 +234,12 @@ int PrintNoteGrammarAction(char * value) {
 	return 0;
 }
 
+int PrintToChordsGrammarAction(char * value) {
+	LogDebug("PrintToChordsGrammarAction(%s)", value);
+	printToChords(value);
+	return 0;
+}
+
 // TODO: Check if strtok use is valid
 int ToChordGrammarAction(char* func, char* notes) {
 	char delimiter[] = " ";

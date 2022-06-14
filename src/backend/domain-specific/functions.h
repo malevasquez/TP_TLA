@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "../support/utils.h"
+#include <string.h>
 
 /* Marcadores de inicio y fin */
 

@@ -120,7 +120,7 @@ print:
 	;
 
 print_to_chords:													
-	PRINT_TO_CHORDS notes									{ }
+	PRINT_TO_CHORDS NOTE NOTE NOTE notes							{ PrintToChordsGrammarAction($2); }
 	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME		{ }
 	;
 
@@ -130,7 +130,8 @@ concat_notes:
 	;
 
 notes:
-	NOTE NOTE NOTE notes
+	NOTE notes
+	| {}
 	;
 
 to_notes:

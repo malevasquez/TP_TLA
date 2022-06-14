@@ -38,8 +38,8 @@ enum type{
     _STRING,
 };
 
-static char* noteName[] = {"do", "do#", "re", "re#", "mi", "mi#", "fa", "fa#","sol", "sol#", "la", "la#","si", "si#",};
-static const int noteNameSize = 12;
+static char* noteName[] = {"do", "do#", "re", "re#", "mi", "fa", "fa#","sol", "sol#", "la", "la#","si"};
+static const int noteNameSize = 10;
 
 static char* chordName[] = {"C", "D", "E", "F", "G", "A", "B"};
 static const int chordNameSize = 7;
