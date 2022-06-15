@@ -128,6 +128,7 @@ elem *getElemById(scopeADT scope, int id) {
 
 // devulve el elemnt si lo encontro sino NULL
 elem *getElemByName(scopeADT scope, char *name) {
+  printf("getElemByName: name %s", name);
   return scopeSearch(scope->stack, name, cmpName);
 }
 
@@ -142,15 +143,21 @@ void freeScope(scopeADT scope) {
 
 // busca en todas las lista de la pila si elemento tiene el valor value
 elem *scopeSearch(stackADT stack, void *value,int (*cmp)(void *elem, void *value)) {
+  printf("Veamos valor de value en scopeSearch: %s\n", (char *) value);
+  printf("Veamos valor de stack: %d\n", stackSize(stack));
   elem *toReturn = NULL;
-
+  printf("LLEGUE ACA\n");
   stackToBegin(stack);
+  printf("LLEGUE ACA: stackToBegin paso\n");
+
   while (stackHasNext(stack)) {
     listADT currentList = (listADT)stackNext(stack);
+    printf("list size: %d\n", listSize(currentList));
     toReturn = (elem *)getElem(currentList, value, cmp);
     if (toReturn != NULL)
       return toReturn;
   }
+  printf("LLEGUE ACA: toReturn puede que este vacio\n");
 
   return toReturn;
 }
@@ -167,7 +174,10 @@ int scopeContains(stackADT stack, void *value,
 int cmpName(void *elem1, void *value) {
   elem *aux = (elem *)elem1;
   char *name = (char *)value;
+  printf("cmpName aux name: [%s]\n", aux->name);
+  printf("cmpName name: [%s]\n", name);
   if (strcmp(aux->name, name) == 0) {
+    printf("strcmp result: 0");
     return 0;
   }
   return 1;

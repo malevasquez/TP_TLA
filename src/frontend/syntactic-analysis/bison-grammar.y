@@ -99,7 +99,7 @@ instruction: definition delimiter
 	| concat_notes delimiter
 	| to_notes delimiter
 	| to_chord delimiter
-	| create_music delimiter
+	| create_music DELIMITER
 	| validate delimiter
 	| print_to_chords delimiter
 	;

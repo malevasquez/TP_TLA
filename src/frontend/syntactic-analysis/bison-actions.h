@@ -74,6 +74,8 @@ int ToNotesGrammarAction(char * func, char * chord);
 
 int ConcatNotesGrammarAction(char * func, char * notes);
 
+int PrintToChordsGrammarAction(char * value);
+
 int CreatePartitureGrammarAction(char * input);
 
 // Validaciones
@@ -97,7 +99,7 @@ int VariableExpressionGrammarAction(char* name);
 
 // DATA TYPES     
 int IntegerConstantGrammarAction(const int value);
-int StringValueGrammarAction(char* str);
+char* StringValueGrammarAction(char* str);
 int NoteValueGrammarAction(char* note);
 int ChordValueGrammarAction(char* chord);
 

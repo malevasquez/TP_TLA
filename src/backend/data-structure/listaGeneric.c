@@ -1,4 +1,5 @@
 #include "listaGeneric.h"
+#include "scope.h"
 
 typedef struct node {
 	void* value;
@@ -48,7 +49,7 @@ int insert(listADT list, void* elem){
 
     newNode->next = list->first;
 
-    newNode->value = elem;
+    newNode->value = elem; // TODO: ACA ESTA EL PROBLEMA
 
     //lo inserto en la lista
     list->first = newNode;
@@ -137,7 +138,10 @@ node* listSearch(node** current, void* elem, int (*cmp)(void*, void*)) {
 	node* last = NULL;
     node* auxCurrent = *current;
     while (auxCurrent != NULL){
+        struct elem *node1 = (struct elem*) auxCurrent->value;
+        printf("node1 name: %s\n", node1->name);
         if(cmp(auxCurrent->value, elem) == 0){
+            printf("ACAAAAAAAAAAA\n");
             return last;
         }
         last = auxCurrent;

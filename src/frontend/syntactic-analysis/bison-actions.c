@@ -375,6 +375,9 @@ int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value){
 int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value) {
 	char dest[20];
 	parser(0, dest, name);
+	printf("assignment(3) dest value [%s]\n", dest);
+	printf("assignment(3) type1 value: [%d]\n", type1);
+	printf("assignment(3) value value: [%d]\n", value);
 	int ret = addAssignByName(scope, dest, type1, NULL);
 	if(ret == -1){
 		LogError("assignment(3) %s", dest);
@@ -418,7 +421,7 @@ int DefinitionGrammarAction(enum type type, char *variableName){
 }
 
 int VariableExpressionGrammarAction(char* name) {
-	char* variable_name[20];
+	char variable_name[20];
 	parser(1, variable_name, name);
 	elem *variable = getElemByName(scope, name);
 	if(variable == NULL || variable->type != _INTEGER || variable->value == NULL) {
@@ -439,15 +442,15 @@ int IntegerConstantGrammarAction(const int value) {
 	return value;
 }
 
-int StringValueGrammarAction(char* str) {
+char* StringValueGrammarAction(char* str) {
 	LogDebug("StringValueGrammarAction(%s)", str);
 	getStringValue(str);
-	return 0;
+	return str;
 }
 
 int NoteValueGrammarAction(char* note) {
 	LogDebug("NoteValueGrammarAction(%s)", note);
-	print_note(note);
+	// print_note(note);
 	return 0;
 }
 
@@ -461,12 +464,12 @@ int ChordValueGrammarAction(char* chord) {
 int parser(int n, char* dest, char* src){
 	int i = 0, j=0;
 	while(src[i] != '\n' && n != -1){
+		if(src[i] == ' '){
+			n--;
+		}
 		if(n == 0){
 			dest[j] = src[i];
 			j++;
-		}
-		if(src[i] == ' '){
-			n--;
 		}
 		i++;
 	}
