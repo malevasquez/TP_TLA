@@ -49,6 +49,14 @@ void print_note(char *note) {
     dprintf(FD, "printf(\"Nota: %s\\n\")", note); 
 }
 
+void print_string(char *str) {
+    dprintf(FD, "printf(\"%s\\n\")", str); 
+}
+
+void print_integer(int num) {
+    dprintf(FD, "printf(\"%%d\\n\")", num); 
+}
+
 int is_chord(char *value) {
     char aux[20];
     strcpy(aux, value);
@@ -80,7 +88,7 @@ void concat_notes(char * note1, char * note2, char * note3) {
 }
 
 void is_note(char *note) {
-    
+    return getNoteEnum(note) != -1;
 }
 
 char* replace_char(char* str, char find, char replace){
