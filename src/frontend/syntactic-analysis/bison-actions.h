@@ -86,7 +86,7 @@ int AssignmentByIdGrammarAction(int id, enum type type, void *value);
 int AssignmentByNameGrammarAction(char *name, enum type type, void *value);
 
 //DEFINITION
-int DefinitionGrammarAction(enum type type, char *variableName){
+int DefinitionGrammarAction(enum type type1, char *variableName);
 
 // DATA TYPES     
 int IntegerConstantGrammarAction(const int value);

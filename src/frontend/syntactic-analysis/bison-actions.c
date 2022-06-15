@@ -316,12 +316,12 @@ int DelimiterGrammarAction(char * value) {
 /* ------------------------------------------------------ */ 
 /*						ASSIGNMENT                        */
 /* ------------------------------------------------------ */ 
-int AssignmentByIdGrammarAction(int id, enum type type, void *value){
-	addAssignById(scope, id, type, value);
+int AssignmentByIdGrammarAction(int id, enum type type1, void *value){
+	addAssignById(scope, id, type1, value);
 }
 
-int AssignmentByNameGrammarAction(char *name, enum type type, void *value) {
-	addAssignByName(scope, name, type, value);
+int AssignmentByNameGrammarAction(char *name, enum type type1, void *value) {
+	addAssignByName(scope, name, type1, value);
 }
 
 
