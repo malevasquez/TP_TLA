@@ -87,7 +87,7 @@ void concat_notes(char * note1, char * note2, char * note3) {
 
 }
 
-void is_note(char *note) {
+int is_note(char *note) {
     return getNoteEnum(note) != -1;
 }
 
