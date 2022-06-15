@@ -283,6 +283,15 @@ int ConcatNotesGrammarAction(char * func, char * notes) {
 	return 0;
 }
 
+int CreatePartitureGrammarAction(char * input) {
+	input[strlen(input) - 1] = '\0';
+	LogDebug("CreatePartitureGrammarAction(%s)", input);
+	
+	create_partiture(input);
+
+	return 0;
+}
+
 /* ------------------------------------------------------ */ 
 /*						 SIMBOLOS                         */
 /* ------------------------------------------------------ */ 
@@ -304,6 +313,17 @@ int DelimiterGrammarAction(char * value) {
 	delimiterValue();
 	return 0;
 }
+/* ------------------------------------------------------ */ 
+/*						ASSIGNMENT                        */
+/* ------------------------------------------------------ */ 
+int AssignmentByIdGrammarAction(int id, enum type type1, void *value){
+	addAssignById(scope, id, type1, value);
+}
+
+int AssignmentByNameGrammarAction(char *name, enum type type1, void *value) {
+	addAssignByName(scope, name, type1, value);
+}
+
 
 /* ------------------------------------------------------ */ 
 /*						DEFINITION                        */

@@ -44,7 +44,7 @@
 %token <func> TO_NOTES
 %token <func> TO_CHORD
 %token REPRODUCE_NOTE
-%token REPRODUCE_CHORD
+%token CREATE_MUSIC_SCORE
 %token IS_NOTE
 %token IS_CHORD
 %token ASSIGN
@@ -60,7 +60,11 @@
 %token <string> CHORD
 %token <string> NOTE
 %token <string> STRING
-%token VARIABLE_NAME
+%token <string> VARIABLE_NAME
+
+%type <num> assignment
+%type <num> to_chord
+%type <num> definition
 
 %right ASSIGN
 %left AND OR
@@ -94,24 +98,24 @@ instruction: definition delimiter
 	| to_notes delimiter
 	| to_chord delimiter
 	| reproduce_note delimiter
-	| reproduce_chord delimiter
+	| create_music delimiter
 	| validate delimiter
 	| print_to_chords delimiter
 	;
 
-assignment:
-	definition ASSIGN str
-	| definition ASSIGN expression
-    | definition ASSIGN chord									
-	| definition ASSIGN note
-	| definition ASSIGN to_chord	
-	| VARIABLE_NAME ASSIGN note	
-	| VARIABLE_NAME ASSIGN expression								
-	| VARIABLE_NAME ASSIGN chord									
-	| VARIABLE_NAME ASSIGN str
-	| VARIABLE_NAME ASSIGN to_chord			
+assignment:															
+	definition ASSIGN str											{ $$ = AssignmentByIdGrammarAction($1, _STRING, NULL); }
+	| definition ASSIGN expression									{ $$ = AssignmentByIdGrammarAction($1, _INTEGER, NULL); }
+    | definition ASSIGN chord										{ $$ = AssignmentByIdGrammarAction($1, _CHORD, NULL); }
+	| definition ASSIGN note										{ $$ = AssignmentByIdGrammarAction($1, _NOTE, NULL); }
+	| definition ASSIGN to_chord									{ $$ = AssignmentByIdGrammarAction($1, _CHORD, NULL); }
+	| VARIABLE_NAME ASSIGN note										{ $$ = AssignmentByNameGrammarAction($1, _NOTE, NULL); }
+	| VARIABLE_NAME ASSIGN expression								{ $$ = AssignmentByNameGrammarAction($1, _INTEGER, NULL); }
+	| VARIABLE_NAME ASSIGN chord									{ $$ = AssignmentByNameGrammarAction($1, _CHORD, NULL); }
+	| VARIABLE_NAME ASSIGN str										{ $$ = AssignmentByNameGrammarAction($1, _STRING, NULL); }
+	| VARIABLE_NAME ASSIGN to_chord									{ $$ = AssignmentByNameGrammarAction($1, _CHORD, NULL); }
 	;
-
+	
 print:
 	PRINT_FUNCTION CHORD											{ PrintChordGrammarAction($2); }
 	| PRINT_FUNCTION NOTE											{ PrintNoteGrammarAction($2); }
@@ -150,9 +154,15 @@ reproduce_note:
 	| REPRODUCE_NOTE VARIABLE_NAME
 	;
 
-reproduce_chord:
-	REPRODUCE_CHORD chord
-	| REPRODUCE_CHORD VARIABLE_NAME
+create_music:
+	CREATE_MUSIC_SCORE CHORD music 									{ CreatePartitureGrammarAction($2); }
+	| CREATE_MUSIC_SCORE NOTE music									{ CreatePartitureGrammarAction($2); }
+	;
+
+music:
+	CHORD music
+	| NOTE music
+	| {}
 	;
 
 validate: IS_NOTE VARIABLE_NAME
@@ -171,12 +181,11 @@ validate: IS_NOTE VARIABLE_NAME
 };*/
 
 definition:
-	INTEGER_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(2, $2); }
-	| STRING_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(3, $2); }
-	| NOTE_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(0, $2); }
-	| CHORD_TYPE VARIABLE_NAME									{ DefinitionGrammarAction(1, $2); }
+	INTEGER_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(2, $2); }
+	| STRING_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(3, $2); }
+	| NOTE_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(0, $2); }
+	| CHORD_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(1, $2); }
 	;
-
 
 /* ------------------------------------------------------ */ 
 /*					 	   BOOLEAN						  */

@@ -195,10 +195,10 @@ unsigned ReproduceNotePatternAction(char * lexeme) {
 	return REPRODUCE_NOTE;
 }
 
-unsigned ReproduceChordPatternAction(char * lexeme) {
-	LogDebug("ReproduceChordPatternAction: '%s'.", lexeme);
+unsigned CreateMusicScorePatternAction(char * lexeme) {
+	LogDebug("CreateMusicScorePatternAction: '%s'.", lexeme);
 	yylval.func = lexeme;
-	return REPRODUCE_CHORD;
+	return CREATE_MUSIC_SCORE;
 }
 
 unsigned IsNotePatternAction(char * lexeme) {

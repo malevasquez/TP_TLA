@@ -74,13 +74,19 @@ int ToNotesGrammarAction(char * func, char * chord);
 
 int ConcatNotesGrammarAction(char * func, char * notes);
 
+int CreatePartitureGrammarAction(char * input);
+
 // Simbolos
 int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);
 int DelimiterGrammarAction(char * value);
 
+//ASSIGNMENT
+int AssignmentByIdGrammarAction(int id, enum type type, void *value);
+int AssignmentByNameGrammarAction(char *name, enum type type, void *value);
+
 //DEFINITION
-int DefinitionGrammarAction(enum type type, char *variableName){
+int DefinitionGrammarAction(enum type type1, char *variableName);
 
 // DATA TYPES     
 int IntegerConstantGrammarAction(const int value);
