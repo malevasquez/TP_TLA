@@ -8,6 +8,7 @@ void introPartiture();
 void createNewExtract();
 void finishPartiture();
 char* notesFromChord(char * chordStr, int sum);
+char* replace_char(char* str, char find, char replace);
 
 void notes_to_chord(char* note1, char* note2, char* note3) {
 
@@ -21,14 +22,8 @@ void notes_to_chord(char* note1, char* note2, char* note3) {
     if (notes[1] - notes[0] == 4 && notes[2] - notes[1] == 3) {
         printf("Acorde valido\n");
         printf("El acorde es: %s\n",getChordStr(notes[0]));
-        dprintf(5, "printf(%s); ", getChordStr(notes[0]));
+        dprintf(FD, "printf(%s); ", getChordStr(notes[0]));
     }
-    // TODO esto funciona para acordes menores, pero no se si vale la pena incorporarlo
-    // else if (notes[1] - notes[0] == 3 && notes[2] - notes[1] == 4) {
-    //     printf("Acorde valido\n");
-    //     printf("El acorde es: %sm\n",getChordStr(notes[0]));
-    //     fprintf(program_file, "El acorde es: %sm\n",getChordStr(notes[0]));
-    // }
     else {
         printf("Acorde invalido\n");
     }
@@ -54,7 +49,17 @@ void print_note(char *note) {
     dprintf(FD, "printf(\"Nota: %s\\n\")", note); 
 }
 
-int is_chord(char *note1, char* note2, char* note3) {
+int is_chord(char *value) {
+    char aux[20];
+    strcpy(aux, value);
+    char *note1 = strtok(aux, " ");
+    char *note2 = strtok(NULL, " ");
+    char *note3 = strtok(NULL, " ");
+
+    replace_char(note1, ';','\0');
+    replace_char(note2, ';','\0');
+    replace_char(note3, ';','\0');
+
     int valid1 = getNoteEnum(note1);
     int valid2 = getNoteEnum(note2);
     int valid3 = getNoteEnum(note3);
@@ -63,13 +68,19 @@ int is_chord(char *note1, char* note2, char* note3) {
         return -1;
     }
 
-    return 0;
+    if (valid2 - valid1 == 4 && valid3 - valid2 == 3) {
+        return 1;
+    }
 
-    // TODO: Falta seguir la funcion
+    return 0;
 }
 
 void concat_notes(char * note1, char * note2, char * note3) {
 
+}
+
+void is_note(char *note) {
+    
 }
 
 char* replace_char(char* str, char find, char replace){

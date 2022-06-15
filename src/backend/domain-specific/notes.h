@@ -11,7 +11,7 @@ void chord_to_notes(char* chord);
 void print_chord(char *chord);
 void print_note(char *note);
 
-int is_chord(char *note1, char* note2, char* note3);
+int is_chord(char *value);
 
 void concatNotes(char * note1, char * note2, char * note3);
 void print_to_chords(char *notes);

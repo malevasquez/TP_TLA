@@ -2,6 +2,8 @@
 
 scopeADT scope;
 
+int parser(int n, char* dest, char* src);
+
 /**
  * Implementación de "bison-grammar.h".
  */
@@ -242,6 +244,7 @@ int PrintToChordsGrammarAction(char * value) {
 	return 0;
 }
 
+
 // TODO: Check if strtok use is valid
 int ToChordGrammarAction(char* func, char* notes) {
 	char delimiter[] = " ";
@@ -255,6 +258,22 @@ int ToChordGrammarAction(char* func, char* notes) {
 	note3 = strtok(NULL, delimiter);
 	toChord(note1, note2, note3);
 	LogDebug("ToChordGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
+	return 0;
+}
+
+int ToChordVariabledGrammarAction(char* func, char* notes) {
+	// char delimiter[] = " ";
+
+	// func = strtok(func, delimiter);
+
+	// char* noteVar1[20];
+	// parser(1, noteVar1, notes);
+
+	// if(noteVar1 == NULL || noteVar1->type ==)
+	// char* noteVar2[20];
+	// parser(2, noteVar2, notes);
+	// char* noteVar3[20];
+	// parser(3, noteVar3, notes);
 	return 0;
 }
 
@@ -280,6 +299,19 @@ int ConcatNotesGrammarAction(char * func, char * notes) {
 	concatNotes(note1, note2, note3);
 	LogDebug("ConcatNotesGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
 	
+	return 0;
+}
+
+int ValidateIsNoteGrammarAction(char *value) {
+	LogDebug("ValidateIsNoteGrammarAction(%s)", value);
+	 // getelembyname(scope, nombreVariable)
+	isNote(value);
+	return 0;
+}
+
+int ValidateIsChordGrammarAction(char *value) {
+	LogDebug("ValidateIsChordGrammarAction(%s)", value);
+	isChord(value);
 	return 0;
 }
 
@@ -316,12 +348,54 @@ int DelimiterGrammarAction(char * value) {
 /* ------------------------------------------------------ */ 
 /*						ASSIGNMENT                        */
 /* ------------------------------------------------------ */ 
-int AssignmentByIdGrammarAction(int id, enum type type1, void *value){
-	addAssignById(scope, id, type1, value);
+int AssignmentNumByIdGrammarAction(int id, enum type type1, int value){
+	int ret = addAssignById(scope, id, type1, NULL);
+	if(ret == -1){
+		LogError("assignment(1) %d", id);
+		exit(1);
+	}
+
+	elem* var = getElemById(scope, id);
+	dprintf(FD, "%s = %d", var->name, value);
+	return ret;
 }
 
-int AssignmentByNameGrammarAction(char *name, enum type type1, void *value) {
-	addAssignByName(scope, name, type1, value);
+int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value){
+	int ret = addAssignById(scope, id, type1, NULL);
+	if(ret == -1){
+		LogError("assignment(2) %d", id);
+		exit(1);
+	}
+
+	elem* var = getElemById(scope, id);
+	dprintf(FD, "%s = %s", var->name, value);
+	return ret;
+}
+
+int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value) {
+	char dest[20];
+	parser(0, dest, name);
+	int ret = addAssignByName(scope, dest, type1, NULL);
+	if(ret == -1){
+		LogError("assignment(3) %s", dest);
+		exit(1);
+	}
+
+	dprintf(FD, "%s = %d", dest, value);
+	return ret;
+}
+
+int AssignmentStringByNameGrammarAction(char *name, enum type type1, char* value) {
+	char dest[20];
+	parser(0, dest, name);
+	int ret = addAssignByName(scope, dest, type1, NULL);
+	if(ret == -1){
+		LogError("assignment(4) %s", dest);
+		exit(1);
+	}
+
+	dprintf(FD, "%s = %s", dest, value);
+	return ret;
 }
 
 
@@ -329,8 +403,30 @@ int AssignmentByNameGrammarAction(char *name, enum type type1, void *value) {
 /*						DEFINITION                        */
 /* ------------------------------------------------------ */ 
 
-int DefinitionGrammarAction(enum type type1, char *variableName){
-	return addDefinition(scope, type1, variableName);
+int DefinitionGrammarAction(enum type type, char *variableName){
+	if(type == _STRING){
+		dprintf(FD, "char* %s", variableName);
+	}else{
+		dprintf(FD, "int %s", variableName);
+	}
+	int ret = addDefinition(scope, type, variableName);
+	if(ret == -1){
+		LogError("Definition %s", variableName);
+		exit(1);
+	}
+	return ret;
+}
+
+int VariableExpressionGrammarAction(char* name) {
+	char* variable_name[20];
+	parser(1, variable_name, name);
+	elem *variable = getElemByName(scope, name);
+	if(variable == NULL || variable->type != _INTEGER || variable->value == NULL) {
+		LogError("Variable no valida");
+		exit(1);
+	}
+
+	return 0;
 }
 
 /* ------------------------------------------------------ */ 
@@ -359,4 +455,21 @@ int ChordValueGrammarAction(char* chord) {
 	LogDebug("ChordValueGrammarAction(%s)", chord);
 	print_chord(chord);
 	return 0;
+}
+
+
+int parser(int n, char* dest, char* src){
+	int i = 0, j=0;
+	while(src[i] != '\n' && n != -1){
+		if(n == 0){
+			dest[j] = src[i];
+			j++;
+		}
+		if(src[i] == ' '){
+			n--;
+		}
+		i++;
+	}
+	dest[j++] = '\0';
+	return j;
 }

@@ -189,12 +189,6 @@ unsigned ToChordPatternAction(char * lexeme) {
 	return TO_CHORD;
 }
 
-unsigned ReproduceNotePatternAction(char * lexeme) {
-	LogDebug("ReproduceNotePatternAction: '%s'.", lexeme);
-	yylval.func = lexeme;
-	return REPRODUCE_NOTE;
-}
-
 unsigned CreateMusicScorePatternAction(char * lexeme) {
 	LogDebug("CreateMusicScorePatternAction: '%s'.", lexeme);
 	yylval.func = lexeme;

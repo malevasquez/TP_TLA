@@ -43,7 +43,6 @@
 %token <func> CONCAT_NOTES
 %token <func> TO_NOTES
 %token <func> TO_CHORD
-%token REPRODUCE_NOTE
 %token CREATE_MUSIC_SCORE
 %token IS_NOTE
 %token IS_CHORD
@@ -62,9 +61,12 @@
 %token <string> STRING
 %token <string> VARIABLE_NAME
 
-%type <num> assignment
+%type <num> assignment integer
 %type <num> to_chord
 %type <num> definition
+%type <num> note chord
+%type <num> expression
+%type <string> str
 
 %right ASSIGN
 %left AND OR
@@ -97,23 +99,22 @@ instruction: definition delimiter
 	| concat_notes delimiter
 	| to_notes delimiter
 	| to_chord delimiter
-	| reproduce_note delimiter
 	| create_music delimiter
 	| validate delimiter
 	| print_to_chords delimiter
 	;
 
 assignment:															
-	definition ASSIGN str											{ $$ = AssignmentByIdGrammarAction($1, _STRING, NULL); }
-	| definition ASSIGN expression									{ $$ = AssignmentByIdGrammarAction($1, _INTEGER, NULL); }
-    | definition ASSIGN chord										{ $$ = AssignmentByIdGrammarAction($1, _CHORD, NULL); }
-	| definition ASSIGN note										{ $$ = AssignmentByIdGrammarAction($1, _NOTE, NULL); }
-	| definition ASSIGN to_chord									{ $$ = AssignmentByIdGrammarAction($1, _CHORD, NULL); }
-	| VARIABLE_NAME ASSIGN note										{ $$ = AssignmentByNameGrammarAction($1, _NOTE, NULL); }
-	| VARIABLE_NAME ASSIGN expression								{ $$ = AssignmentByNameGrammarAction($1, _INTEGER, NULL); }
-	| VARIABLE_NAME ASSIGN chord									{ $$ = AssignmentByNameGrammarAction($1, _CHORD, NULL); }
-	| VARIABLE_NAME ASSIGN str										{ $$ = AssignmentByNameGrammarAction($1, _STRING, NULL); }
-	| VARIABLE_NAME ASSIGN to_chord									{ $$ = AssignmentByNameGrammarAction($1, _CHORD, NULL); }
+	definition ASSIGN str											{ $$ = AssignmentStringByIdGrammarAction($1, _STRING, $3); }
+	| definition ASSIGN expression									{ $$ = AssignmentNumByIdGrammarAction($1, _INTEGER, $3); }
+    | definition ASSIGN chord										{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
+	| definition ASSIGN note										{ $$ = AssignmentNumByIdGrammarAction($1, _NOTE, $3); }
+	| definition ASSIGN to_chord									{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
+	| VARIABLE_NAME ASSIGN note										{ $$ = AssignmentNumByNameGrammarAction($1, _NOTE, $3); }
+	| VARIABLE_NAME ASSIGN expression								{ $$ = AssignmentNumByNameGrammarAction($1, _INTEGER, $3); }
+	| VARIABLE_NAME ASSIGN chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
+	| VARIABLE_NAME ASSIGN str										{ $$ = AssignmentStringByNameGrammarAction($1, _STRING, $3); }
+	| VARIABLE_NAME ASSIGN to_chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
 	;
 	
 print:
@@ -121,7 +122,7 @@ print:
 	| PRINT_FUNCTION NOTE											{ PrintNoteGrammarAction($2); }
 	| PRINT_FUNCTION STRING											{ PrintStringGrammarAction($2); }
 	| PRINT_FUNCTION INTEGER										{ PrintIntegerGrammarAction($2); }
-	| PRINT_FUNCTION VARIABLE_NAME
+	| PRINT_FUNCTION VARIABLE_NAME									{ }
 	;
 
 print_to_chords:													
@@ -149,11 +150,6 @@ to_chord:
 	| TO_CHORD NOTE NOTE NOTE										{ ToChordGrammarAction($1, $2); }
 	;
 
-reproduce_note:
-	REPRODUCE_NOTE note
-	| REPRODUCE_NOTE VARIABLE_NAME
-	;
-
 create_music:
 	CREATE_MUSIC_SCORE CHORD music 									{ CreatePartitureGrammarAction($2); }
 	| CREATE_MUSIC_SCORE NOTE music									{ CreatePartitureGrammarAction($2); }
@@ -165,12 +161,12 @@ music:
 	| {}
 	;
 
-validate: IS_NOTE VARIABLE_NAME
-	| IS_NOTE note
-	| IS_CHORD VARIABLE_NAME
-	| IS_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
-	| IS_CHORD note note note
-	| IS_CHORD chord
+validate: IS_NOTE VARIABLE_NAME										{ ValidateIsNoteGrammarAction($2);}
+	| IS_NOTE NOTE													{ ValidateIsNoteGrammarAction($2);}
+	| IS_CHORD VARIABLE_NAME										{ ValidateIsChordGrammarAction($2);}
+	| IS_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME			{ ValidateIsChordGrammarAction($2);}
+	| IS_CHORD NOTE NOTE NOTE										{ ValidateIsChordGrammarAction($2);}
+	| IS_CHORD CHORD												{ ValidateIsChordGrammarAction($2);}
 	;
 
 /*enum type{
@@ -179,7 +175,7 @@ validate: IS_NOTE VARIABLE_NAME
     _INTEGER,
     _STRING,
 };*/
-
+ 
 definition:
 	INTEGER_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(2, $2); }
 	| STRING_TYPE VARIABLE_NAME									{ $$ = DefinitionGrammarAction(3, $2); }
@@ -283,10 +279,10 @@ while_state:
 /* ------------------------------------------------------ */ 
 
 expression:		
-	VARIABLE_NAME op_sign expression
+	VARIABLE_NAME op_sign expression								{ VariableExpressionGrammarAction($1); }
 	| integer op_sign expression
 	| open_par expression close_par
-	| VARIABLE_NAME
+	| VARIABLE_NAME													{ VariableExpressionGrammarAction($1); }
 	| integer
 	;
 
@@ -318,19 +314,19 @@ delimiter:
 /* ------------------------------------------------------ */ 
 
 integer:
-	INTEGER															{ IntegerConstantGrammarAction($1); }
+	INTEGER															{ $$ = IntegerConstantGrammarAction($1); }
 	;
 
 str:
-	STRING															{ StringValueGrammarAction($1); }
+	STRING															{ $$ = StringValueGrammarAction($1); }
 	;
 
 chord:
-	CHORD															{ ChordValueGrammarAction($1); }
+	CHORD															{ $$ = ChordValueGrammarAction($1); }
 	;
 
 note:
-	NOTE															{ NoteValueGrammarAction($1); }
+	NOTE															{ $$ = NoteValueGrammarAction($1); }
 	;
 
 %%

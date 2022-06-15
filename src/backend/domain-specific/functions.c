@@ -123,6 +123,16 @@ void concatNotes(char * note1, char * note2, char * note3) {
     dprintf(FD, "concat_notes(\"%s\", \"%s\", \"%s\")", note1, note2, note3);
 }
 
+void isNote(char *note) {
+    dprintf(FD, "is_note(\"%s\")", note);
+}
+
+void isChord(char *value) {
+    printf("es acorde?%s\n\n", value);
+    dprintf(FD,"is_chord(\"%s\")", value);
+    // dprintf(FD, "is_note(\"%s\",\"%s\",\"%s\")", note1, note2, note3);
+}
+
 void printToChords(char *notes) {
     dprintf(FD, "strcpy(printChordAuxArray, \"%s\");\n", notes);
     dprintf(FD, "print_to_chords(printChordAuxArray)", notes);

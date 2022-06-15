@@ -76,17 +76,24 @@ int ConcatNotesGrammarAction(char * func, char * notes);
 
 int CreatePartitureGrammarAction(char * input);
 
+// Validaciones
+int ValidateIsNoteGrammarAction(char *value);
+int ValidateIsChordGrammarAction(char *value);
+
 // Simbolos
 int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);
 int DelimiterGrammarAction(char * value);
 
 //ASSIGNMENT
-int AssignmentByIdGrammarAction(int id, enum type type, void *value);
-int AssignmentByNameGrammarAction(char *name, enum type type, void *value);
+int AssignmentNumByIdGrammarAction(int id, enum type type1, int value);
+int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value);
+int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value);
+int AssignmentStringByNameGrammarAction(char *name, enum type type1, char* value);
 
 //DEFINITION
 int DefinitionGrammarAction(enum type type1, char *variableName);
+int VariableExpressionGrammarAction(char* name);
 
 // DATA TYPES     
 int IntegerConstantGrammarAction(const int value);

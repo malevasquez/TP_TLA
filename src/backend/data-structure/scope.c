@@ -113,8 +113,11 @@ int addAssign(elem **elem1, enum type type, void *value) {
   else
     valueSize = sizeof(int);
 
-  auxElem->value = malloc(valueSize);
-  memcpy(auxElem->value, value, valueSize);
+  if(value != NULL){
+    auxElem->value = malloc(valueSize);
+    memcpy(auxElem->value, value, valueSize);
+  }
+  
   return 0;
 }
 
@@ -138,8 +141,7 @@ void freeScope(scopeADT scope) {
 /////////////////////////////////////////////////////////////////////////////
 
 // busca en todas las lista de la pila si elemento tiene el valor value
-elem *scopeSearch(stackADT stack, void *value,
-                  int (*cmp)(void *elem, void *value)) {
+elem *scopeSearch(stackADT stack, void *value,int (*cmp)(void *elem, void *value)) {
   elem *toReturn = NULL;
 
   stackToBegin(stack);

@@ -2,6 +2,7 @@
 #define LOGGER_HEADER
 
 #include <stdio.h>
+#include <stdarg.h>
 
 void Log(FILE * const stream, const char * prefix, const char * const format, const char * suffix, va_list arguments);
 

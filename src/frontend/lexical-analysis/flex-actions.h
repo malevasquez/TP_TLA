@@ -135,7 +135,6 @@ unsigned PrintToChordsPatternAction(char * lexeme);
 unsigned ConcatNotesPatternAction(char * lexeme);
 unsigned ToNotesPatternAction(char * lexeme);
 unsigned ToChordPatternAction(char * lexeme);
-unsigned ReproduceNotePatternAction(char * lexeme);
 unsigned CreateMusicScorePatternAction(char * lexeme);
 unsigned IsNotePatternAction(char * lexeme);
 unsigned IsChordPatternAction(char * lexeme);

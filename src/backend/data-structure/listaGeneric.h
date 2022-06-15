@@ -6,7 +6,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "logger.h"
 /*
  * lista generica, se puede guardar cualquier tipo de elem y de cualquier tamaño
  * los elentos se crean con un malloc y se le pasa a insert el puntero al elem.
