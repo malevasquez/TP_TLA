@@ -161,11 +161,11 @@ music:
 	| {}
 	;
 
-validate: IS_NOTE VARIABLE_NAME										{ ValidateIsNoteGrammarAction($2);}
+validate: IS_NOTE VARIABLE_NAME										{ ValidateVariableIsNoteGrammarAction($2);}
 	| IS_NOTE NOTE													{ ValidateIsNoteGrammarAction($2);}
-	| IS_CHORD VARIABLE_NAME										{ ValidateIsChordGrammarAction($2);}
-	| IS_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME			{ ValidateIsChordGrammarAction($2);}
-	| IS_CHORD NOTE NOTE NOTE										{ ValidateIsChordGrammarAction($2);}
+	| IS_CHORD VARIABLE_NAME										{ ValidateIsChordFromSingleVariableGrammarAction($2);}
+	| IS_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME			{ ValidateVariableIsChordGrammarFromNotesAction($2);}
+	| IS_CHORD NOTE NOTE NOTE										{ ValidateIsChordFromNotesGrammarAction($2);}
 	| IS_CHORD CHORD												{ ValidateIsChordGrammarAction($2);}
 	;
 

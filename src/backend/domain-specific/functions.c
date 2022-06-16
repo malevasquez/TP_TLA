@@ -17,7 +17,7 @@ void end_program() {
 
 /* Signos de Operacion */
 
-void plusValue() {
+void plusValue()    {
     dprintf(FD, " + ");
 }
 
@@ -128,9 +128,15 @@ void isNote(char *note) {
 }
 
 void isChord(char *value) {
-    printf("es acorde?%s\n\n", value);
     dprintf(FD,"is_chord(\"%s\")", value);
-    // dprintf(FD, "is_note(\"%s\",\"%s\",\"%s\")", note1, note2, note3);
+}
+
+void isChordSimple(char *value) {
+    dprintf(FD,"is_chord_simple(\"%s\")", value);
+}
+
+void isChordGivenNotes(char *note1, char *note2, char *note3) {
+    dprintf(FD,"is_chord_given_notes(\"%s\",\"%s\",\"%s\")", note1, note2, note3);
 }
 
 void printToChords(char *notes) {

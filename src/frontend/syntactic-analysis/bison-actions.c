@@ -304,8 +304,19 @@ int ConcatNotesGrammarAction(char * func, char * notes) {
 
 int ValidateIsNoteGrammarAction(char *value) {
 	LogDebug("ValidateIsNoteGrammarAction(%s)", value);
-	 // getelembyname(scope, nombreVariable)
 	isNote(value);
+	return 0;
+}
+
+int ValidateVariableIsNoteGrammarAction(char *value) {
+	LogDebug("ValidateVariableIsNoteGrammarAction(%s)", value);
+	elem *variable = getElemByName(scope, value);
+	// if(variable == NULL || variable->type != _STRING || variable->value == NULL) {
+	// 	LogError("Variable no valida");
+	// 	exit(1);
+	// }
+
+	isChordSimple(variable->value);
 	return 0;
 }
 
@@ -313,6 +324,52 @@ int ValidateIsChordGrammarAction(char *value) {
 	LogDebug("ValidateIsChordGrammarAction(%s)", value);
 	isChord(value);
 	return 0;
+}
+
+int ValidateIsChordFromSingleVariableGrammarAction(char *value) {
+	LogDebug("ValidateIsChordFromSingleVariableGrammarAction(%s)", value);
+	elem *var = getElemByName(scope, value);
+
+	//TODO: Validaciones
+
+	isChordSimple(var->value);
+	return 0;
+}
+
+int ValidateVariableIsChordGrammarFromNotesAction(char *value) {
+	LogDebug("ValidateVariableIsChordGrammarFromNotesAction(%s)", value);
+	char *note1, *note2, *note3;
+
+	note1 = strtok(value, " ");
+	note2 = strtok(NULL, " ");
+	note3 = strtok(NULL, " ");
+
+	elem *var1 = getElemByName(scope, note1);
+	elem *var2 = getElemByName(scope, note2);
+	elem *var3 = getElemByName(scope, note3);
+	
+	// TODO: Validaciones
+
+	isChordGivenNotes(var1->value, var2->value, var3->value);
+	return 0;
+}
+
+int ValidateIsChordFromSingleNoteGrammarAction(char *value) {
+	LogDebug("ValidateIsChordFromSingleNoteGrammarAction(%s)", value);
+	isChordSimple(value);
+	return 0;
+}
+
+
+int ValidateIsChordFromNotesGrammarAction(char *value) {
+	LogDebug("ValidateIsChordFromNotesGrammarAction(%s)", value);
+	char *note1, *note2, *note3;
+
+	note1 = strtok(value, " ");
+	note2 = strtok(NULL, " ");
+	note3 = strtok(NULL, " ");
+
+	isChordGivenNotes(note1, note2, note3);
 }
 
 int CreatePartitureGrammarAction(char * input) {

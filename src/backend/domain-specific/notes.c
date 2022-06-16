@@ -83,6 +83,14 @@ int is_chord(char *value) {
     return 0;
 }
 
+int is_chord_simple(char *value) {
+    return getNoteEnum(value);
+}
+
+int is_chord_given_notes(char * note1, char * note2, char * note3) {
+    
+}
+
 void concat_notes(char * note1, char * note2, char * note3) {
 
 }
