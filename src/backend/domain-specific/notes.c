@@ -18,7 +18,7 @@ void notes_to_chord(char* note1, char* note2, char* note3) {
     notes[2] = (getNoteEnum(note3) % 13);
 
     bubbleSort(notes, 3);
-
+    
     if (notes[1] - notes[0] == 4 && notes[2] - notes[1] == 3) {
         printf("Acorde valido\n");
         printf("El acorde es: %s\n",getChordStr(notes[0]));
@@ -92,7 +92,7 @@ int is_chord_given_notes(char * note1, char * note2, char * note3) {
 }
 
 void concat_notes(char * note1, char * note2, char * note3) {
-
+    notes_to_chord(note1, note2, note3);
 }
 
 int is_note(char *note) {

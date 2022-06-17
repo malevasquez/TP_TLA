@@ -339,10 +339,6 @@ int ToChordVariabledGrammarAction(char* func, char* notes) {
 	elem *elem2 = (elem*) getElemByName(scope, note2);
 	elem *elem3 = (elem*) getElemByName(scope, note3);
 
-	char* value1 = getNoteStr(ATTACHMENT_INT(elem1));
-	char* value2 = getNoteStr(ATTACHMENT_INT(elem2));
-	char* value3 = getNoteStr(ATTACHMENT_INT(elem3));
-
 	if(elem1 == NULL || elem1->type != _NOTE || elem1->value == NULL) {
 		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", note1);
 		exit(1);
@@ -357,6 +353,10 @@ int ToChordVariabledGrammarAction(char* func, char* notes) {
 		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", note3);
 		exit(1);
 	}
+
+	char* value1 = getNoteStr(ATTACHMENT_INT(elem1));
+	char* value2 = getNoteStr(ATTACHMENT_INT(elem2));
+	char* value3 = getNoteStr(ATTACHMENT_INT(elem3));
 
 	toChord(value1, value2, value3);
 
@@ -413,21 +413,21 @@ int ConcatVariableNotesGrammarAction(char* variables) {
 	elem* elem1 = (elem*) getElemByName(scope, variable1);
 
 	if(elem1 == NULL || elem1->type != _NOTE || elem1->value == NULL) {
-		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable1);
+		LogError("Variable %s en ConcatVariableNotesGrammarAction invalida.", variable1);
 		exit(1);
 	}
 
 	elem* elem2 = (elem*) getElemByName(scope, variable2);
 
 	if(elem2 == NULL || elem2->type != _NOTE || elem2->value == NULL) {
-		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable2);
+		LogError("Variable %s en ConcatVariableNotesGrammarAction invalida.", variable2);
 		exit(1);
 	}
 
 	elem* elem3 = (elem*) getElemByName(scope, variable3);
 
 	if(elem3 == NULL || elem3->type != _NOTE || elem3->value == NULL) {
-		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable3);
+		LogError("Variable %s en ConcatVariableNotesGrammarAction invalida.", variable3);
 		exit(1);
 	}
 
@@ -467,11 +467,14 @@ int ValidateIsChordGrammarAction(char *value) {
 
 int ValidateIsChordFromSingleVariableGrammarAction(char *value) {
 	LogDebug("ValidateIsChordFromSingleVariableGrammarAction(%s)", value);
-	elem *var = getElemByName(scope, value);
+	elem *var = (elem*) getElemByName(scope, value);
 
-	//TODO: Validaciones
+	if(var == NULL || var->type != _CHORD || var->value == NULL) {
+		LogError("Variable %s en ValidateIsChordFromSingleVariableGrammarAction invalida.", var);
+		exit(1);
+	}
 
-	isChordSimple(var->value);
+	isChordSimple(ATTACHMENT_STR(var));
 	return 0;
 }
 
@@ -483,13 +486,27 @@ int ValidateVariableIsChordGrammarFromNotesAction(char *value) {
 	note2 = strtok(NULL, " ");
 	note3 = strtok(NULL, " ");
 
-	elem *var1 = getElemByName(scope, note1);
-	elem *var2 = getElemByName(scope, note2);
-	elem *var3 = getElemByName(scope, note3);
+	elem *var1 = (elem*) getElemByName(scope, note1);
+	elem *var2 = (elem*) getElemByName(scope, note2);
+	elem *var3 = (elem*) getElemByName(scope, note3);
 	
-	// TODO: Validaciones
+	if(var1 == NULL || var1->type != _NOTE || var1->value == NULL) {
+		LogError("Variable %s en ValidateVariableIsChordGrammarFromNotesAction invalida.", note1);
+		exit(1);
+	}
 
-	isChordGivenNotes(var1->value, var2->value, var3->value);
+	if(var2 == NULL || var2->type != _NOTE || var2->value == NULL) {
+		LogError("Variable %s en ValidateVariableIsChordGrammarFromNotesAction invalida.", note2);
+		exit(1);
+	}
+
+	if(var3 == NULL || var3->type != _NOTE || var3->value == NULL) {
+		LogError("Variable %s en ValidateVariableIsChordGrammarFromNotesAction invalida.", note3);
+		exit(1);
+	}
+
+
+	isChordGivenNotes(ATTACHMENT_STR(var1), ATTACHMENT_STR(var2), ATTACHMENT_STR(var3));
 	return 0;
 }
 
