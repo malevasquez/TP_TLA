@@ -48,6 +48,8 @@ void falseValue();
 
 void printNum(int value);
 void printStr(char * str);
+void printChord(char* chord);
+void printNote(char* note);
 
 void printToChords(char *notes);
 

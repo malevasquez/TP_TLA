@@ -11,6 +11,8 @@
 #include "../../backend/domain-specific/calculator.h"
 #include "../../backend/support/logger.h"
 
+#define ATTACHMENT_INT(elem)    *((int *)elem->value)
+#define ATTACHMENT_STR(elem)    ((char *)elem->value)
 
 /**
  * Se definen las acciones a ejecutar sobre cada regla de producción de la
@@ -68,13 +70,18 @@ int PrintIntegerGrammarAction(int value);
 int PrintStringGrammarAction(char * value);
 int PrintChordGrammarAction(char * value);
 int PrintNoteGrammarAction(char * value);
+int PrintVariableGrammarAction(char* value);
 
 int ToChordGrammarAction(char * func, char* notes);
+int ToChordVariabledGrammarAction(char* func, char* notes);
 int ToNotesGrammarAction(char * func, char * chord);
+int ToNotesVariableGrammarAction(char* chord_var);
 
 int ConcatNotesGrammarAction(char * func, char * notes);
+int ConcatVariableNotesGrammarAction(char* variables);
 
 int PrintToChordsGrammarAction(char * value);
+int PrintToChordsVariableGrammarAction(char* value);
 
 int CreatePartitureGrammarAction(char * input);
 

@@ -228,24 +228,87 @@ int PrintStringGrammarAction(char * value) {
 
 int PrintChordGrammarAction(char * value) {
 	LogDebug("PrintChordGrammarAction(%s)", value);
-	print_chord(value);
+	printChord(value);
 	return 0;
 }
 
 int PrintNoteGrammarAction(char * value) {
 	LogDebug("PrintNoteGrammarAction(%s)", value);
-	print_note(value);
+	printNote(value);
+	return 0;
+}
+
+int PrintVariableGrammarAction(char* value) {
+	elem *element = (elem*) getElemByName(scope, value);
+	
+	if(element == NULL || element->value == NULL) {
+		LogError("Variable %s en PrintVariableGrammarAction invalida.", value);
+		exit(1);
+	}
+
+	// Check type
+	if(element->type == _STRING) {
+		printStr(ATTACHMENT_STR(element));
+	} else if(element->type == _INTEGER) {
+		printNum(ATTACHMENT_INT(element));
+	} else if(element->type == _NOTE) {
+		char* note = getNoteStr(ATTACHMENT_INT(element));
+		printNote(note);
+	} else if(element->type == _CHORD) {
+		char* chord = getChordStr(ATTACHMENT_INT(element));
+		printChord(chord);
+	}
+
+	LogDebug("PrintVariableGrammarAction(%s)", value);
 	return 0;
 }
 
 int PrintToChordsGrammarAction(char * value) {
 	LogDebug("PrintToChordsGrammarAction(%s)", value);
+	int len = strlen(value);
+	value[len - 1] = '\0';
 	printToChords(value);
 	return 0;
 }
 
+int PrintToChordsVariableGrammarAction(char* value) {
+	char* notesArray = value;
+	int value_len = strlen(value);
+	char true_value[100];
+	strncpy(true_value, value, value_len - 1);
+	char delimiter[] = " ";
 
-// TODO: Check if strtok use is valid
+	char* token = strtok(true_value, delimiter);
+
+	char notes[100] = "\0";
+	elem* elem1;
+	char* value1;
+
+	while (token != NULL)
+	{
+		printf("token name: %s\n", token);
+		elem1 = (elem*) getElemByName(scope, token);
+		value1 = getNoteStr(ATTACHMENT_INT(elem1));
+
+		if(elem1 == NULL || elem1->type != _NOTE || elem1->value == NULL) {
+			LogError("Variable %s en PrintToChordsVariableGrammarAction invalida.", token);
+			exit(1);
+		}
+
+		strcat(notes, value1);
+		strcat(notes, " ");
+
+		token = strtok(NULL, delimiter);
+	}
+	value_len = strlen(notes);
+	notes[value_len - 1] = '\0';
+
+	printToChords(notes);
+	LogDebug("PrintToChordsVariableGrammarAction(%s)", notesArray);
+	return 0;
+}
+
+
 int ToChordGrammarAction(char* func, char* notes) {
 	char delimiter[] = " ";
 
@@ -262,18 +325,42 @@ int ToChordGrammarAction(char* func, char* notes) {
 }
 
 int ToChordVariabledGrammarAction(char* func, char* notes) {
-	// char delimiter[] = " ";
+	char delimiter[] = " ";
 
-	// func = strtok(func, delimiter);
+	func = strtok(func, delimiter);
 
-	// char* noteVar1[20];
-	// parser(1, noteVar1, notes);
+	char *note1, *note2, *note3;
 
-	// if(noteVar1 == NULL || noteVar1->type ==)
-	// char* noteVar2[20];
-	// parser(2, noteVar2, notes);
-	// char* noteVar3[20];
-	// parser(3, noteVar3, notes);
+	note1 = strtok(notes, delimiter);
+	note2 = strtok(NULL, delimiter);
+	note3 = strtok(NULL, delimiter);
+
+	elem *elem1 = (elem*) getElemByName(scope, note1);
+	elem *elem2 = (elem*) getElemByName(scope, note2);
+	elem *elem3 = (elem*) getElemByName(scope, note3);
+
+	char* value1 = getNoteStr(ATTACHMENT_INT(elem1));
+	char* value2 = getNoteStr(ATTACHMENT_INT(elem2));
+	char* value3 = getNoteStr(ATTACHMENT_INT(elem3));
+
+	if(elem1 == NULL || elem1->type != _NOTE || elem1->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", note1);
+		exit(1);
+	}
+
+	if(elem2 == NULL || elem2->type != _NOTE || elem2->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", note2);
+		exit(1);
+	}
+
+	if(elem3 == NULL || elem3->type != _NOTE || elem3->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", note3);
+		exit(1);
+	}
+
+	toChord(value1, value2, value3);
+
+	LogDebug("ToChordVariabledGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
 	return 0;
 }
 
@@ -283,6 +370,20 @@ int ToNotesGrammarAction(char * func, char * chord) {
 
 	LogDebug("ToNotesGrammarAction(%s, %s)", func, chord);
 	toNotes(chord);
+	return 0;
+}
+
+int ToNotesVariableGrammarAction(char* chord_var) {
+	elem* chord_elem = (elem*) getElemByName(scope, chord_var);
+
+	if(chord_elem == NULL || chord_elem->type != _CHORD || chord_elem->value == NULL) {
+		LogError("Variable %s en ToNotesVariableGrammarAction invalida.", chord_var);
+		exit(1);
+	}
+
+	char* chord_name = getChordStr(ATTACHMENT_INT(chord_elem));
+	toNotes(chord_name);
+
 	return 0;
 }
 
@@ -299,6 +400,44 @@ int ConcatNotesGrammarAction(char * func, char * notes) {
 	concatNotes(note1, note2, note3);
 	LogDebug("ConcatNotesGrammarAction(%s, %s, %s, %s)", func, note1, note2, note3);
 	
+	return 0;
+}
+
+int ConcatVariableNotesGrammarAction(char* variables) {
+	char delimiter[] = " ";
+
+	char* variable1 = strtok(variables, delimiter);
+	char* variable2 = strtok(NULL, delimiter);
+	char* variable3 = strtok(NULL, delimiter);
+
+	elem* elem1 = (elem*) getElemByName(scope, variable1);
+
+	if(elem1 == NULL || elem1->type != _NOTE || elem1->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable1);
+		exit(1);
+	}
+
+	elem* elem2 = (elem*) getElemByName(scope, variable2);
+
+	if(elem2 == NULL || elem2->type != _NOTE || elem2->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable2);
+		exit(1);
+	}
+
+	elem* elem3 = (elem*) getElemByName(scope, variable3);
+
+	if(elem3 == NULL || elem3->type != _NOTE || elem3->value == NULL) {
+		LogError("Variable %s en ToChordVariabledGrammarAction invalida.", variable3);
+		exit(1);
+	}
+
+	char* note1 = getNoteStr(ATTACHMENT_INT(elem1));
+	char* note2 = getNoteStr(ATTACHMENT_INT(elem2));
+	char* note3 = getNoteStr(ATTACHMENT_INT(elem3));
+
+	concatNotes(note1, note2, note3);
+	LogDebug("ConcatVariableNotesGrammarAction(%s, %s, %s)", note1, note2, note3);
+
 	return 0;
 }
 
@@ -406,14 +545,18 @@ int DelimiterGrammarAction(char * value) {
 /*						ASSIGNMENT                        */
 /* ------------------------------------------------------ */ 
 int AssignmentNumByIdGrammarAction(int id, enum type type1, int value){
-	int ret = addAssignById(scope, id, type1, NULL);
+	int ret = addAssignById(scope, id, type1, &value);
 	if(ret == -1){
 		LogError("assignment(1) %d", id);
 		exit(1);
 	}
 
-	elem* var = getElemById(scope, id);
-	dprintf(FD, "%s = %d", var->name, value);
+	elem* var = (elem*) getElemById(scope, id);
+	printf("\n\n\n VALOR DE NUMERO: %d\n", ATTACHMENT_INT(var));
+	if(var->type == _INTEGER)
+		dprintf(FD, "%s = ", var->name);
+	else
+		dprintf(FD, "%s = %d", var->name,  ATTACHMENT_INT(var));
 	return ret;
 }
 
@@ -425,7 +568,7 @@ int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value){
 	}
 
 	elem* var = getElemById(scope, id);
-	dprintf(FD, "%s = %s", var->name, value);
+	dprintf(FD, "%s = %s", var->name, ATTACHMENT_STR(var));
 	return ret;
 }
 
@@ -435,13 +578,15 @@ int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value) {
 	printf("assignment(3) dest value [%s]\n", dest);
 	printf("assignment(3) type1 value: [%d]\n", type1);
 	printf("assignment(3) value value: [%d]\n", value);
-	int ret = addAssignByName(scope, dest, type1, NULL);
+	int ret = addAssignByName(scope, dest, type1, &value);
 	if(ret == -1){
 		LogError("assignment(3) %s", dest);
 		exit(1);
 	}
-
-	dprintf(FD, "%s = %d", dest, value);
+	if(type1 == _INTEGER)
+		dprintf(FD, "%s = ", dest);
+	else
+		dprintf(FD, "%s = %d", dest, value);
 	return ret;
 }
 
@@ -465,9 +610,10 @@ int AssignmentStringByNameGrammarAction(char *name, enum type type1, char* value
 
 int DefinitionGrammarAction(enum type type, char *variableName){
 	if(type == _STRING){
-		dprintf(FD, "char* %s", variableName);
+		dprintf(FD, "char* %s;\n", variableName);
 	}else{
-		dprintf(FD, "int %s", variableName);
+		printf("\n\n\n\nDEFINITION NUM %s\n", variableName);
+		dprintf(FD, "int %s;\n", variableName);
 	}
 	int ret = addDefinition(scope, type, variableName);
 	if(ret == -1){
@@ -482,9 +628,11 @@ int VariableExpressionGrammarAction(char* name) {
 	parser(1, variable_name, name);
 	elem *variable = getElemByName(scope, name);
 	if(variable == NULL || variable->type != _INTEGER || variable->value == NULL) {
-		LogError("Variable no valida");
+		LogError("Variable %s no valida", name);
 		exit(1);
 	}
+
+	dprintf(FD, "%s", variable->name);
 
 	return 0;
 }
@@ -507,14 +655,23 @@ char* StringValueGrammarAction(char* str) {
 
 int NoteValueGrammarAction(char* note) {
 	LogDebug("NoteValueGrammarAction(%s)", note);
-	// print_note(note);
-	return 0;
+	int n = getNoteEnum(note);
+	if(n == -1) {
+		LogError("Nota invalida.");
+		exit(1);
+	}
+	return n;
 }
 
 int ChordValueGrammarAction(char* chord) {
 	LogDebug("ChordValueGrammarAction(%s)", chord);
-	print_chord(chord);
-	return 0;
+	// print_chord(chord);
+	int n = getChordEnum(chord);
+	if(n == -1) {
+		LogError("Acorde invalido.");
+		exit(1);
+	}
+	return n;
 }
 
 

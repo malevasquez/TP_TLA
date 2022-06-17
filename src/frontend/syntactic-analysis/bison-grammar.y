@@ -122,16 +122,16 @@ print:
 	| PRINT_FUNCTION NOTE											{ PrintNoteGrammarAction($2); }
 	| PRINT_FUNCTION STRING											{ PrintStringGrammarAction($2); }
 	| PRINT_FUNCTION INTEGER										{ PrintIntegerGrammarAction($2); }
-	| PRINT_FUNCTION VARIABLE_NAME									{ }
+	| PRINT_FUNCTION VARIABLE_NAME									{ PrintVariableGrammarAction($2); }
 	;
 
 print_to_chords:													
 	PRINT_TO_CHORDS NOTE NOTE NOTE notes							{ PrintToChordsGrammarAction($2); }
-	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME		{ }
+	| PRINT_TO_CHORDS VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME	variables	{ PrintToChordsVariableGrammarAction($2); }
 	;
 
 concat_notes: 
-	CONCAT_NOTES VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME
+	CONCAT_NOTES VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME			{ ConcatVariableNotesGrammarAction($2); }
 	| CONCAT_NOTES NOTE NOTE NOTE									{ ConcatNotesGrammarAction($1, $2); }
 	;
 
@@ -140,13 +140,18 @@ notes:
 	| {}
 	;
 
+variables:
+	VARIABLE_NAME variables
+	| {}
+	;
+
 to_notes:
 	TO_NOTES CHORD													{ ToNotesGrammarAction($1, $2); }
-	| TO_NOTES VARIABLE_NAME
+	| TO_NOTES VARIABLE_NAME										{ ToNotesVariableGrammarAction($2); }
 	;
 
 to_chord:
-	TO_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME				{ }
+	TO_CHORD VARIABLE_NAME VARIABLE_NAME VARIABLE_NAME				{ ToChordVariabledGrammarAction($1, $2); }
 	| TO_CHORD NOTE NOTE NOTE										{ ToChordGrammarAction($1, $2); }
 	;
 
@@ -279,11 +284,15 @@ while_state:
 /* ------------------------------------------------------ */ 
 
 expression:		
-	VARIABLE_NAME op_sign expression								{ VariableExpressionGrammarAction($1); }
+	variable_expression op_sign expression							
 	| integer op_sign expression
 	| open_par expression close_par
-	| VARIABLE_NAME													{ VariableExpressionGrammarAction($1); }
+	| variable_expression										
 	| integer
+	;
+
+variable_expression:
+	VARIABLE_NAME													{ VariableExpressionGrammarAction($1); }
 	;
 
 op_sign:
