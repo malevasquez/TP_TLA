@@ -24,6 +24,7 @@ note note3 is sol;
 to_chord note1 note2 note3;
 
 chord chord1 is D;
+integer num2 is 7;
 
 to_notes chord1;
 

@@ -63,10 +63,10 @@
 
 %type <num> assignment integer
 %type <num> to_chord
-%type <num> definition
+%type <num> definition definition_assign
 %type <num> note chord
 %type <num> expression
-%type <string> str
+%type <string> str variable_name
 
 %right ASSIGN
 %left AND OR
@@ -105,16 +105,31 @@ instruction: definition delimiter
 	;
 
 assignment:															
-	definition ASSIGN str											{ $$ = AssignmentStringByIdGrammarAction($1, _STRING, $3); }
-	| definition ASSIGN expression									{ $$ = AssignmentNumByIdGrammarAction($1, _INTEGER, $3); }
-    | definition ASSIGN chord										{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
-	| definition ASSIGN note										{ $$ = AssignmentNumByIdGrammarAction($1, _NOTE, $3); }
-	| definition ASSIGN to_chord									{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
-	| VARIABLE_NAME ASSIGN note										{ $$ = AssignmentNumByNameGrammarAction($1, _NOTE, $3); }
-	| VARIABLE_NAME ASSIGN expression								{ $$ = AssignmentNumByNameGrammarAction($1, _INTEGER, $3); }
-	| VARIABLE_NAME ASSIGN chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
-	| VARIABLE_NAME ASSIGN str										{ $$ = AssignmentStringByNameGrammarAction($1, _STRING, $3); }
-	| VARIABLE_NAME ASSIGN to_chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
+	definition_assign assign str									{ $$ = AssignmentStringByIdGrammarAction($1, _STRING, $3); }
+	| definition_assign assign expression							{ $$ = AssignmentNumByIdGrammarAction($1, _INTEGER, $3); }
+    | definition_assign assign chord								{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
+	| definition_assign assign note									{ $$ = AssignmentNumByIdGrammarAction($1, _NOTE, $3); }
+	| definition_assign assign to_chord								{ $$ = AssignmentNumByIdGrammarAction($1, _CHORD, $3); }
+	| variable_name assign note										{ $$ = AssignmentNumByNameGrammarAction($1, _NOTE, $3); }
+	| variable_name assign chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
+	| variable_name assign str										{ $$ = AssignmentStringByNameGrammarAction($1, _STRING, $3); }
+	| variable_name assign to_chord									{ $$ = AssignmentNumByNameGrammarAction($1, _CHORD, $3); }
+	| variable_name assign expression								{ $$ = AssignmentNumByNameGrammarAction($1, _INTEGER, $3); }
+	;
+
+definition_assign:
+	INTEGER_TYPE VARIABLE_NAME										{ $$ = DefinitionForAssignGrammarAction(2, $2); }
+	| STRING_TYPE VARIABLE_NAME										{ $$ = DefinitionForAssignGrammarAction(3, $2); }
+	| NOTE_TYPE VARIABLE_NAME										{ $$ = DefinitionForAssignGrammarAction(0, $2); }
+	| CHORD_TYPE VARIABLE_NAME										{ $$ = DefinitionForAssignGrammarAction(1, $2); }
+	;
+
+variable_name:
+	VARIABLE_NAME													{ $$ = VariableValueGrammarAction($1); }
+	;
+
+assign:
+	ASSIGN															{ AssignValueGrammarAction(); }
 	;
 	
 print:

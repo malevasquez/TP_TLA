@@ -93,6 +93,7 @@ int ValidateIsChordGrammarAction(char *value);
 int OpenParGrammarAction(char * value);
 int CloseParGrammarAction(char * value);
 int DelimiterGrammarAction(char * value);
+void AssignValueGrammarAction();
 
 //ASSIGNMENT
 int AssignmentNumByIdGrammarAction(int id, enum type type1, int value);
@@ -102,6 +103,7 @@ int AssignmentStringByNameGrammarAction(char *name, enum type type1, char* value
 
 //DEFINITION
 int DefinitionGrammarAction(enum type type1, char *variableName);
+int DefinitionForAssignGrammarAction(enum type type, char *variableName);
 int VariableExpressionGrammarAction(char* name);
 
 // DATA TYPES     
@@ -109,5 +111,6 @@ int IntegerConstantGrammarAction(const int value);
 char* StringValueGrammarAction(char* str);
 int NoteValueGrammarAction(char* note);
 int ChordValueGrammarAction(char* chord);
+char* VariableValueGrammarAction(char* variable);
 
 #endif

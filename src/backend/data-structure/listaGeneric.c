@@ -139,7 +139,7 @@ node* listSearch(node** current, void* elem, int (*cmp)(void*, void*)) {
     node* auxCurrent = *current;
     while (auxCurrent != NULL){
         struct elem *node1 = (struct elem*) auxCurrent->value;
-        printf("node1 name: %s\n", node1->name);
+        printf("node1 name: [%s]\n", node1->name);
         if(cmp(auxCurrent->value, elem) == 0){
             printf("ACAAAAAAAAAAA\n");
             return last;
