@@ -276,6 +276,7 @@ int PrintToChordsVariableGrammarAction(char* value) {
 	int value_len = strlen(value);
 	char true_value[100];
 	strncpy(true_value, value, value_len - 1);
+	true_value[value_len - 1] = '\0';
 	char delimiter[] = " ";
 
 	char* token = strtok(true_value, delimiter);
@@ -570,26 +571,27 @@ void AssignValueGrammarAction() {
 int AssignmentNumByIdGrammarAction(int id, enum type type1, int value){
 	int ret = addAssignById(scope, id, type1, &value);
 	if(ret == -1){
-		LogError("assignment(1) %d", id);
+		LogError("Error in AssignmentNumByIdGrammarAction %d", id);
 		exit(1);
 	}
 
 	elem* var = (elem*) getElemById(scope, id);
-	printf("\n\n\n VALOR DE NUMERO: %d\n", ATTACHMENT_INT(var));
-	// if(var->type == _NOTE || var->type == _CHORD)
-	// 	dprintf(FD, "%s = %d", var->name,  ATTACHMENT_INT(var));
+	if(var == NULL || var->type != type1 || ATTACHMENT_INT(var) != value) {
+		LogError("Error in AssignmentNumByIdGrammarAction %d", id);
+		exit(1);
+	}
 	return ret;
 }
 
 int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value){
-	int ret = addAssignById(scope, id, type1, NULL);
+	int ret = addAssignById(scope, id, type1, value);
 	if(ret == -1){
 		LogError("assignment(2) %d", id);
 		exit(1);
 	}
 
 	elem* var = (elem*) getElemById(scope, id);
-	dprintf(FD, "%s = %s", var->name, ATTACHMENT_STR(var));
+	// dprintf(FD, "%s = %s", var->name, ATTACHMENT_STR(var));
 	return ret;
 }
 
@@ -604,10 +606,6 @@ int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value) {
 		LogError("assignment(3) %s", dest);
 		exit(1);
 	}
-	// if(type1 == _INTEGER)
-	// 	dprintf(FD, "%s = ", dest);
-	// else
-	// 	dprintf(FD, "%s = %d", dest, value);
 	LogDebug("AssignmentNumByNameGrammarAction(%s, %d, %d)", dest, type1, value);
 	return ret;
 }
@@ -647,15 +645,12 @@ int DefinitionGrammarAction(enum type type, char *variableName){
 		LogError("Definition %s", variableName);
 		exit(1);
 	}
-	// if(type == _INTEGER)
-		// dprintf(FD, "%s", variableName);
 	return ret;
 }
 
 int DefinitionForAssignGrammarAction(enum type type, char *variableName) {
 	variableName = strtok(variableName, " ");
 	
-	printf("\n\n\n\nQUEEEEEE [%s]\n", variableName);
 	LogDebug("DefinitionForAssignGrammarAction(%d, %s)", type, variableName);
 	int ret = DefinitionGrammarAction(type, variableName);
 	dprintf(FD, "%s", variableName);
@@ -689,7 +684,7 @@ int IntegerConstantGrammarAction(const int value) {
 
 char* StringValueGrammarAction(char* str) {
 	LogDebug("StringValueGrammarAction(%s)", str);
-	// getStringValue(str);
+	getStringValue(str);
 	return str;
 }
 
