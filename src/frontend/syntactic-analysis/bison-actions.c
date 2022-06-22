@@ -266,7 +266,9 @@ int PrintVariableGrammarAction(char* value) {
 int PrintToChordsGrammarAction(char * value) {
 	LogDebug("PrintToChordsGrammarAction(%s)", value);
 	int len = strlen(value);
+	printf("ANTES DE PRINTTOCHORDS: %s", value);
 	value[len - 1] = '\0';
+	printf("DESP DE PRINTTOCHORDS: %s", value);
 	printToChords(value);
 	return 0;
 }
@@ -652,7 +654,9 @@ int DefinitionForAssignGrammarAction(enum type type, char *variableName) {
 	
 	LogDebug("DefinitionForAssignGrammarAction(%d, %s)", type, variableName);
 	int ret = DefinitionGrammarAction(type, variableName);
-	dprintf(FD, ";\n%s", variableName);
+	if(type != _STRING)
+		dprintf(FD, ";\n");
+	dprintf(FD, "\n%s", variableName);
 	return ret;
 }
 

@@ -87,7 +87,11 @@ int CreatePartitureGrammarAction(char * input);
 
 // Validaciones
 int ValidateIsNoteGrammarAction(char *value);
+int ValidateVariableIsNoteGrammarAction(char *value);
 int ValidateIsChordGrammarAction(char *value);
+int ValidateIsChordFromNotesGrammarAction(char *value);
+int ValidateIsChordFromSingleVariableGrammarAction(char *value);
+int ValidateVariableIsChordGrammarFromNotesAction(char *value);
 
 // Simbolos
 int OpenParGrammarAction(char * value);

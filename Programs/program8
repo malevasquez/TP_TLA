@@ -1,11 +1,28 @@
 start
+
+if ( ( 3 < 2 ) and ( 3 > 9 ) )
+then
+print "bien";
+end_if
+
+if ( true and true )
+then 
+print "verdadero";
+end_if
+
+if ( 7 != 4)
+then 
+print "distinto";
+end_if
+
 integer num1 is 9;
 compute
 print "doing";
-while ( num1 greater_than 1);
+while ( num1 > 1);
 
 string text1 is "hello";
 compute
 print text1;
 while ( true );
+
 end

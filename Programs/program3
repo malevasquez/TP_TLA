@@ -1,9 +1,8 @@
 start
-note nota1 is fa;
+note nota1 is do;
 note nota2 is mi;
 note nota3 is sol;
-chord acorde1;
+to_chord nota1 nota2 nota3;
 chord acorde2;
-acorde1 is to_chord nota1 nota2 nota3;
-acorde2 is mi do sol;
+acorde2 is to_chord mi do sol;
 end

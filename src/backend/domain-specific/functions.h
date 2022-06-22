@@ -58,6 +58,8 @@ void toNotes(char* chord);
 
 void isNote(char *note);
 void isChord(char *value);
+void isChordSimple(char *value);
+void isChordGivenNotes(char *note1, char *note2, char *note3);
 
 void concatNotes(char * note1, char * note2, char * note3);
 

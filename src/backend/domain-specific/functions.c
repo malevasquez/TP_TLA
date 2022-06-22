@@ -4,7 +4,7 @@
 
 void start_program() {
     // FILE *file = fopen("archivoPrueba.c", "w");
-    dprintf(FD, "#include <stdio.h>\n#include <string.h>\nint main()  {\nchar printChordAuxArray[100];\n");
+    dprintf(FD, "#include <stdio.h>\n#include <string.h>\n#include \"domain-specific/notes.h\" \n#include \"variables/variable.h\" \nint main()  {\nchar printChordAuxArray[100];\n");
     // printf("#include <stdio.h> int main()  {");
     // program_file = file;
 }
