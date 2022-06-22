@@ -33,15 +33,18 @@ Si es que su versión de CMake es una anterior a la establecida en los requerimi
 
 ##  Ejecucion
 
-Para compilar un programa, primero cree un archivo vacío denominado `program` con una gramatica valida.
+Para compilar un programa, primero cree un archivo vacío denominado `program` con una gramática válida.
 
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, inyectando el programa desde la entrada estándard:
 
 ```bash
-user@machine:path/ $ cat Programs/program<number> | bin/Compiler
+user@machine:path/ $ ./execute.sh program
 ```
 
 ## Casos de uso
-En la carpeta [`Programs`](./Programs), se encuentran los casos de uso pedidos por la cátedra.
+En la carpeta [`Programs`](./Programs) se encuentran los casos de uso pedidos por la cátedra.
+
+## Gramática
+En la carpeta [`doc`](./doc) se encuentra un informe en el cual se explica la gramática del lenguaje. 
 
