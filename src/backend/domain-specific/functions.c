@@ -149,7 +149,7 @@ void isChordGivenNotes(char *note1, char *note2, char *note3) {
 
 void printToChords(char *notes) {
     dprintf(FD, "strcpy(printChordAuxArray, \"%s\");\n", notes);
-    dprintf(FD, "print_to_chords(printChordAuxArray)", notes);
+    dprintf(FD, "print_to_chords(printChordAuxArray)");
 }
 
 // TODO: Hacer las funciones

@@ -10,7 +10,7 @@ void finishPartiture();
 char* notesFromChord(char * chordStr, int sum);
 char* replace_char(char* str, char find, char replace);
 
-void notes_to_chord(char* note1, char* note2, char* note3) {
+int notes_to_chord(char* note1, char* note2, char* note3) {
 
     int notes[3]; 
     notes[0] = (getNoteEnum(note1) % 13);
@@ -23,9 +23,11 @@ void notes_to_chord(char* note1, char* note2, char* note3) {
         printf("Acorde valido\n");
         printf("El acorde es: %s\n",getChordStr(notes[0]));
         dprintf(FD, "printf(%s); ", getChordStr(notes[0]));
+        return getChordEnum(getChordStr(notes[0]));
     }
     else {
         printf("Acorde invalido\n");
+        return -1;
     }
 
 }
@@ -53,7 +55,7 @@ void print_string(char *str) {
 }
 
 void print_integer(int num) {
-    dprintf(FD, "printf(\"%%d\\n\")", num); 
+    dprintf(FD, "printf(\"%%d\\n\", %d)", num); 
 }
 
 int is_chord(char *value) {
@@ -86,9 +88,9 @@ int is_chord_simple(char *value) {
     return getNoteEnum(value);
 }
 
-int is_chord_given_notes(char * note1, char * note2, char * note3) {
+// int is_chord_given_notes(char * note1, char * note2, char * note3) {
     
-}
+// }
 
 void concat_notes(char * note1, char * note2, char * note3) {
     notes_to_chord(note1, note2, note3);
