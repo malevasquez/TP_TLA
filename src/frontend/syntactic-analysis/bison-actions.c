@@ -629,16 +629,15 @@ int AssignmentStringByNameGrammarAction(char *name, enum type type1, char* value
 /* ------------------------------------------------------ */ 
 
 int DefinitionGrammarAction(enum type type, char *variableName){
-	if(type == _INTEGER) {
-		int len = strlen(variableName);
+	int len = strlen(variableName);
+	if(variableName[len - 1] == ';')
 		variableName[len - 1] = '\0';
-	}
 	if(type == _STRING){
 		dprintf(FD, "char* %s;\n", variableName);
 	}else if(type == _INTEGER) {
 		dprintf(FD, "int %s", variableName);
 	}else{
-		dprintf(FD, "int %s;\n", variableName);
+		dprintf(FD, "int %s", variableName);
 	}
 	int ret = addDefinition(scope, type, variableName);
 	if(ret == -1){
@@ -653,7 +652,7 @@ int DefinitionForAssignGrammarAction(enum type type, char *variableName) {
 	
 	LogDebug("DefinitionForAssignGrammarAction(%d, %s)", type, variableName);
 	int ret = DefinitionGrammarAction(type, variableName);
-	dprintf(FD, "%s", variableName);
+	dprintf(FD, ";\n%s", variableName);
 	return ret;
 }
 
