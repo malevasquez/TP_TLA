@@ -26,51 +26,50 @@ note                (do|re|mi|fa|sol|la|si)#?
 
 %%
 
-"start"                                     { return PatternAction(START, "start"); }
-"end"                                       { return END; }
-"is"                                        { return ASSIGN; }
+"start"                                     { return StartPatternAction(yytext); }
+"end"                                       { return EndPatternAction(yytext); }
+"is"                                        { return AssignPatternAction(yytext); }
 
-"plus"                                      {return PLUS;}
-"minus"                                     {return MINUS;}     
-"times"                                     {return MULTIPLY;}
-"by"                                        {return DIVIDE;}
+"plus"                                      {return PlusPatternAction(yytext);}
+"minus"                                     {return MinusPatternAction(yytext);}     
+"times"                                     {return MultiplyPatternAction(yytext);}
+"by"                                        {return DividePatternAction(yytext);}
 
-"if"                                        { return IF; }
-"then"                                      { return THEN; }
-"else"                                      { return ELSE; }
-"end_if"                                    { return END_IF; }
+"if"                                        { return IfPatternAction(yytext); }
+"then"                                      { return ThenPatternAction(yytext); }
+"else"                                      { return ElsePatternAction(yytext); }
+"end_if"                                    { return EndIfPatternAction(yytext); }
 
-"compute"                                   { return DO_STATEMENT; }
-"while"                                     { return WHILE; }
+"compute"                                   { return DoStatementPatternAction(yytext); }
+"while"                                     { return WhilePatternAction(yytext); }
 
-">"                                         {return GREATER;}
-"<"                                         {return LOWER;}
-"="                                         {return EQUALS;}
-"!="                                        {return NOT_EQUALS;}
-"and"                                       {return AND;}
-"or"                                        {return OR;}
-"not"                                       {return NOT;}
-"true"                                      {return TRUE;}
-"false"                                     {return FALSE;}
+">"                                         {return GreaterPatternAction(yytext);}
+"<"                                         {return LowerPatternAction(yytext);}
+"="                                         {return EqualsPatternAction(yytext);}
+"!="                                        {return NotEqualsPatternAction(yytext);}
+"and"                                       {return AndPatternAction(yytext);}
+"or"                                        {return OrPatternAction(yytext);}
+"not"                                       {return NotPatternAction(yytext);}
+"true"                                      {return TruePatternAction(yytext);}
+"false"                                     {return FalsePatternAction(yytext);}
 
-"print"                                     { return PRINT_FUNCTION; }
-"print_to_chords"                           { return PRINT_TO_CHORDS; }
-"concat_notes"                              { return CONCAT_NOTES; }
-"to_notes"                                  { return TO_NOTES; }
-"to_chord"                                  { return TO_CHORD; }
-"reproduce_note"                            { return REPRODUCE_NOTE; }
-"reproduce_chord"                           { return REPRODUCE_CHORD; }
-"is_note"                                   { return IS_NOTE; }
-"is_chord"                                  { return IS_CHORD; }
+"print"                                     { return PrintPatternAction(yytext); }
+"print_to_chords"                           { return PrintToChordsPatternAction(yytext); }
+"concat_notes"                              { return ConcatNotesPatternAction(yytext); }
+"to_notes"                                  { return ToNotesPatternAction(yytext); }
+"to_chord"                                  { return ToChordPatternAction(yytext); }
+"create_music_score"                        { return CreateMusicScorePatternAction(yytext); }
+"is_note"                                   { return IsNotePatternAction(yytext); }
+"is_chord"                                  { return IsChordPatternAction(yytext); }
 
-"("											{ return OPEN_PARENTHESIS; }
-")"											{ return CLOSE_PARENTHESIS; }
-";"                                         { return DELIMITER; }
+"("											{ return OpenParenthesisPatternAction(yytext); }
+")"											{ return CloseParenthesisPatternAction(yytext); }
+";"                                         { return DelimiterPatternAction(yytext); }
 
-"note"                                      { return NOTE_TYPE; }
-"chord"                                     { return CHORD_TYPE; }
-"string"                                    { return STRING_TYPE; }
-"integer"                                   { return INTEGER_TYPE; }
+"note"                                      { return NoteTypePatternAction(yytext); }
+"chord"                                     { return ChordTypePatternAction(yytext); }
+"string"                                    { return StringTypePatternAction(yytext); }
+"integer"                                   { return IntegerTypePatternAction(yytext); }
 
 {chord}                                     { return ChordPatternAction(yytext);}
 {note}                                      { return NotePatternAction(yytext);}

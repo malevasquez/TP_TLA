@@ -1,11 +1,7 @@
 start
-chord acorde is F;
-note nota1;
-note nota2;
-note nota3;
-nota1 nota2 nota3 to_notes acorde;
-note nota4;
-note nota5;
-note nota6;
-nota4 nota5 nota6 to_notes D;
+print_to_chords do mi sol;
+note nota4 is re;
+note nota5 is fa#;
+note nota6 is la;
+print_to_chords nota4 nota5 nota6;
 end

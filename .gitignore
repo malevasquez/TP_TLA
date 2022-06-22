@@ -2,6 +2,7 @@
 .DS_Store
 .vs/
 .vscode/
+.vscode/settings.json
 bin/
 cache/
 log/
@@ -11,7 +12,8 @@ node_modules/
 # Files:
 *.csproj.user
 *~
-
+*
+*.json
 # Project specific:
 bison-parser.c
 bison-parser.h

@@ -1,2 +1,49 @@
 start
+print 6;
+print "hola";
+print do;
+print G;
+
+if ( 6 > 2 )
+then
+print sol;
+end_if
+
+to_chord do mi sol;
+
+to_notes C;
+
+concat_notes re mi do;
+
+create_music_score do mi sol C re E F G si A;
+
+note note1 is do;
+note note2 is mi;
+note note3 is sol;
+
+to_chord note1 note2 note3;
+
+chord chord1 is D;
+integer num2 is 7;
+
+to_notes chord1;
+
+concat_notes note1 note2 note3;
+
+note note4 is re;
+note note5 is fa#;
+note note6 is la;
+
+integer num1;
+num1 is 7;
+string str1 is "hola";
+
+print note2;
+print chord1;
+print num1;
+
+
+print_to_chords mi sol# si fa la do;
+print_to_chords note1 note2 note3 note5 note6;
+
 end

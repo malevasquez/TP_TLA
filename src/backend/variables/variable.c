@@ -29,3 +29,22 @@ char *getChordStr(enum chords chord) {
     return NULL;
   return chordName[chord];
 }
+
+int isSharp(char *noteStr) {
+  if(strchr(noteStr, '#') != NULL) {
+    // True
+    return 1;
+  } 
+  // False
+  return 0;
+}
+
+
+int getNoteNumber(char *noteStr) {
+  for (int i = 0; i < majorNotesNameSize; i++) {
+    if (strcmp(noteStr, majorNotesName[i]) == 0) {
+      return i;
+    }
+  }
+  return -1;
+}
