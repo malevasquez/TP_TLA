@@ -11,9 +11,12 @@ node_modules/
 
 # Files:
 *.csproj.user
-*~
-*
 *.json
+partiture.tex
+archivoPrueba.*
+*.o
+music
+
 # Project specific:
 bison-parser.c
 bison-parser.h
