@@ -128,7 +128,6 @@ elem *getElemById(scopeADT scope, int id) {
 
 // devulve el elemnt si lo encontro sino NULL
 elem *getElemByName(scopeADT scope, char *name) {
-  printf("getElemByName: name %s", name);
   return scopeSearch(scope->stack, name, cmpName);
 }
 

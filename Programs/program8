@@ -10,7 +10,7 @@ then
 print "verdadero";
 end_if
 
-if ( 7 != 4)
+if ( (2 != 4) and (7 > 2) )
 then 
 print "distinto";
 end_if

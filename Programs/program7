@@ -28,7 +28,7 @@ then
 print "hello";
 end_if
 
-if ( true or false )
+if ( 7 != 1 )
 then
 print "good";
 end_if

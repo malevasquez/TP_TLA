@@ -266,9 +266,7 @@ int PrintVariableGrammarAction(char* value) {
 int PrintToChordsGrammarAction(char * value) {
 	LogDebug("PrintToChordsGrammarAction(%s)", value);
 	int len = strlen(value);
-	printf("ANTES DE PRINTTOCHORDS: %s", value);
 	value[len - 1] = '\0';
-	printf("DESP DE PRINTTOCHORDS: %s", value);
 	printToChords(value);
 	return 0;
 }
@@ -289,7 +287,6 @@ int PrintToChordsVariableGrammarAction(char* value) {
 
 	while (token != NULL)
 	{
-		printf("token name: %s\n", token);
 		elem1 = (elem*) getElemByName(scope, token);
 		value1 = getNoteStr(ATTACHMENT_INT(elem1));
 
@@ -600,9 +597,6 @@ int AssignmentStringByIdGrammarAction(int id, enum type type1, char* value){
 int AssignmentNumByNameGrammarAction(char *name, enum type type1, int value) {
 	char dest[20];
 	parser(0, dest, name);
-	printf("assignment(3) dest value [%s]\n", dest);
-	printf("assignment(3) type1 value: [%d]\n", type1);
-	printf("assignment(3) value value: [%d]\n", value);
 	int ret = addAssignByName(scope, dest, type1, &value);
 	if(ret == -1){
 		LogError("assignment(3) %s", dest);
@@ -715,7 +709,6 @@ int ChordValueGrammarAction(char* chord) {
 }
 
 char* VariableValueGrammarAction(char* variable) {
-	printf("\n\n\n\nQUIERO ASIGNAR UN ENTEROOOO\n\n\n");
 	LogDebug("VariableValueGrammarAction(%s)", variable);
 	dprintf(FD, "%s", variable);
 	return variable;

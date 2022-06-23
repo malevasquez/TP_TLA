@@ -1,0 +1,3 @@
+start
+note nota1 is do;
+create_music_score do mi fa# "hello" C;
