@@ -15,7 +15,7 @@ void print_integer(int num);
 
 int is_chord(char *value);
 int is_chord_simple(char *value);
-// int is_chord_given_notes(char * note1, char * note2, char * note3);
+int is_chord_given_notes(char * note1, char * note2, char * note3);
 int is_note(char *note);
 
 void concat_notes(char * note1, char * note2, char * note3);

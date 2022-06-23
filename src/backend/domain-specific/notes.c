@@ -88,9 +88,9 @@ int is_chord_simple(char *value) {
     return getNoteEnum(value);
 }
 
-// int is_chord_given_notes(char * note1, char * note2, char * note3) {
-    
-// }
+int is_chord_given_notes(char * note1, char * note2, char * note3) {
+    return notes_to_chord(note1, note2, note3);
+}
 
 void concat_notes(char * note1, char * note2, char * note3) {
     notes_to_chord(note1, note2, note3);

@@ -14,7 +14,7 @@ add_custom_command(
 	message(NOTICE "El compilador de C es GCC.")
 
 	# Opciones para GCC:
-	add_compile_options(-static-libgcc)
+	#add_compile_options(-static-libgcc)
 	add_compile_options(-std=gnu99)
 	add_compile_options(-O3)
 

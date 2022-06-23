@@ -508,8 +508,7 @@ int ValidateVariableIsChordGrammarFromNotesAction(char *value) {
 		exit(1);
 	}
 
-
-	isChordGivenNotes(ATTACHMENT_STR(var1), ATTACHMENT_STR(var2), ATTACHMENT_STR(var3));
+	isChordGivenNotes(getNoteStr(ATTACHMENT_INT(var1)), getNoteStr(ATTACHMENT_INT(var2)), getNoteStr(ATTACHMENT_INT(var3)));
 	return 0;
 }
 
@@ -529,6 +528,7 @@ int ValidateIsChordFromNotesGrammarAction(char *value) {
 	note3 = strtok(NULL, " ");
 
 	isChordGivenNotes(note1, note2, note3);
+	return 0;
 }
 
 int CreatePartitureGrammarAction(char * input) {

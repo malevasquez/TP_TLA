@@ -8,6 +8,7 @@ cache/
 log/
 obj/
 node_modules/
+build/
 
 # Files:
 *.csproj.user
@@ -16,6 +17,7 @@ partiture.tex
 archivoPrueba.*
 *.o
 music
+
 
 # Project specific:
 bison-parser.c
