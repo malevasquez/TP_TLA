@@ -18,11 +18,7 @@ end_if
 integer num1 is 9;
 compute
 print "doing";
+num1 is 0;
 while ( num1 > 1);
-
-string text1 is "hello";
-compute
-print text1;
-while ( true );
 
 end
